@@ -5,7 +5,9 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.onlineshop.model.Category;
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.remote.retrofit.CategoryListDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductListDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductService;
 import com.example.onlineshop.remote.retrofit.RetrofitInstance;
@@ -19,7 +21,7 @@ import retrofit2.Response;
 
 public class ProductRepository {
     private Context mContext;
-    private ProductService mProductService;
+    private ProductService mProductService, mCategoryService;
     private static ProductRepository sInstance;
 
     private MutableLiveData<Integer> mTotalProductMutableLiveData = new MutableLiveData<>();
@@ -35,6 +37,12 @@ public class ProductRepository {
                 new TypeToken<List<Product>>() {
                 }.getType(),
                 new ProductListDeserializer()).create(ProductService.class);
+
+        mCategoryService = RetrofitInstance.getRetrofitInstance(
+                new TypeToken<List<Category>>() {
+                }.getType(),
+                new CategoryListDeserializer()).create(ProductService.class);
+
         mContext = context;
     }
 
@@ -114,16 +122,16 @@ public class ProductRepository {
         mProductService
                 .getMostVisitedProduct(orderby, order, per_page)
                 .enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                mMostVisitedProductMutableLiveData.setValue(response.body());
-            }
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        mMostVisitedProductMutableLiveData.setValue(response.body());
+                    }
 
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                Log.e(TAG, t.getMessage(), t);
-            }
-        });
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+                        Log.e(TAG, t.getMessage(), t);
+                    }
+                });
     }
 
     public void getSpecialProduct(boolean featured, int per_page) {
