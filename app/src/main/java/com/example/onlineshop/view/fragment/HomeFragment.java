@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -88,6 +89,8 @@ public class HomeFragment extends Fragment {
     private void initRecyclerView() {
         mBinding.recyclerViewBestProduct.setLayoutManager(
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true));
+        mBinding.recyclerViewBestProduct.addItemDecoration(new DividerItemDecoration(
+                mBinding.recyclerViewBestProduct.getContext(), DividerItemDecoration.VERTICAL));
         mBinding.recyclerViewLatestProduct.setLayoutManager(
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true));
         mBinding.recyclerViewMostVisitedProduct.setLayoutManager(

@@ -87,7 +87,7 @@ public class Product {
     }
 
     @BindingAdapter({"imageUrl"})
-    public void setProductImage(ImageView imageView, String url) {
+    public static void setProductImage(ImageView imageView, String url) {
         if (url == null) {
             Picasso.get().load(R.drawable.image_place_holder).into(imageView);
         } else {
