@@ -1,6 +1,6 @@
 package com.example.onlineshop.model;
 
-public class Category {
+public class Category implements Comparable {
     private int mId;
     private String mName;
 
@@ -23,5 +23,14 @@ public class Category {
 
     public void setName(String name) {
         mName = name;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Category category = (Category) o;
+        if (category.getId() == this.mId && category.getName().equals(this.mName)) {
+            return 0;
+        }
+        return 1;
     }
 }
