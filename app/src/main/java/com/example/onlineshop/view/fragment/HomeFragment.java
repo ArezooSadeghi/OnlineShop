@@ -63,8 +63,6 @@ public class HomeFragment extends Fragment {
                 container,
                 false);
 
-        mBinding.setIsLoading(true);
-
         initToolbar();
         initRecyclerView();
 
@@ -106,7 +104,6 @@ public class HomeFragment extends Fragment {
         mViewModel.getTotalProductLiveData().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer totalProduct) {
-                mBinding.setIsLoading(false);
                 mViewModel.getBestProduct("rating", "desc", totalProduct);
                 mViewModel.getLatestProduct("date", "desc", totalProduct);
                 mViewModel.getMostVisitedProduct("popularity", "desc", totalProduct);

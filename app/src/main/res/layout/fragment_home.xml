@@ -21,12 +21,6 @@
             name="specialProductTitle"
             type="String" />
 
-        <variable
-            name="isLoading"
-            type="Boolean" />
-
-        <import type="android.view.View" />
-
     </data>
 
     <ScrollView
@@ -122,7 +116,7 @@
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/slider_view_special_product"
                 android:layout_width="wrap_content"
-                android:layout_height="120dp"
+                android:layout_height="200dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -149,16 +143,6 @@
                     android:layout_margin="16dp" />
 
             </com.smarteist.autoimageslider.SliderView>
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:visibility="@{isLoading ? View.VISIBLE : View.GONE, default = gone}"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
