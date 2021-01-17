@@ -1,5 +1,12 @@
 package com.example.onlineshop.model;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.example.onlineshop.R;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class Product {
@@ -77,5 +84,14 @@ public class Product {
 
     public void setImageUrl(List<String> imageUrl) {
         mImageUrl = imageUrl;
+    }
+
+    @BindingAdapter({"imageUrl"})
+    public void setProductImage(ImageView imageView, String url) {
+        if (url == null) {
+            Picasso.get().load(R.drawable.image_place_holder).into(imageView);
+        } else {
+            Picasso.get().load(url).into(imageView);
+        }
     }
 }

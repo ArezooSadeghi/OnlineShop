@@ -15,6 +15,7 @@ public class HomeViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<List<Product>> mBestProductLiveData,
             mLatestProductLiveData, mMostVisitedProductLiveData;
+    private LiveData<Integer> mTotalProductLiveData;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
@@ -23,6 +24,11 @@ public class HomeViewModel extends AndroidViewModel {
         mBestProductLiveData = mRepository.getBestProductMutableLiveData();
         mLatestProductLiveData = mRepository.getLatestProductMutableLiveData();
         mMostVisitedProductLiveData = mRepository.getMostVisitedProductMutableLiveData();
+        mTotalProductLiveData = mRepository.getTotalProductMutableLiveData();
+    }
+
+    public LiveData<Integer> getTotalProductLiveData() {
+        return mTotalProductLiveData;
     }
 
     public LiveData<List<Product>> getBestProductLiveData() {
@@ -35,6 +41,10 @@ public class HomeViewModel extends AndroidViewModel {
 
     public LiveData<List<Product>> getMostVisitedProductLiveData() {
         return mMostVisitedProductLiveData;
+    }
+
+    public void getTotalProduct() {
+        mRepository.getTotalProduct();
     }
 
     public void getBestProduct(String orderby, String order, int per_page) {

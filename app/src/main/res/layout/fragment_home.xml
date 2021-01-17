@@ -5,13 +5,25 @@
 
     <data>
 
+        <variable
+            name="bestProductTitle"
+            type="String" />
+
+        <variable
+            name="latestProductTitle"
+            type="String" />
+
+        <variable
+            name="mostVisitedProductTitle"
+            type="String" />
+
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:background="@color/surface"
+        android:fillViewport="true"
         tools:context=".view.fragment.HomeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/best_product_title"
+                android:text="@{bestProductTitle}"
                 android:textColor="@color/on_surface"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/latest_product_title"
+                android:text="@{latestProductTitle}"
                 android:textColor="@color/on_surface"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/most_visited_product_title"
+                android:text="@{mostVisitedProductTitle}"
                 android:textColor="@color/on_surface"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"

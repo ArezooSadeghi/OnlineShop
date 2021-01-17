@@ -22,6 +22,7 @@ public class ProductRepository {
     private ProductService mProductService;
     private static ProductRepository sInstance;
 
+    private MutableLiveData<Integer> mTotalProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mBestProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mLatestProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mMostVisitedProductMutableLiveData = new MutableLiveData<>();
@@ -43,6 +44,10 @@ public class ProductRepository {
         return sInstance;
     }
 
+    public MutableLiveData<Integer> getTotalProductMutableLiveData() {
+        return mTotalProductMutableLiveData;
+    }
+
     public MutableLiveData<List<Product>> getBestProductMutableLiveData() {
         return mBestProductMutableLiveData;
     }
@@ -53,6 +58,21 @@ public class ProductRepository {
 
     public MutableLiveData<List<Product>> getMostVisitedProductMutableLiveData() {
         return mMostVisitedProductMutableLiveData;
+    }
+
+    public void getTotalProduct() {
+        mProductService.getTotalProduct().enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                mTotalProductMutableLiveData.setValue(Integer.valueOf(
+                        response.headers().values("X-WP-Total").get(0)));
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
     }
 
     public void getBestProduct(String orderby, String order, int per_page) {
