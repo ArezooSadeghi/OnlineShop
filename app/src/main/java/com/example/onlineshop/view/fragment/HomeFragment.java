@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ProductAdapter;
+import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentHomeBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.viewmodel.HomeViewModel;
@@ -62,6 +63,8 @@ public class HomeFragment extends Fragment {
                 container,
                 false);
 
+        mBinding.setIsLoading(true);
+
         initToolbar();
         initRecyclerView();
 
@@ -95,15 +98,19 @@ public class HomeFragment extends Fragment {
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true));
         mBinding.recyclerViewMostVisitedProduct.setLayoutManager(
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true));
+        mBinding.recyclerViewMostVisitedProduct.addItemDecoration(new DividerItemDecoration(
+                mBinding.recyclerViewMostVisitedProduct.getContext(), DividerItemDecoration.VERTICAL));
     }
 
     private void setObserver() {
         mViewModel.getTotalProductLiveData().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer totalProduct) {
+                mBinding.setIsLoading(false);
                 mViewModel.getBestProduct("rating", "desc", totalProduct);
                 mViewModel.getLatestProduct("date", "desc", totalProduct);
                 mViewModel.getMostVisitedProduct("popularity", "desc", totalProduct);
+                mViewModel.getSpecialProduct(false, totalProduct);
             }
         });
 
@@ -130,6 +137,14 @@ public class HomeFragment extends Fragment {
                 setupMostVisitedProductAdapter(mostVisitedProducts);
             }
         });
+
+        mViewModel.getSpecialProductLiveData().observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> specialProducts) {
+                mBinding.setSpecialProductTitle(getString(R.string.special_product_title));
+                setupSpecialProductAdapter(specialProducts);
+            }
+        });
     }
 
 
@@ -146,5 +161,10 @@ public class HomeFragment extends Fragment {
     private void setupMostVisitedProductAdapter(List<Product> mostVisitedProducts) {
         ProductAdapter mostVisitedProductAdapter = new ProductAdapter(getContext(), mostVisitedProducts);
         mBinding.recyclerViewMostVisitedProduct.setAdapter(mostVisitedProductAdapter);
+    }
+
+    private void setupSpecialProductAdapter(List<Product> specialProducts) {
+        List<String> urls = mViewModel.getUrl(specialProducts);
+        mBinding.sliderViewSpecialProduct.setSliderAdapter(new SliderAdapter(getContext(), urls));
     }
 }

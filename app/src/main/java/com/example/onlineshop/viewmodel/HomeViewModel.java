@@ -9,12 +9,13 @@ import androidx.lifecycle.LiveData;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.repository.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<List<Product>> mBestProductLiveData,
-            mLatestProductLiveData, mMostVisitedProductLiveData;
+            mLatestProductLiveData, mMostVisitedProductLiveData, mSpecialProductLiveData;
     private LiveData<Integer> mTotalProductLiveData;
 
     public HomeViewModel(@NonNull Application application) {
@@ -25,6 +26,7 @@ public class HomeViewModel extends AndroidViewModel {
         mLatestProductLiveData = mRepository.getLatestProductMutableLiveData();
         mMostVisitedProductLiveData = mRepository.getMostVisitedProductMutableLiveData();
         mTotalProductLiveData = mRepository.getTotalProductMutableLiveData();
+        mSpecialProductLiveData = mRepository.getSpecialProductMutableLiveData();
     }
 
     public LiveData<Integer> getTotalProductLiveData() {
@@ -43,6 +45,10 @@ public class HomeViewModel extends AndroidViewModel {
         return mMostVisitedProductLiveData;
     }
 
+    public LiveData<List<Product>> getSpecialProductLiveData() {
+        return mSpecialProductLiveData;
+    }
+
     public void getTotalProduct() {
         mRepository.getTotalProduct();
     }
@@ -57,5 +63,19 @@ public class HomeViewModel extends AndroidViewModel {
 
     public void getMostVisitedProduct(String orderby, String order, int per_page) {
         mRepository.getMostVisitedProduct(orderby, order, per_page);
+    }
+
+    public void getSpecialProduct(boolean featured, int per_page) {
+        mRepository.getSpecialProduct(featured, per_page);
+    }
+
+    public List<String> getUrl(List<Product> products) {
+        List<String> urls = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getImageUrl().size() != 0) {
+                urls.add(product.getImageUrl().get(0));
+            }
+        }
+        return urls;
     }
 }

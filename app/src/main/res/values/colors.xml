@@ -11,4 +11,5 @@
     <color name="secondary_shrine_pink">#FEEAE6</color>
     <color name="surface">#FFFBFA</color>
     <color name="on_surface">#442C2E</color>
+    <color name="light_gray">#D3D3D3</color>
 </resources>

@@ -26,6 +26,7 @@ public class ProductRepository {
     private MutableLiveData<List<Product>> mBestProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mLatestProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mMostVisitedProductMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Product>> mSpecialProductMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
@@ -58,6 +59,10 @@ public class ProductRepository {
 
     public MutableLiveData<List<Product>> getMostVisitedProductMutableLiveData() {
         return mMostVisitedProductMutableLiveData;
+    }
+
+    public MutableLiveData<List<Product>> getSpecialProductMutableLiveData() {
+        return mSpecialProductMutableLiveData;
     }
 
     public void getTotalProduct() {
@@ -112,6 +117,21 @@ public class ProductRepository {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mMostVisitedProductMutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
+    public void getSpecialProduct(boolean featured, int per_page) {
+        mProductService
+                .getSpecialProduct(featured, per_page).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                mSpecialProductMutableLiveData.setValue(response.body());
             }
 
             @Override
