@@ -20,6 +20,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/surface"
         android:fillViewport="true"
         tools:context=".view.fragment.DetailFragment">
 
@@ -27,6 +28,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/secondary_shrine_pink">
+
+                <Button
+                    android:id="@+id/btn_add_to_cart"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/add_to_cart"
+                    android:textColor="@color/on_surface"
+                    android:textSize="20sp"
+                    app:icon="@drawable/ic_add_to_cart" />
+
+            </com.google.android.material.appbar.AppBarLayout>
 
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/img_product_slider"
@@ -50,7 +69,6 @@
 
                 <ImageView
                     android:id="@+id/img_product"
-                    imageUrl="@{product.imageUrl.size() != 0 ? product.imageUrl.get(0) : null}"
                     android:layout_width="wrap_content"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"

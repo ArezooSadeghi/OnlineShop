@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.onlineshop.R;
+import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentDetailBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.viewmodel.DetailViewModel;
@@ -60,8 +61,14 @@ public class DetailFragment extends Fragment {
         mViewModel.getProductLiveData().observe(this, new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
-                mBinding.setProduct(product);
+                initViews(product);
             }
         });
+    }
+
+    private void initViews(Product product) {
+        mBinding.setProduct(product);
+        SliderAdapter sliderAdapter = new SliderAdapter(getContext(), product.getImageUrl());
+        mBinding.imgProductSlider.setSliderAdapter(sliderAdapter);
     }
 }
