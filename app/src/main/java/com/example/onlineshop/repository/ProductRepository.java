@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.onlineshop.model.Category;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.remote.retrofit.CategoryListDeserializer;
+import com.example.onlineshop.remote.retrofit.ProductDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductListDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductService;
 import com.example.onlineshop.remote.retrofit.RetrofitInstance;
@@ -21,7 +22,7 @@ import retrofit2.Response;
 
 public class ProductRepository {
     private Context mContext;
-    private ProductService mProductService, mCategoryService;
+    private ProductService mProductListService, mProductService, mCategoryService;
     private static ProductRepository sInstance;
 
     private MutableLiveData<Integer> mTotalProductMutableLiveData = new MutableLiveData<>();
@@ -29,14 +30,20 @@ public class ProductRepository {
     private MutableLiveData<List<Product>> mLatestProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mMostVisitedProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mSpecialProductMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
     private ProductRepository(Context context) {
-        mProductService = RetrofitInstance.getRetrofitInstance(
+        mProductListService = RetrofitInstance.getRetrofitInstance(
                 new TypeToken<List<Product>>() {
                 }.getType(),
                 new ProductListDeserializer()).create(ProductService.class);
+
+        mProductService = RetrofitInstance.getRetrofitInstance(
+                new TypeToken<Product>() {
+                }.getType(),
+                new ProductDeserializer()).create(ProductService.class);
 
         mCategoryService = RetrofitInstance.getRetrofitInstance(
                 new TypeToken<List<Category>>() {
@@ -73,8 +80,12 @@ public class ProductRepository {
         return mSpecialProductMutableLiveData;
     }
 
+    public MutableLiveData<Product> getProductMutableLiveData() {
+        return mProductMutableLiveData;
+    }
+
     public void getTotalProduct() {
-        mProductService.getTotalProduct().enqueue(new Callback<List<Product>>() {
+        mProductListService.getTotalProduct().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mTotalProductMutableLiveData.setValue(Integer.valueOf(
@@ -89,7 +100,7 @@ public class ProductRepository {
     }
 
     public void getBestProduct(String orderby, String order, int per_page) {
-        mProductService
+        mProductListService
                 .getBestProduct(orderby, order, per_page).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -104,7 +115,7 @@ public class ProductRepository {
     }
 
     public void getLatestProduct(String orderby, String order, int per_page) {
-        mProductService
+        mProductListService
                 .getLatestProduct(orderby, order, per_page).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -119,7 +130,7 @@ public class ProductRepository {
     }
 
     public void getMostVisitedProduct(String orderby, String order, int per_page) {
-        mProductService
+        mProductListService
                 .getMostVisitedProduct(orderby, order, per_page)
                 .enqueue(new Callback<List<Product>>() {
                     @Override
@@ -135,7 +146,7 @@ public class ProductRepository {
     }
 
     public void getSpecialProduct(boolean featured, int per_page) {
-        mProductService
+        mProductListService
                 .getSpecialProduct(featured, per_page).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -144,6 +155,20 @@ public class ProductRepository {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
+    public void retrieveProduct(int id) {
+        mProductService.retrieveProduct(id).enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                mProductMutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
             }
         });

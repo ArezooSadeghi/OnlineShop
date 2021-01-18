@@ -59,11 +59,13 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HomeProductHolder) {
-            ((HomeProductHolder) holder).bindProduct(mProducts.get(position));
+            Product product = mProducts.get(position);
+            ((HomeProductHolder) holder).bindProduct(product);
             ((HomeProductHolder) holder).mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mViewModel.getItemClickedSingleLiveEvent().setValue(true);
+                    mViewModel.getProductIdLiveData().setValue(product.getId());
                 }
             });
         }
