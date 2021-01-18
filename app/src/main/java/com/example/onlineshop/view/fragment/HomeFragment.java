@@ -150,8 +150,7 @@ public class HomeFragment extends Fragment {
                 if (isItemClicked) {
                     mViewModel.getProductIdLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
                         @Override
-                        public void onChanged(Integer integer) {
-                            int id = mViewModel.getProductIdLiveData().getValue();
+                        public void onChanged(Integer id) {
                             HomeFragmentDirections.ActionNavigationHomeToDetailFragment action =
                                     HomeFragmentDirections.actionNavigationHomeToDetailFragment();
                             action.setId(id);

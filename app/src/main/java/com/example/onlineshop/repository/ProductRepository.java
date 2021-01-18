@@ -31,6 +31,7 @@ public class ProductRepository {
     private MutableLiveData<List<Product>> mMostVisitedProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mSpecialProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Product>> mProductByCategoryMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
@@ -82,6 +83,10 @@ public class ProductRepository {
 
     public MutableLiveData<Product> getProductMutableLiveData() {
         return mProductMutableLiveData;
+    }
+
+    public MutableLiveData<List<Product>> getProductByCategoryMutableLiveData() {
+        return mProductByCategoryMutableLiveData;
     }
 
     public void getTotalProduct() {
@@ -169,6 +174,20 @@ public class ProductRepository {
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
+    public void getProductByCategory(int categoryId) {
+        mProductListService.getProductByCategory(categoryId).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                mProductByCategoryMutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
             }
         });
