@@ -2,6 +2,7 @@ package com.example.onlineshop.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,16 +13,19 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.CartProductAdapterItemBinding;
 import com.example.onlineshop.databinding.HomeProductAdapterItemBinding;
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.viewmodel.SingleHomeViewModel;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
+    private SingleHomeViewModel mViewModel;
     private int mViewType;
     private List<Product> mProducts;
 
-    public ProductAdapter(Context context, int viewType, List<Product> products) {
+    public ProductAdapter(Context context, SingleHomeViewModel viewModel, int viewType, List<Product> products) {
         mContext = context;
+        mViewModel = viewModel;
         mViewType = viewType;
         mProducts = products;
     }
@@ -56,6 +60,12 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HomeProductHolder) {
             ((HomeProductHolder) holder).bindProduct(mProducts.get(position));
+            ((HomeProductHolder) holder).mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mViewModel.getItemClickedSingleLiveEvent().setValue(true);
+                }
+            });
         }
         if (holder instanceof CartProductHolder) {
             ((CartProductHolder) holder).bindProduct(mProducts.get(position));

@@ -8,17 +8,20 @@ import androidx.lifecycle.LiveData;
 
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.repository.ProductRepository;
+import com.example.onlineshop.singleliveevent.SingleLiveEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeViewModel extends AndroidViewModel {
+public class SingleHomeViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<List<Product>> mBestProductLiveData,
             mLatestProductLiveData, mMostVisitedProductLiveData, mSpecialProductLiveData;
     private LiveData<Integer> mTotalProductLiveData;
 
-    public HomeViewModel(@NonNull Application application) {
+    private SingleLiveEvent<Boolean> mItemClickedSingleLiveEvent = new SingleLiveEvent<>();
+
+    public SingleHomeViewModel(@NonNull Application application) {
         super(application);
 
         mRepository = ProductRepository.getInstance(getApplication());
@@ -47,6 +50,10 @@ public class HomeViewModel extends AndroidViewModel {
 
     public LiveData<List<Product>> getSpecialProductLiveData() {
         return mSpecialProductLiveData;
+    }
+
+    public SingleLiveEvent<Boolean> getItemClickedSingleLiveEvent() {
+        return mItemClickedSingleLiveEvent;
     }
 
     public void getTotalProduct() {

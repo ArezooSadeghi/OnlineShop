@@ -1,12 +1,14 @@
 package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,13 +26,13 @@ import com.example.onlineshop.adapter.ProductAdapter;
 import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentHomeBinding;
 import com.example.onlineshop.model.Product;
-import com.example.onlineshop.viewmodel.HomeViewModel;
+import com.example.onlineshop.viewmodel.SingleHomeViewModel;
 
 import java.util.List;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding mBinding;
-    private HomeViewModel mViewModel;
+    private SingleHomeViewModel mViewModel;
 
 
     public static HomeFragment newInstance() {
@@ -46,7 +48,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SingleHomeViewModel.class);
         mViewModel.getTotalProduct();
         setObserver();
     }
@@ -142,21 +144,32 @@ public class HomeFragment extends Fragment {
                 setupSpecialProductAdapter(specialProducts);
             }
         });
+
+        mViewModel.getItemClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isItemClicked) {
+                if (isItemClicked) {
+                    Toast.makeText(getContext(), "Done Successful", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Done Failed", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
 
     private void setupBestProductAdapter(List<Product> bestProducts) {
-        ProductAdapter bestProductAdapter = new ProductAdapter(getContext(), 1, bestProducts);
+        ProductAdapter bestProductAdapter = new ProductAdapter(getContext(), mViewModel, 1, bestProducts);
         mBinding.recyclerViewBestProduct.setAdapter(bestProductAdapter);
     }
 
     private void setupLatestProductAdapter(List<Product> latestProducts) {
-        ProductAdapter latestProductAdapter = new ProductAdapter(getContext(), 1, latestProducts);
+        ProductAdapter latestProductAdapter = new ProductAdapter(getContext(), mViewModel, 1, latestProducts);
         mBinding.recyclerViewLatestProduct.setAdapter(latestProductAdapter);
     }
 
     private void setupMostVisitedProductAdapter(List<Product> mostVisitedProducts) {
-        ProductAdapter mostVisitedProductAdapter = new ProductAdapter(getContext(), 1, mostVisitedProducts);
+        ProductAdapter mostVisitedProductAdapter = new ProductAdapter(getContext(), mViewModel, 1, mostVisitedProducts);
         mBinding.recyclerViewMostVisitedProduct.setAdapter(mostVisitedProductAdapter);
     }
 
