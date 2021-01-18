@@ -14,4 +14,8 @@
     <string name="currency">تومان</string>
     <string name="total">مجموع</string>
     <string name="continue_the_buying_process">ادامه فرایند خرید</string>
+    <string name="specifications">مشخصات کلی</string>
+    <string name="text_sale">در سبد شما</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
