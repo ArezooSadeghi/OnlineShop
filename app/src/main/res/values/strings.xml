@@ -10,5 +10,8 @@
     <string name="special_product_title">محصولات ویژه</string>
     <string name="see_all">مشاهده همه</string>
     <string name="number">1</string>
+    <string name="ziro">0</string>
     <string name="currency">تومان</string>
+    <string name="total">مجموع</string>
+    <string name="continue_the_buying_process">ادامه فرایند خرید</string>
 </resources>
