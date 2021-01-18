@@ -9,17 +9,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineshop.R;
-import com.example.onlineshop.databinding.ProductAdapterItemBinding;
+import com.example.onlineshop.databinding.CartProductAdapterItemBinding;
+import com.example.onlineshop.databinding.HomeProductAdapterItemBinding;
 import com.example.onlineshop.model.Product;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
+    private int mViewType;
     private List<Product> mProducts;
 
-    public ProductAdapter(Context context, List<Product> products) {
+    public ProductAdapter(Context context, int viewType, List<Product> products) {
         mContext = context;
+        mViewType = viewType;
         mProducts = products;
     }
 
@@ -33,17 +36,30 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
     @NonNull
     @Override
-    public ProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ProductHolder(DataBindingUtil.inflate(
-                LayoutInflater.from(mContext),
-                R.layout.product_adapter_item,
-                parent,
-                false));
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == 2) {
+            return new CartProductHolder(DataBindingUtil.inflate(
+                    LayoutInflater.from(mContext),
+                    R.layout.cart_product_adapter_item,
+                    parent,
+                    false));
+        } else {
+            return new HomeProductHolder(DataBindingUtil.inflate(
+                    LayoutInflater.from(mContext),
+                    R.layout.home_product_adapter_item,
+                    parent,
+                    false));
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
-        holder.bindProduct(mProducts.get(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof HomeProductHolder) {
+            ((HomeProductHolder) holder).bindProduct(mProducts.get(position));
+        }
+        if (holder instanceof CartProductHolder) {
+            ((CartProductHolder) holder).bindProduct(mProducts.get(position));
+        }
     }
 
     @Override
@@ -51,10 +67,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         return mProducts.size();
     }
 
-    public class ProductHolder extends RecyclerView.ViewHolder {
-        private ProductAdapterItemBinding mBinding;
 
-        public ProductHolder(ProductAdapterItemBinding binding) {
+    public class HomeProductHolder extends RecyclerView.ViewHolder {
+        private HomeProductAdapterItemBinding mBinding;
+
+        public HomeProductHolder(HomeProductAdapterItemBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+        }
+
+        public void bindProduct(Product product) {
+            mBinding.setProduct(product);
+        }
+    }
+
+    public class CartProductHolder extends RecyclerView.ViewHolder {
+        private CartProductAdapterItemBinding mBinding;
+
+        public CartProductHolder(CartProductAdapterItemBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }

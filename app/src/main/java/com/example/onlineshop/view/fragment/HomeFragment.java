@@ -146,17 +146,17 @@ public class HomeFragment extends Fragment {
 
 
     private void setupBestProductAdapter(List<Product> bestProducts) {
-        ProductAdapter bestProductAdapter = new ProductAdapter(getContext(), bestProducts);
+        ProductAdapter bestProductAdapter = new ProductAdapter(getContext(), 1, bestProducts);
         mBinding.recyclerViewBestProduct.setAdapter(bestProductAdapter);
     }
 
     private void setupLatestProductAdapter(List<Product> latestProducts) {
-        ProductAdapter latestProductAdapter = new ProductAdapter(getContext(), latestProducts);
+        ProductAdapter latestProductAdapter = new ProductAdapter(getContext(), 1, latestProducts);
         mBinding.recyclerViewLatestProduct.setAdapter(latestProductAdapter);
     }
 
     private void setupMostVisitedProductAdapter(List<Product> mostVisitedProducts) {
-        ProductAdapter mostVisitedProductAdapter = new ProductAdapter(getContext(), mostVisitedProducts);
+        ProductAdapter mostVisitedProductAdapter = new ProductAdapter(getContext(), 1, mostVisitedProducts);
         mBinding.recyclerViewMostVisitedProduct.setAdapter(mostVisitedProductAdapter);
     }
 
