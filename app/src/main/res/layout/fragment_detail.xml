@@ -12,7 +12,7 @@
         <variable
             name="isSold"
             type="Boolean" />
-
+        
         <import type="android.view.View" />
 
     </data>
@@ -92,19 +92,19 @@
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@{product.description}"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:lineSpacingMultiplier="2"
                 android:maxLines="7"
-                android:text="@{product.description}"
                 android:textColor="@color/on_surface" />
 
             <RelativeLayout
                 android:id="@+id/show_detail_of_sale"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{isSold ? View.VISIBLE : View.GONE, default = gone}">
+                android:visibility="@{isSold ? View.VISIBLE : View.GONE, default=gone}"
+                android:layout_height="wrap_content">
 
                 <Button
                     android:id="@+id/btn_number"

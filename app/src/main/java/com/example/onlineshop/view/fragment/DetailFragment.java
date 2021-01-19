@@ -16,11 +16,12 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentDetailBinding;
 import com.example.onlineshop.model.Product;
-import com.example.onlineshop.viewmodel.DetailViewModel;
+import com.example.onlineshop.viewmodel.SharedDetailViewModel;
 
 public class DetailFragment extends Fragment {
     private FragmentDetailBinding mBinding;
-    private DetailViewModel mViewModel;
+    private SharedDetailViewModel mViewModel;
+    private Product mProduct;
 
     public static DetailFragment newInstance() {
         DetailFragment fragment = new DetailFragment();
@@ -33,7 +34,7 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(SharedDetailViewModel.class);
         setObserver();
     }
 
@@ -46,6 +47,17 @@ public class DetailFragment extends Fragment {
                 R.layout.fragment_detail,
                 container,
                 false);
+
+        mBinding.btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.addToCartClicked(view);
+                mBinding.setIsSold(true);
+                mViewModel.getProducts().add(mProduct);
+                mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
+            }
+        });
+
         return mBinding.getRoot();
     }
 
@@ -61,6 +73,7 @@ public class DetailFragment extends Fragment {
         mViewModel.getProductLiveData().observe(this, new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
+                mProduct = product;
                 initViews(product);
             }
         });

@@ -40,6 +40,12 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mProducts = products;
     }
 
+    public ProductAdapter(Context context, int viewType, List<Product> products) {
+        mContext = context;
+        mViewType = viewType;
+        mProducts = products;
+    }
+
     public List<Product> getProducts() {
         return mProducts;
     }

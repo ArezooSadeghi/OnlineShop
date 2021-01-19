@@ -1,19 +1,26 @@
 package com.example.onlineshop.viewmodel;
 
 import android.app.Application;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.repository.ProductRepository;
 
-public class DetailViewModel extends AndroidViewModel {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SharedDetailViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<Product> mProductLiveData;
+    private List<Product> mProducts = new ArrayList<>();
+    private MutableLiveData<List<Product>> mProductListMutableLiveData = new MutableLiveData<>();
 
-    public DetailViewModel(@NonNull Application application) {
+    public SharedDetailViewModel(@NonNull Application application) {
         super(application);
 
         mRepository = ProductRepository.getInstance(getApplication());
@@ -26,5 +33,17 @@ public class DetailViewModel extends AndroidViewModel {
 
     public void retrieveProduct(int id) {
         mRepository.retrieveProduct(id);
+    }
+
+    public void addToCartClicked(View view) {
+        view.setVisibility(View.GONE);
+    }
+
+    public List<Product> getProducts() {
+        return mProducts;
+    }
+
+    public MutableLiveData<List<Product>> getProductListMutableLiveData() {
+        return mProductListMutableLiveData;
     }
 }
