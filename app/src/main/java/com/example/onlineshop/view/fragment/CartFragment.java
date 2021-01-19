@@ -17,13 +17,13 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ProductAdapter;
 import com.example.onlineshop.databinding.FragmentCartBinding;
 import com.example.onlineshop.model.Product;
-import com.example.onlineshop.viewmodel.SharedDetailViewModel;
+import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
 
 import java.util.List;
 
 public class CartFragment extends Fragment {
     private FragmentCartBinding mBinding;
-    private SharedDetailViewModel mViewModel;
+    private SingleSharedDetailViewModel mViewModel;
 
     public static CartFragment newInstance() {
         Bundle args = new Bundle();
@@ -36,20 +36,8 @@ public class CartFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(requireActivity()).get(SharedDetailViewModel.class);
-        mViewModel.getProductListMutableLiveData().observe(this, new Observer<List<Product>>() {
-            @Override
-            public void onChanged(List<Product> products) {
-                setupAdapter(products);
-            }
-        });
-
-        mViewModel.getPriceMutableLiveData().observe(this, new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> prices) {
-                calculateTotalPrice(prices);
-            }
-        });
+        mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
+        setObserver();
     }
 
     @Nullable
@@ -68,12 +56,62 @@ public class CartFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    private void setObserver() {
+        mViewModel.getProductListMutableLiveData().observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                setupAdapter(products);
+            }
+        });
+
+        mViewModel.getPriceMutableLiveData().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> prices) {
+                calculateTotalPrice(prices);
+            }
+        });
+
+        mViewModel.getAddClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isAddClicked) {
+                if (isAddClicked) {
+                    mViewModel.getPrices().add(mViewModel.getProductMutableLiveData().getValue().getPrice());
+                    mViewModel.getPriceMutableLiveData().setValue(mViewModel.getPrices());
+                }
+            }
+        });
+
+        mViewModel.getDeleteClickedSingleLiveEvent().
+
+                observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean isDeleteClicked) {
+                        if (isDeleteClicked) {
+                            mViewModel.getPrices().remove(mViewModel.getProductMutableLiveData().getValue().getPrice());
+                            mViewModel.getPriceMutableLiveData().setValue(mViewModel.getPrices());
+                            mViewModel.getProducts().remove(mViewModel.getProductMutableLiveData().getValue());
+                            mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
+                        }
+                    }
+                });
+
+        mViewModel.getRemoveClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isRemoveClicked) {
+                if (isRemoveClicked) {
+                    mViewModel.getPrices().remove(mViewModel.getProductMutableLiveData().getValue().getPrice());
+                    mViewModel.getPriceMutableLiveData().setValue(mViewModel.getPrices());
+                }
+            }
+        });
+    }
+
     private void initRecyclerView() {
         mBinding.recyclerViewCart.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void setupAdapter(List<Product> products) {
-        ProductAdapter productAdapter = new ProductAdapter(getContext(), 2, products);
+        ProductAdapter productAdapter = new ProductAdapter(getContext(), mViewModel, 2, products);
         mBinding.recyclerViewCart.setAdapter(productAdapter);
     }
 

@@ -16,11 +16,11 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentDetailBinding;
 import com.example.onlineshop.model.Product;
-import com.example.onlineshop.viewmodel.SharedDetailViewModel;
+import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
 
 public class DetailFragment extends Fragment {
     private FragmentDetailBinding mBinding;
-    private SharedDetailViewModel mViewModel;
+    private SingleSharedDetailViewModel mViewModel;
     private Product mProduct;
 
     public static DetailFragment newInstance() {
@@ -34,7 +34,7 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(requireActivity()).get(SharedDetailViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
         setObserver();
     }
 
@@ -72,7 +72,7 @@ public class DetailFragment extends Fragment {
     }
 
     private void setObserver() {
-        mViewModel.getProductLiveData().observe(this, new Observer<Product>() {
+        mViewModel.getRetrieveProductLiveData().observe(this, new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
                 mProduct = product;

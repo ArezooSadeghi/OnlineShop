@@ -10,27 +10,32 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.repository.ProductRepository;
+import com.example.onlineshop.singleliveevent.SingleLiveEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SharedDetailViewModel extends AndroidViewModel {
+public class SingleSharedDetailViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
-    private LiveData<Product> mProductLiveData;
+    private LiveData<Product> mRetrieveProductLiveData;
     private List<Product> mProducts = new ArrayList<>();
     private List<String> mPrices = new ArrayList<>();
     private MutableLiveData<List<String>> mPriceMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mProductListMutableLiveData = new MutableLiveData<>();
+    private SingleLiveEvent<Boolean> mAddClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mDeleteClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mRemoveClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
 
-    public SharedDetailViewModel(@NonNull Application application) {
+    public SingleSharedDetailViewModel(@NonNull Application application) {
         super(application);
 
         mRepository = ProductRepository.getInstance(getApplication());
-        mProductLiveData = mRepository.getProductMutableLiveData();
+        mRetrieveProductLiveData = mRepository.getProductMutableLiveData();
     }
 
-    public LiveData<Product> getProductLiveData() {
-        return mProductLiveData;
+    public LiveData<Product> getRetrieveProductLiveData() {
+        return mRetrieveProductLiveData;
     }
 
     public void retrieveProduct(int id) {
@@ -55,5 +60,21 @@ public class SharedDetailViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<String>> getPriceMutableLiveData() {
         return mPriceMutableLiveData;
+    }
+
+    public MutableLiveData<Product> getProductMutableLiveData() {
+        return mProductMutableLiveData;
+    }
+
+    public SingleLiveEvent<Boolean> getAddClickedSingleLiveEvent() {
+        return mAddClickedSingleLiveEvent;
+    }
+
+    public SingleLiveEvent<Boolean> getDeleteClickedSingleLiveEvent() {
+        return mDeleteClickedSingleLiveEvent;
+    }
+
+    public SingleLiveEvent<Boolean> getRemoveClickedSingleLiveEvent() {
+        return mRemoveClickedSingleLiveEvent;
     }
 }
