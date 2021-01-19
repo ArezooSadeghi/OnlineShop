@@ -55,6 +55,8 @@ public class DetailFragment extends Fragment {
                 mBinding.setIsSold(true);
                 mViewModel.getProducts().add(mProduct);
                 mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
+                mViewModel.getPrices().add(mProduct.getPrice());
+                mViewModel.getPriceMutableLiveData().setValue(mViewModel.getPrices());
             }
         });
 

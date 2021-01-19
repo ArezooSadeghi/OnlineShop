@@ -43,6 +43,13 @@ public class CartFragment extends Fragment {
                 setupAdapter(products);
             }
         });
+
+        mViewModel.getPriceMutableLiveData().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> prices) {
+                calculateTotalPrice(prices);
+            }
+        });
     }
 
     @Nullable
@@ -68,5 +75,13 @@ public class CartFragment extends Fragment {
     private void setupAdapter(List<Product> products) {
         ProductAdapter productAdapter = new ProductAdapter(getContext(), 2, products);
         mBinding.recyclerViewCart.setAdapter(productAdapter);
+    }
+
+    private void calculateTotalPrice(List<String> prices) {
+        Double totalPrice = 0.0;
+        for (String price : prices) {
+            totalPrice += Double.parseDouble(price);
+        }
+        mBinding.setTotalPrice(String.valueOf(totalPrice));
     }
 }

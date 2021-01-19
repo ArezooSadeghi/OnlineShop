@@ -18,6 +18,8 @@ public class SharedDetailViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<Product> mProductLiveData;
     private List<Product> mProducts = new ArrayList<>();
+    private List<String> mPrices = new ArrayList<>();
+    private MutableLiveData<List<String>> mPriceMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mProductListMutableLiveData = new MutableLiveData<>();
 
     public SharedDetailViewModel(@NonNull Application application) {
@@ -43,7 +45,15 @@ public class SharedDetailViewModel extends AndroidViewModel {
         return mProducts;
     }
 
+    public List<String> getPrices() {
+        return mPrices;
+    }
+
     public MutableLiveData<List<Product>> getProductListMutableLiveData() {
         return mProductListMutableLiveData;
+    }
+
+    public MutableLiveData<List<String>> getPriceMutableLiveData() {
+        return mPriceMutableLiveData;
     }
 }
