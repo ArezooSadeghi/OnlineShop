@@ -98,6 +98,13 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (holder instanceof CartProductHolder) {
             ((CartProductHolder) holder).bindProduct(product);
+            ((CartProductHolder) holder).mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mSingleSharedDetailViewModel.getProductMutableLiveData().setValue(product);
+                    mSingleSharedDetailViewModel.getItemClickedMutableLiveData().setValue(true);
+                }
+            });
             ((CartProductHolder) holder).mBinding.btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

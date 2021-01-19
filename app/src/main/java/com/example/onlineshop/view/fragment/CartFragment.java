@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.onlineshop.R;
@@ -57,6 +58,18 @@ public class CartFragment extends Fragment {
     }
 
     private void setObserver() {
+        mViewModel.getItemClickedMutableLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isItemClicked) {
+                if (isItemClicked) {
+                    CartFragmentDirections.ActionNavigationCartToDetailFragment action =
+                            CartFragmentDirections.actionNavigationCartToDetailFragment();
+                    action.setId(mViewModel.getProductMutableLiveData().getValue().getId());
+                    NavHostFragment.findNavController(CartFragment.this).navigate(action);
+                }
+            }
+        });
+
         mViewModel.getProductListMutableLiveData().observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {

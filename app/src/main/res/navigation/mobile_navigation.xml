@@ -33,7 +33,13 @@
         android:id="@+id/navigation_cart"
         android:name="com.example.onlineshop.view.fragment.CartFragment"
         android:label="@string/title_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart">
+
+        <action
+            android:id="@+id/action_navigation_cart_to_detailFragment"
+            app:destination="@id/detailFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/detailFragment"

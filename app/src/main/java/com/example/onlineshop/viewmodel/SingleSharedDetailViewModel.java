@@ -25,6 +25,7 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
     private SingleLiveEvent<Boolean> mAddClickedSingleLiveEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<Boolean> mDeleteClickedSingleLiveEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<Boolean> mRemoveClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private MutableLiveData<Boolean> mItemClickedMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
 
     public SingleSharedDetailViewModel(@NonNull Application application) {
@@ -76,5 +77,9 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
 
     public SingleLiveEvent<Boolean> getRemoveClickedSingleLiveEvent() {
         return mRemoveClickedSingleLiveEvent;
+    }
+
+    public MutableLiveData<Boolean> getItemClickedMutableLiveData() {
+        return mItemClickedMutableLiveData;
     }
 }
