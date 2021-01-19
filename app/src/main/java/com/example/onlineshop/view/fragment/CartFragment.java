@@ -23,8 +23,10 @@ import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
 import java.util.List;
 
 public class CartFragment extends Fragment {
+
     private FragmentCartBinding mBinding;
     private SingleSharedDetailViewModel mViewModel;
+    private static final String TAG = "AlertDialogFragment";
 
     public static CartFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,6 +55,14 @@ public class CartFragment extends Fragment {
                 false);
 
         initRecyclerView();
+        mBinding.btnContinueBuying.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialogFragment fragment = AlertDialogFragment.newInstance(
+                        mViewModel.getTotalAmountPaidMutableLiveData().getValue());
+                fragment.show(getParentFragmentManager(), TAG);
+            }
+        });
 
         return mBinding.getRoot();
     }
@@ -133,6 +143,7 @@ public class CartFragment extends Fragment {
         for (String price : prices) {
             totalPrice += Double.parseDouble(price);
         }
+        mViewModel.getTotalAmountPaidMutableLiveData().setValue(String.valueOf(totalPrice));
         mBinding.setTotalPrice(String.valueOf(totalPrice));
     }
 }

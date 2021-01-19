@@ -14,6 +14,9 @@
     <string name="available_in_stock">موجود در انبار</string>
     <string name="not_available_in_stock">در انبار موجود نیست</string>
     <string name="ziro">0</string>
+    <string name="total_amount_paid">جمع مبلغ پرداختی :</string>
+    <string name="final_confirmation">تایید نهایی سبد خرید</string>
+    <string name="discount_code">کد تخفیف</string>
     <string name="currency">تومان</string>
     <string name="total">مجموع</string>
     <string name="continue_the_buying_process">ادامه فرایند خرید</string>

@@ -27,6 +27,7 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
     private SingleLiveEvent<Boolean> mRemoveClickedSingleLiveEvent = new SingleLiveEvent<>();
     private MutableLiveData<Boolean> mItemClickedMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> mTotalAmountPaidMutableLiveData = new MutableLiveData<>();
 
     public SingleSharedDetailViewModel(@NonNull Application application) {
         super(application);
@@ -81,5 +82,9 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
 
     public MutableLiveData<Boolean> getItemClickedMutableLiveData() {
         return mItemClickedMutableLiveData;
+    }
+
+    public MutableLiveData<String> getTotalAmountPaidMutableLiveData() {
+        return mTotalAmountPaidMutableLiveData;
     }
 }
