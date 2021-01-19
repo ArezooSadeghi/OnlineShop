@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ProductAdapter;
@@ -20,11 +21,16 @@ import com.example.onlineshop.databinding.FragmentProductOfEachCategoryBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.viewmodel.SingleProductOfEachCategoryViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductOfEachCategoryFragment extends Fragment {
     private FragmentProductOfEachCategoryBinding mBinding;
     private SingleProductOfEachCategoryViewModel mViewModel;
+    private int mCurrentPage = 1;
+    private int mId;
+    private ProductAdapter mProductAdapter;
+    private List<Product> mProducts = new ArrayList<>();
 
 
     public static ProductOfEachCategoryFragment newInstance() {
@@ -55,6 +61,18 @@ public class ProductOfEachCategoryFragment extends Fragment {
 
         initRecyclerView();
 
+        mBinding.recyclerViewProductOfEachCategory.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (!mBinding.recyclerViewProductOfEachCategory.canScrollVertically(1)) {
+                    if (mCurrentPage <= mViewModel.getTotalPageLiveData().getValue()) {
+                        mViewModel.getProductByCategory(mId, mCurrentPage);
+                        mCurrentPage++;
+                    }
+                }
+            }
+        });
+
         return mBinding.getRoot();
     }
 
@@ -62,15 +80,20 @@ public class ProductOfEachCategoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ProductOfEachCategoryFragmentArgs args = ProductOfEachCategoryFragmentArgs.fromBundle(getArguments());
-        int id = args.getId();
-        mViewModel.getProductByCategory(id);
+        mId = args.getId();
+        setupAdapter(mProducts);
+        mViewModel.getProductByCategory(mId, mCurrentPage);
+        mCurrentPage++;
     }
 
     private void setObserver() {
         mViewModel.getProductByCategoryLiveData().observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
-                setupAdapter(products);
+                int positionStart = mProducts.size();
+                mProducts.addAll(products);
+                int itemCount = mProducts.size();
+                mProductAdapter.notifyItemRangeInserted(positionStart, itemCount);
             }
         });
 
@@ -97,7 +120,7 @@ public class ProductOfEachCategoryFragment extends Fragment {
     }
 
     private void setupAdapter(List<Product> products) {
-        ProductAdapter productAdapter = new ProductAdapter(getContext(), mViewModel, 3, products);
-        mBinding.recyclerViewProductOfEachCategory.setAdapter(productAdapter);
+        mProductAdapter = new ProductAdapter(getContext(), mViewModel, 3, products);
+        mBinding.recyclerViewProductOfEachCategory.setAdapter(mProductAdapter);
     }
 }

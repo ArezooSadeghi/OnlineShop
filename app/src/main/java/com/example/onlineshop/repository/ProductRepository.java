@@ -32,6 +32,7 @@ public class ProductRepository {
     private MutableLiveData<List<Product>> mSpecialProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mProductByCategoryMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> mTotalPageMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
@@ -87,6 +88,10 @@ public class ProductRepository {
 
     public MutableLiveData<List<Product>> getProductByCategoryMutableLiveData() {
         return mProductByCategoryMutableLiveData;
+    }
+
+    public MutableLiveData<Integer> getTotalPageMutableLiveData() {
+        return mTotalPageMutableLiveData;
     }
 
     public void getTotalProduct() {
@@ -179,11 +184,12 @@ public class ProductRepository {
         });
     }
 
-    public void getProductByCategory(int categoryId) {
-        mProductListService.getProductByCategory(categoryId).enqueue(new Callback<List<Product>>() {
+    public void getProductByCategory(int categoryId, int page) {
+        mProductListService.getProductByCategory(categoryId, page).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mProductByCategoryMutableLiveData.setValue(response.body());
+                mTotalPageMutableLiveData.setValue(Integer.valueOf(response.headers().values("x-wp-totalpages").get(0)));
             }
 
             @Override

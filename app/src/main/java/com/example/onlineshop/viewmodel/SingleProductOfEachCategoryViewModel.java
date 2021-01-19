@@ -18,12 +18,14 @@ public class SingleProductOfEachCategoryViewModel extends AndroidViewModel {
     private LiveData<List<Product>> mProductByCategoryLiveData;
     private SingleLiveEvent<Boolean> mItemClickedSingleLiveEvent = new SingleLiveEvent<>();
     private MutableLiveData<Integer> mProductIdMutableLiveData = new MutableLiveData<>();
+    private LiveData<Integer> mTotalPageLiveData;
 
     public SingleProductOfEachCategoryViewModel(@NonNull Application application) {
         super(application);
 
         mRepository = ProductRepository.getInstance(getApplication());
         mProductByCategoryLiveData = mRepository.getProductByCategoryMutableLiveData();
+        mTotalPageLiveData = mRepository.getTotalPageMutableLiveData();
     }
 
     public LiveData<List<Product>> getProductByCategoryLiveData() {
@@ -38,7 +40,11 @@ public class SingleProductOfEachCategoryViewModel extends AndroidViewModel {
         return mProductIdMutableLiveData;
     }
 
-    public void getProductByCategory(int categoryId) {
-        mRepository.getProductByCategory(categoryId);
+    public LiveData<Integer> getTotalPageLiveData() {
+        return mTotalPageLiveData;
+    }
+
+    public void getProductByCategory(int categoryId, int page) {
+        mRepository.getProductByCategory(categoryId, page);
     }
 }
