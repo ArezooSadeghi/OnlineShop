@@ -15,24 +15,27 @@ import com.example.onlineshop.databinding.HomeProductAdapterItemBinding;
 import com.example.onlineshop.databinding.ProductOfEachCategoryAdapterItemBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.viewmodel.SingleHomeViewModel;
+import com.example.onlineshop.viewmodel.SingleProductOfEachCategoryViewModel;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
-    private SingleHomeViewModel mViewModel;
+    private SingleHomeViewModel mHomeViewModel;
+    private SingleProductOfEachCategoryViewModel mProductOfEachCategoryViewModel;
     private int mViewType;
     private List<Product> mProducts;
 
-    public ProductAdapter(Context context, SingleHomeViewModel viewModel, int viewType, List<Product> products) {
+    public ProductAdapter(Context context, SingleHomeViewModel homeViewModel, int viewType, List<Product> products) {
         mContext = context;
-        mViewModel = viewModel;
+        mHomeViewModel = homeViewModel;
         mViewType = viewType;
         mProducts = products;
     }
 
-    public ProductAdapter(Context context, int viewType, List<Product> products) {
+    public ProductAdapter(Context context, SingleProductOfEachCategoryViewModel singleProductOfEachCategoryViewModel, int viewType, List<Product> products) {
         mContext = context;
+        mProductOfEachCategoryViewModel = singleProductOfEachCategoryViewModel;
         mViewType = viewType;
         mProducts = products;
     }
@@ -77,8 +80,8 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((HomeProductHolder) holder).mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mViewModel.getItemClickedSingleLiveEvent().setValue(true);
-                    mViewModel.getProductIdLiveData().setValue(product.getId());
+                    mHomeViewModel.getItemClickedSingleLiveEvent().setValue(true);
+                    mHomeViewModel.getProductIdLiveData().setValue(product.getId());
                 }
             });
         }
@@ -89,6 +92,13 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (holder instanceof ProductOfEachCategoryHolder) {
             ((ProductOfEachCategoryHolder) holder).bindProduct(product);
+            ((ProductOfEachCategoryHolder) holder).mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mProductOfEachCategoryViewModel.getItemClickedSingleLiveEvent().setValue(true);
+                    mProductOfEachCategoryViewModel.getProductIdMutableLiveData().setValue(product.getId());
+                }
+            });
         }
     }
 
