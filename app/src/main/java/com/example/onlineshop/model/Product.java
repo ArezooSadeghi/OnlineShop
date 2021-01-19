@@ -14,17 +14,17 @@ public class Product {
     private int mId;
     private String mName;
     private String mPrice;
-    private int mRatingCount;
+    private String mAverageRating;
     private String mDescription;
     private String mStockStatus;
     private List<String> mImageUrl;
 
-    public Product(int id, String name, String price, int ratingCount,
+    public Product(int id, String name, String price, String averageRating,
                    String description, String stockStatus, List<String> imageUrl) {
         mId = id;
         mName = name;
         mPrice = price;
-        mRatingCount = ratingCount;
+        mAverageRating = averageRating;
         mDescription = description;
         mStockStatus = stockStatus;
         mImageUrl = imageUrl;
@@ -54,12 +54,12 @@ public class Product {
         mPrice = price;
     }
 
-    public int getRatingCount() {
-        return mRatingCount;
+    public String getAverageRating() {
+        return mAverageRating;
     }
 
-    public void setRatingCount(int ratingCount) {
-        mRatingCount = ratingCount;
+    public void setAverageRating(String averageRating) {
+        mAverageRating = averageRating;
     }
 
     public String getDescription() {

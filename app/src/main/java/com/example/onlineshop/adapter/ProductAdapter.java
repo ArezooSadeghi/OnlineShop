@@ -57,6 +57,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     R.layout.product_of_each_category_adapter_item,
                     parent,
                     false));
+
         } else if (viewType == 2) {
             return new CartProductHolder(DataBindingUtil.inflate(
                     LayoutInflater.from(mContext),

@@ -27,7 +27,7 @@ public class ProductListDeserializer implements JsonDeserializer<List<Product>> 
             int id = productObject.get("id").getAsInt();
             String name = productObject.get("name").getAsString();
             String price = productObject.get("regular_price").getAsString();
-            int ratingCount = productObject.get("rating_count").getAsInt();
+            String averageRating = productObject.get("average_rating").getAsString();
             String description = Html.fromHtml(
                     productObject.get("description").getAsString()).toString();
             String stockStatus = productObject.get("stock_status").getAsString();
@@ -40,7 +40,7 @@ public class ProductListDeserializer implements JsonDeserializer<List<Product>> 
             }
 
             Product product = new Product(
-                    id, name, price, ratingCount, description, stockStatus, imageUrls);
+                    id, name, price, averageRating, description, stockStatus, imageUrls);
             products.add(product);
         }
         return products;

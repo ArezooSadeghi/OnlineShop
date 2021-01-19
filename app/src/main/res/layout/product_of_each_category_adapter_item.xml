@@ -20,36 +20,70 @@
             android:layout_width="100dp"
             android:layout_height="140dp"
             android:layout_alignParentRight="true"
-            android:layout_margin="16dp" />
+            android:layout_margin="32dp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/img_product"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="72dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginRight="20dp"
                 android:ellipsize="end"
                 android:lineSpacingMultiplier="1.5"
                 android:lines="2"
-                android:text="@{product.name}"
-                android:textColor="@color/on_surface" />
+                android:text="@{product.name}" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <RatingBar
+                    android:id="@+id/rating_bar_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:numStars="1"
+                    android:rating="@{Float.valueOf(product.averageRating)}"
+                    android:scaleX="0.4"
+                    android:scaleY="0.4"
+                    android:theme="@style/Theme.RatingBar" />
+
+                <TextView
+                    android:id="@+id/txt_stock_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right"
+                    android:text="@{product.stockStatus.equals(@string/in_stock) ? @string/available_in_stock : @string/not_available_in_stock}"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txt_product_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="16dp"
+                    android:layout_toRightOf="@+id/rating_bar_product"
+                    android:text="@{product.averageRating}" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/txt_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="32dp"
                 android:text="@{product.price + ` ` + @string/currency}"
-                android:textColor="@color/on_surface"
                 android:textSize="14sp" />
 
         </LinearLayout>

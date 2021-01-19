@@ -10,6 +10,9 @@
     <string name="special_product_title">محصولات ویژه</string>
     <string name="see_all">مشاهده همه</string>
     <string name="number">1</string>
+    <string name="in_stock">instock</string>
+    <string name="available_in_stock">موجود در انبار</string>
+    <string name="not_available_in_stock">در انبار موجود نیست</string>
     <string name="ziro">0</string>
     <string name="currency">تومان</string>
     <string name="total">مجموع</string>
