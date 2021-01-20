@@ -5,7 +5,9 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.onlineshop.database.CustomerDataBase;
 import com.example.onlineshop.model.Category;
+import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.remote.retrofit.CategoryListDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductDeserializer;
@@ -24,6 +26,7 @@ public class ProductRepository {
     private Context mContext;
     private ProductService mProductListService, mProductService, mCategoryService;
     private static ProductRepository sInstance;
+    private CustomerDataBase mDataBase;
 
     private MutableLiveData<Integer> mTotalProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mBestProductMutableLiveData = new MutableLiveData<>();
@@ -33,6 +36,7 @@ public class ProductRepository {
     private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mProductByCategoryMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mTotalPageMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> mStatusCodePostCustomerMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
@@ -53,6 +57,7 @@ public class ProductRepository {
                 new CategoryListDeserializer()).create(ProductService.class);
 
         mContext = context;
+        mDataBase = CustomerDataBase.getInstance(mContext.getApplicationContext());
     }
 
     public static ProductRepository getInstance(Context context) {
@@ -92,6 +97,14 @@ public class ProductRepository {
 
     public MutableLiveData<Integer> getTotalPageMutableLiveData() {
         return mTotalPageMutableLiveData;
+    }
+
+    public MutableLiveData<Integer> getStatusCodePostCustomerMutableLiveData() {
+        return mStatusCodePostCustomerMutableLiveData;
+    }
+
+    public void insert(Customer customer) {
+        mDataBase.getCustomerDao().insert(customer);
     }
 
     public void getTotalProduct() {
@@ -194,6 +207,20 @@ public class ProductRepository {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
+    public void postCustomer(String email) {
+        mProductListService.postCustomer(email).enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                mStatusCodePostCustomerMutableLiveData.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(Call<Customer> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
             }
         });

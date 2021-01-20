@@ -4,8 +4,11 @@
     <string name="title_category">دسته بندی ها</string>
     <string name="title_cart">سبد خرید</string>
     <string name="best_product_title">بهترین محصولات</string>
+    <string name="successful_register">ثبت نام شما با موفقیت انجام شد</string>
+    <string name="account_exist">یک حساب با آدرس ایمیل شما قبلا ثبت شده است</string>
     <string name="latest_product_title">جدیدترین محصولات</string>
     <string name="wrong_discount_code">کد تخفیف نادرست می باشد</string>
+    <string name="enter_email">لطفا پست الکترونیک خود را وارد کنید</string>
     <string name="title_search">جستجو</string>
     <string name="login_description">برای ورود پست الکترونیک خود را وارد نمایید</string>
     <string name="empty_discount_code">لطفا کد تخفیف خود را وارد کنید</string>

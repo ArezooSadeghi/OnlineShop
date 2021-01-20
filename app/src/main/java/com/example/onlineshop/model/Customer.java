@@ -17,8 +17,7 @@ public class Customer {
     @ColumnInfo(name = "email")
     private String mEmail;
 
-    public Customer(int id, String email) {
-        mId = id;
+    public Customer(String email) {
         mEmail = email;
     }
 
