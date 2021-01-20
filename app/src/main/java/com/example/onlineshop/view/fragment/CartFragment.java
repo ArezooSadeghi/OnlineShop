@@ -18,6 +18,7 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ProductAdapter;
 import com.example.onlineshop.databinding.FragmentCartBinding;
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
 
 import java.util.List;
@@ -132,7 +133,15 @@ public class CartFragment extends Fragment {
             @Override
             public void onChanged(Boolean isOkClicked) {
                 if (isOkClicked) {
-                    NavHostFragment.findNavController(CartFragment.this).navigate(R.id.action_navigation_cart_to_loginFragment);
+                    if (Preferences.getIsLogin(getContext())) {
+                        CartFragmentDirections.ActionNavigationCartToAddressFragment action =
+                                CartFragmentDirections.actionNavigationCartToAddressFragment();
+                        action.setEmail(Preferences.getEmail(getContext()));
+                        NavHostFragment.findNavController(CartFragment.this).navigate(action);
+                    } else {
+                        NavHostFragment.findNavController(CartFragment.this)
+                                .navigate(R.id.action_navigation_cart_to_loginFragment);
+                    }
                 }
             }
         });

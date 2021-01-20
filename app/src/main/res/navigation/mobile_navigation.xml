@@ -43,6 +43,10 @@
             android:id="@+id/action_navigation_cart_to_loginFragment"
             app:destination="@id/loginFragment" />
 
+        <action
+            android:id="@+id/action_navigation_cart_to_addressFragment"
+            app:destination="@id/addressFragment" />
+
     </fragment>
 
     <fragment
@@ -101,12 +105,12 @@
         android:id="@+id/addressFragment"
         android:name="com.example.onlineshop.view.fragment.AddressFragment"
         android:label="fragment_address"
-        tools:layout="@layout/fragment_address" >
+        tools:layout="@layout/fragment_address">
 
         <argument
             android:name="email"
-            app:argType="string"
-            android:defaultValue="null" />
+            android:defaultValue="null"
+            app:argType="string" />
 
     </fragment>
 

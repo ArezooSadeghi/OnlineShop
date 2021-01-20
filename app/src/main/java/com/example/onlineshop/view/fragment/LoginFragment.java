@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentLoginBinding;
+import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.LoginViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -72,6 +73,8 @@ public class LoginFragment extends Fragment {
                             mBinding.txtEmail.getText().toString(),
                             mViewModel.getCustomers());
                     if (isValidCustomer) {
+                        Preferences.setIsLogin(getContext(), true);
+                        Preferences.setEmail(getContext(), mBinding.txtEmail.getText().toString());
                         LoginFragmentDirections.ActionLoginFragmentToAddressFragment action =
                                 LoginFragmentDirections.actionLoginFragmentToAddressFragment();
                         action.setEmail(mBinding.txtEmail.getText().toString());
