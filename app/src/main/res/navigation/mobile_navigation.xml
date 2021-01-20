@@ -71,4 +71,9 @@
 
     </fragment>
 
+    <dialog
+        android:id="@+id/alertDialogFragment"
+        android:name="com.example.onlineshop.view.fragment.AlertDialogFragment"
+        android:label="AlertDialogFragment" />
+
 </navigation>
