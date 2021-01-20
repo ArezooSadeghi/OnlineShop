@@ -13,6 +13,7 @@
     <string name="title_search">جستجو</string>
     <string name="final_registration_order">ثبت نهایی سفارش</string>
     <string name="successful_final_registration_order">سفارش شما با موفقیت ثبت شد</string>
+    <string name="failed_final_registration_order">متاسفانه ثبت سفارش شما موفقیت آمیز نبود</string>
     <string name="login_description">برای ورود پست الکترونیک خود را وارد نمایید</string>
     <string name="empty_discount_code">لطفا کد تخفیف خود را وارد کنید</string>
     <string name="most_visited_product_title">پربازدیدترین محصولات</string>
