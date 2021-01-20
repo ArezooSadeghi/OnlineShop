@@ -127,6 +127,15 @@ public class CartFragment extends Fragment {
                 }
             }
         });
+
+        mViewModel.getOkClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isOkClicked) {
+                if (isOkClicked) {
+                    NavHostFragment.findNavController(CartFragment.this).navigate(R.id.action_navigation_cart_to_loginFragment);
+                }
+            }
+        });
     }
 
     private void initRecyclerView() {

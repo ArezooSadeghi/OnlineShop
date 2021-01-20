@@ -39,6 +39,10 @@
             android:id="@+id/action_navigation_cart_to_detailFragment"
             app:destination="@id/detailFragment" />
 
+        <action
+            android:id="@+id/action_navigation_cart_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
     </fragment>
 
     <fragment
@@ -71,9 +75,10 @@
 
     </fragment>
 
-    <dialog
-        android:id="@+id/alertDialogFragment"
-        android:name="com.example.onlineshop.view.fragment.AlertDialogFragment"
-        android:label="AlertDialogFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.onlineshop.view.fragment.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 
 </navigation>

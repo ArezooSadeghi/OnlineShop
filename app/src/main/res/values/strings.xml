@@ -7,10 +7,14 @@
     <string name="latest_product_title">جدیدترین محصولات</string>
     <string name="wrong_discount_code">کد تخفیف نادرست می باشد</string>
     <string name="title_search">جستجو</string>
+    <string name="login_description">برای ورود پست الکترونیک خود را وارد نمایید</string>
     <string name="empty_discount_code">لطفا کد تخفیف خود را وارد کنید</string>
     <string name="most_visited_product_title">پربازدیدترین محصولات</string>
     <string name="special_product_title">محصولات ویژه</string>
     <string name="see_all">مشاهده همه</string>
+    <string name="login">ورود</string>
+    <string name="register">ثبت نام</string>
+    <string name="email_hint">پست الکترونیک</string>
     <string name="amount_paid_with_discount">جمع مبلغ پرداختی با احتساب 10 درصد تخفیف:</string>
     <string name="number">1</string>
     <string name="in_stock">instock</string>
@@ -28,4 +32,13 @@
     <string name="text_sale">در سبد شما</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
