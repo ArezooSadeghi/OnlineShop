@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.onlineshop.database.CustomerDataBase;
 import com.example.onlineshop.model.Category;
 import com.example.onlineshop.model.Customer;
+import com.example.onlineshop.model.Order;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.remote.retrofit.CategoryListDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductDeserializer;
@@ -37,6 +38,7 @@ public class ProductRepository {
     private MutableLiveData<List<Product>> mProductByCategoryMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mTotalPageMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mStatusCodePostCustomerMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> mStatusCodePostOrderMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
@@ -103,8 +105,16 @@ public class ProductRepository {
         return mStatusCodePostCustomerMutableLiveData;
     }
 
+    public MutableLiveData<Integer> getStatusCodePostOrderMutableLiveData() {
+        return mStatusCodePostOrderMutableLiveData;
+    }
+
     public void insert(Customer customer) {
         mDataBase.getCustomerDao().insert(customer);
+    }
+
+    public List<Customer> getCustomers() {
+        return mDataBase.getCustomerDao().getCustomers();
     }
 
     public void getTotalProduct() {
@@ -221,6 +231,20 @@ public class ProductRepository {
 
             @Override
             public void onFailure(Call<Customer> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
+    public void postOrder(String email) {
+        mProductListService.postOrder(email).enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                mStatusCodePostOrderMutableLiveData.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
             }
         });

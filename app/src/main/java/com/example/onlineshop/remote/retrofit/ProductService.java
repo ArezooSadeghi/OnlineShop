@@ -2,6 +2,7 @@ package com.example.onlineshop.remote.retrofit;
 
 import com.example.onlineshop.model.Category;
 import com.example.onlineshop.model.Customer;
+import com.example.onlineshop.model.Order;
 import com.example.onlineshop.model.Product;
 
 import java.util.List;
@@ -52,4 +53,9 @@ public interface ProductService {
     @POST("customers?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
     Call<Customer> postCustomer(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("orders?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
+            "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
+    Call<Order> postOrder(@Field("email") String email);
 }

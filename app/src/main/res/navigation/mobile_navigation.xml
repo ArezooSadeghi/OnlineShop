@@ -85,6 +85,10 @@
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
 
+        <action
+            android:id="@+id/action_loginFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+
     </fragment>
 
     <fragment
@@ -92,5 +96,18 @@
         android:name="com.example.onlineshop.view.fragment.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" />
+
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.example.onlineshop.view.fragment.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" >
+
+        <argument
+            android:name="email"
+            app:argType="string"
+            android:defaultValue="null" />
+
+    </fragment>
 
 </navigation>

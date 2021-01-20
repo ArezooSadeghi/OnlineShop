@@ -12,4 +12,6 @@
     <color name="surface">#FFFBFA</color>
     <color name="on_surface">#442C2E</color>
     <color name="light_gray">#D3D3D3</color>
+    <color name="neon_fuchsia">#fc6c85</color>
+    <color name="melon">#fdbcb4</color>
 </resources>

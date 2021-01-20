@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
     public void onDestinationChanged(@NonNull NavController controller,
                                      @NonNull NavDestination destination,
                                      @Nullable Bundle arguments) {
-        if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.signupFragment) {
+        if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.signupFragment
+                || destination.getId() == R.id.addressFragment) {
             mBinding.navView.setVisibility(View.GONE);
         } else {
             mBinding.navView.setVisibility(View.VISIBLE);
