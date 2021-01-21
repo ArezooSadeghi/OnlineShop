@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +33,7 @@ public class DetailFragment extends Fragment {
     private SingleSharedDetailViewModel mViewModel;
     private ReviewAdapter mAdapter;
     private Product mProduct;
-    private Product mMyProduct;
+    private int mId;
 
     public static DetailFragment newInstance() {
         DetailFragment fragment = new DetailFragment();
@@ -48,9 +49,9 @@ public class DetailFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
         DetailFragmentArgs args = DetailFragmentArgs.fromBundle(getArguments());
-        int id = args.getId();
-        mViewModel.retrieveProduct(id);
-        mViewModel.getReviews(id);
+        mId = args.getId();
+        mViewModel.retrieveProduct(mId);
+        mViewModel.getReviews(mId);
         setObserver();
     }
 
@@ -66,9 +67,11 @@ public class DetailFragment extends Fragment {
 
         initToolbar();
         initRecyclerView();
+        setListener();
 
         return mBinding.getRoot();
     }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -118,6 +121,19 @@ public class DetailFragment extends Fragment {
                 RecyclerView.HORIZONTAL,
                 true));
     }
+
+    private void setListener() {
+        mBinding.btnAddReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DetailFragmentDirections.ActionDetailFragmentToReviewFragment action =
+                        DetailFragmentDirections.actionDetailFragmentToReviewFragment();
+                action.setId(mId);
+                NavHostFragment.findNavController(DetailFragment.this).navigate(action);
+            }
+        });
+    }
+
 
     private void initViews(Product product) {
         mBinding.setProduct(product);

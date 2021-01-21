@@ -63,4 +63,13 @@ public interface ProductService {
     @POST("orders?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
     Call<Order> postOrder(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("products/reviews?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
+            "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
+    Call<Review> postReview(@Field("product_id") int productId,
+                            @Field("review") String review,
+                            @Field("reviewer") String reviewer,
+                            @Field("reviewer_email") String reviewerEmail,
+                            @Field("rating") int rating);
 }

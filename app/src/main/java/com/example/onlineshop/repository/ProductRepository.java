@@ -42,6 +42,7 @@ public class ProductRepository {
     private MutableLiveData<Integer> mStatusCodePostCustomerMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mStatusCodePostOrderMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Review>> mReviewListMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> mStatusCodePostReviewMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
@@ -119,6 +120,10 @@ public class ProductRepository {
 
     public MutableLiveData<List<Review>> getReviewListMutableLiveData() {
         return mReviewListMutableLiveData;
+    }
+
+    public MutableLiveData<Integer> getStatusCodePostReviewMutableLiveData() {
+        return mStatusCodePostReviewMutableLiveData;
     }
 
     public void insert(Customer customer) {
@@ -275,4 +280,19 @@ public class ProductRepository {
             }
         });
     }
+
+    public void postReview(int productId, String content, String name, String email, int rating) {
+        mProductListService.postReview(productId, content, name, email, rating).enqueue(new Callback<Review>() {
+            @Override
+            public void onResponse(Call<Review> call, Response<Review> response) {
+                mStatusCodePostReviewMutableLiveData.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(Call<Review> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
 }
+

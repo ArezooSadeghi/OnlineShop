@@ -31,7 +31,7 @@
                 app:menu="@menu/detail_menu">
 
                 <Button
-                    android:id="@+id/btn_add_to_cart"
+                    android:id="@+id/btn_add_review"
                     style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

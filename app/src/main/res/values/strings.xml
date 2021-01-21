@@ -2,7 +2,11 @@
     <string name="app_name">OnlineShop</string>
     <string name="title_home">خانه</string>
     <string name="title_category">دسته بندی ها</string>
+    <string name="first_and_last_name_hint">نام و نام خانوادگی</string>
+    <string name="your_review_hint">دیدگاه</string>
+    <string name="score_hint">از یک تا پنج امتیاز دهید</string>
     <string name="title_cart">سبد خرید</string>
+    <string name="register_review">ثبت دیدگاه</string>
     <string name="title_account">حساب کاربری</string>
     <string name="best_product_title">بهترین محصولات</string>
     <string name="successful_register">ثبت نام شما با موفقیت انجام شد</string>
@@ -13,6 +17,8 @@
     <string name="enter_email">لطفا پست الکترونیک خود را وارد کنید</string>
     <string name="review">نقد و نظرات</string>
     <string name="address">آدرس ها</string>
+    <string name="successful_post_review">نظر شما با موفقیت ثبت شد</string>
+    <string name="failed_post_review">متاسفانه ثبت نظر شما موفقیت آمیز نبود</string>
     <string name="account_information">اطلاعات حساب کاربری</string>
     <string name="title_search">جستجو</string>
     <string name="title_add_to_cart">افزودن به سبد خرید</string>
@@ -25,6 +31,7 @@
     <string name="special_product_title">محصولات ویژه</string>
     <string name="see_all">مشاهده همه</string>
     <string name="login">ورود</string>
+    <string name="enter_request_information">لطفا اطلاعات خواسته شده را وارد کنید</string>
     <string name="register">ثبت نام</string>
     <string name="email_hint">پست الکترونیک</string>
     <string name="amount_paid_with_discount">جمع مبلغ پرداختی با احتساب 10 درصد تخفیف:</string>
