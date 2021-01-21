@@ -23,20 +23,21 @@
     <string name="register">ثبت نام</string>
     <string name="email_hint">پست الکترونیک</string>
     <string name="amount_paid_with_discount">جمع مبلغ پرداختی با احتساب 10 درصد تخفیف:</string>
-    <string name="number">1</string>
     <string name="in_stock">instock</string>
     <string name="available_in_stock">موجود در انبار</string>
     <string name="not_available_in_stock">در انبار موجود نیست</string>
     <string name="ziro">0</string>
+    <string name="number">1</string>
     <string name="total_amount_paid">جمع مبلغ پرداختی:</string>
     <string name="final_confirmation">تایید نهایی سبد خرید</string>
     <string name="discount_code">کد تخفیف</string>
     <string name="currency">تومان</string>
     <string name="total">مجموع</string>
+    <string name="see_review">مشاهده نظرات</string>
     <string name="continue_the_buying_process">ادامه فرایند خرید</string>
     <string name="specifications">مشخصات کلی</string>
     <string name="add_to_cart">افزودن به سبد خرید</string>
-    <string name="text_sale">در سبد شما</string>
+    <string name="text_sale">1 در سبد شما</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Strings related to login -->

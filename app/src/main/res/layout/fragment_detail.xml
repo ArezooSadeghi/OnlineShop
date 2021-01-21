@@ -12,7 +12,7 @@
         <variable
             name="isSold"
             type="Boolean" />
-        
+
         <import type="android.view.View" />
 
     </data>
@@ -24,34 +24,18 @@
         android:fillViewport="true"
         tools:context=".view.fragment.DetailFragment">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/secondary_shrine_pink">
-
-                <Button
-                    android:id="@+id/btn_add_to_cart"
-                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/add_to_cart"
-                    android:textColor="@color/on_surface"
-                    android:textSize="20sp"
-                    app:icon="@drawable/ic_add_to_cart" />
-
-            </com.google.android.material.appbar.AppBarLayout>
+            android:layout_height="match_parent">
 
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/img_product_slider"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:sliderAnimationDuration="1000"
                 app:sliderAutoCycleDirection="back_and_forth"
                 app:sliderAutoCycleEnabled="true"
@@ -68,67 +52,84 @@
                 app:sliderStartAutoCycle="true">
 
                 <ImageView
-                    android:id="@+id/img_product"
                     android:layout_width="wrap_content"
                     android:layout_height="150dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp" />
 
             </com.smarteist.autoimageslider.SliderView>
 
             <TextView
+                android:id="@+id/txt_specifications"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
                 android:text="@string/specifications"
                 android:textColor="@color/on_surface"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_product_slider" />
 
             <TextView
                 android:id="@+id/txt_product_description"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{product.description}"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:lineSpacingMultiplier="2"
                 android:maxLines="7"
-                android:textColor="@color/on_surface" />
+                android:text="@{product.description}"
+                android:textColor="@color/on_surface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_specifications" />
 
-            <RelativeLayout
-                android:id="@+id/show_detail_of_sale"
+            <Button
+                android:id="@+id/btn_see_review"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/see_review"
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_product_description" />
+
+            <Button
+                android:id="@+id/btn_sale"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/text_sale"
+                android:textColor="@color/on_surface"
+                android:textSize="14sp"
                 android:visibility="@{isSold ? View.VISIBLE : View.GONE, default=gone}"
-                android:layout_height="wrap_content">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <Button
-                    android:id="@+id/btn_number"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/custom_button"
-                    android:text="@string/number" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_add_to_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/add_to_cart"
+                android:text="@string/add_to_cart"
+                android:visibility="@{!isSold ? View.VISIBLE : View.GONE, default=visible}"
+                app:backgroundTint="@color/secondary_shrine_pink"
+                app:icon="@drawable/ic_add_to_cart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_toLeftOf="@id/btn_number"
-                    android:text="@string/text_sale"
-                    android:textColor="@color/on_surface"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 

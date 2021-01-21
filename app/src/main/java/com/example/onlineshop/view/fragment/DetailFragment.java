@@ -48,10 +48,9 @@ public class DetailFragment extends Fragment {
                 container,
                 false);
 
-        mBinding.btnAddToCart.setOnClickListener(new View.OnClickListener() {
+        mBinding.fabAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.addToCartClicked(view);
                 mBinding.setIsSold(true);
                 mViewModel.getProducts().add(mProduct);
                 mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());

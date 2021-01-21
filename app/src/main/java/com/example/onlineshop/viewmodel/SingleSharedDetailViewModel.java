@@ -1,7 +1,6 @@
 package com.example.onlineshop.viewmodel;
 
 import android.app.Application;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -43,10 +42,6 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
 
     public void retrieveProduct(int id) {
         mRepository.retrieveProduct(id);
-    }
-
-    public void addToCartClicked(View view) {
-        view.setVisibility(View.GONE);
     }
 
     public List<Product> getProducts() {
