@@ -2,11 +2,15 @@ package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -40,6 +44,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
         setObserver();
@@ -55,19 +60,9 @@ public class DetailFragment extends Fragment {
                 container,
                 false);
 
+        initToolbar();
         initRecyclerView();
 
-       /* mBinding.fabAddToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mBinding.setIsSold(true);
-                mViewModel.getProducts().add(mProduct);
-                mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
-                mViewModel.getPrices().add(mProduct.getPrice());
-                mViewModel.getPriceMutableLiveData().setValue(mViewModel.getPrices());
-            }
-        });
-*/
         return mBinding.getRoot();
     }
 
@@ -78,6 +73,26 @@ public class DetailFragment extends Fragment {
         int id = args.getId();
         mViewModel.retrieveProduct(id);
         mViewModel.getReviews(id);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.detail_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_add_to_cart:
+                mViewModel.getProducts().add(mProduct);
+                mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
+                mViewModel.getPrices().add(mProduct.getPrice());
+                mViewModel.getPriceMutableLiveData().setValue(mViewModel.getPrices());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setObserver() {
@@ -95,6 +110,11 @@ public class DetailFragment extends Fragment {
                 updateUI(reviews);
             }
         });
+    }
+
+    private void initToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.detailToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
     }
 
     private void initRecyclerView() {

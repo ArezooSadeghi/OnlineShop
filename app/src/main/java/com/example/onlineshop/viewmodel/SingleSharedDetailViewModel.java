@@ -30,7 +30,6 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
     private MutableLiveData<String> mTotalAmountPaidMutableLiveData = new MutableLiveData<>();
     private SingleLiveEvent<Boolean> mOkClickedSingleLiveEvent = new SingleLiveEvent<>();
     private LiveData<List<Review>> mReviewListLiveData;
-    private List<Review> mReviews = new ArrayList<>();
 
     public SingleSharedDetailViewModel(@NonNull Application application) {
         super(application);
@@ -94,14 +93,6 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
 
     public LiveData<List<Review>> getReviewListLiveData() {
         return mReviewListLiveData;
-    }
-
-    public List<Review> getReviews() {
-        return mReviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        mReviews = reviews;
     }
 
     public void getReviews(int id) {

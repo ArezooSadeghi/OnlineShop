@@ -23,6 +23,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/secondary_shrine_pink"
+                app:menu="@menu/detail_menu">
+
+                <Button
+                    android:id="@+id/btn_add_to_cart"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="@string/add_review"
+                    app:icon="@drawable/ic_add" />
+
+            </androidx.appcompat.widget.Toolbar>
+
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/img_product_slider"
                 android:layout_width="match_parent"

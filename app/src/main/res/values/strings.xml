@@ -11,6 +11,7 @@
     <string name="wrong_discount_code">کد تخفیف نادرست می باشد</string>
     <string name="enter_email">لطفا پست الکترونیک خود را وارد کنید</string>
     <string name="title_search">جستجو</string>
+    <string name="title_add_to_cart">افزودن به سبد خرید</string>
     <string name="final_registration_order">ثبت نهایی سفارش</string>
     <string name="successful_final_registration_order">سفارش شما با موفقیت ثبت شد</string>
     <string name="failed_final_registration_order">متاسفانه ثبت سفارش شما موفقیت آمیز نبود</string>
