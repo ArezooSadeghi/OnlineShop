@@ -4,6 +4,7 @@ import com.example.onlineshop.model.Category;
 import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.model.Order;
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.model.Review;
 
 import java.util.List;
 
@@ -48,6 +49,10 @@ public interface ProductService {
     @GET("products?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
     Call<List<Product>> getProductByCategory(@Query("category") int categoryId, @Query("page") int page);
+
+    @GET("products/reviews?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
+            "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
+    Call<List<Review>> getReviews(@Query("product") int id);
 
     @FormUrlEncoded
     @POST("customers?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +

@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.model.Review;
 import com.example.onlineshop.repository.ProductRepository;
 import com.example.onlineshop.singleliveevent.SingleLiveEvent;
 
@@ -28,12 +29,15 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
     private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> mTotalAmountPaidMutableLiveData = new MutableLiveData<>();
     private SingleLiveEvent<Boolean> mOkClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private LiveData<List<Review>> mReviewListLiveData;
+    private List<Review> mReviews = new ArrayList<>();
 
     public SingleSharedDetailViewModel(@NonNull Application application) {
         super(application);
 
         mRepository = ProductRepository.getInstance(getApplication());
         mRetrieveProductLiveData = mRepository.getProductMutableLiveData();
+        mReviewListLiveData = mRepository.getReviewListMutableLiveData();
     }
 
     public LiveData<Product> getRetrieveProductLiveData() {
@@ -86,5 +90,21 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
 
     public SingleLiveEvent<Boolean> getOkClickedSingleLiveEvent() {
         return mOkClickedSingleLiveEvent;
+    }
+
+    public LiveData<List<Review>> getReviewListLiveData() {
+        return mReviewListLiveData;
+    }
+
+    public List<Review> getReviews() {
+        return mReviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        mReviews = reviews;
+    }
+
+    public void getReviews(int id) {
+        mRepository.getReviews(id);
     }
 }

@@ -11,16 +11,23 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineshop.R;
+import com.example.onlineshop.adapter.ReviewAdapter;
 import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentDetailBinding;
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.model.Review;
 import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
+
+import java.util.List;
 
 public class DetailFragment extends Fragment {
     private FragmentDetailBinding mBinding;
     private SingleSharedDetailViewModel mViewModel;
+    private ReviewAdapter mAdapter;
     private Product mProduct;
 
     public static DetailFragment newInstance() {
@@ -48,7 +55,9 @@ public class DetailFragment extends Fragment {
                 container,
                 false);
 
-        mBinding.fabAddToCart.setOnClickListener(new View.OnClickListener() {
+        initRecyclerView();
+
+       /* mBinding.fabAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mBinding.setIsSold(true);
@@ -58,7 +67,7 @@ public class DetailFragment extends Fragment {
                 mViewModel.getPriceMutableLiveData().setValue(mViewModel.getPrices());
             }
         });
-
+*/
         return mBinding.getRoot();
     }
 
@@ -68,6 +77,7 @@ public class DetailFragment extends Fragment {
         DetailFragmentArgs args = DetailFragmentArgs.fromBundle(getArguments());
         int id = args.getId();
         mViewModel.retrieveProduct(id);
+        mViewModel.getReviews(id);
     }
 
     private void setObserver() {
@@ -78,11 +88,34 @@ public class DetailFragment extends Fragment {
                 initViews(product);
             }
         });
+
+        mViewModel.getReviewListLiveData().observe(this, new Observer<List<Review>>() {
+            @Override
+            public void onChanged(List<Review> reviews) {
+                updateUI(reviews);
+            }
+        });
+    }
+
+    private void initRecyclerView() {
+        mBinding.recyclerViewReview.setLayoutManager(new LinearLayoutManager(
+                getContext(),
+                RecyclerView.HORIZONTAL,
+                true));
     }
 
     private void initViews(Product product) {
         mBinding.setProduct(product);
         SliderAdapter sliderAdapter = new SliderAdapter(getContext(), product.getImageUrl());
         mBinding.imgProductSlider.setSliderAdapter(sliderAdapter);
+    }
+
+    private void updateUI(List<Review> reviews) {
+        if (mAdapter == null) {
+            mAdapter = new ReviewAdapter(getContext(), reviews);
+            mBinding.recyclerViewReview.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }

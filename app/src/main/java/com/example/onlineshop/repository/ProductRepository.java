@@ -10,11 +10,13 @@ import com.example.onlineshop.model.Category;
 import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.model.Order;
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.model.Review;
 import com.example.onlineshop.remote.retrofit.CategoryListDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductListDeserializer;
 import com.example.onlineshop.remote.retrofit.ProductService;
 import com.example.onlineshop.remote.retrofit.RetrofitInstance;
+import com.example.onlineshop.remote.retrofit.ReviewListDeserializer;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
@@ -25,7 +27,7 @@ import retrofit2.Response;
 
 public class ProductRepository {
     private Context mContext;
-    private ProductService mProductListService, mProductService, mCategoryService;
+    private ProductService mProductListService, mProductService, mCategoryService, mReviewService;
     private static ProductRepository sInstance;
     private CustomerDataBase mDataBase;
 
@@ -39,6 +41,7 @@ public class ProductRepository {
     private MutableLiveData<Integer> mTotalPageMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mStatusCodePostCustomerMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mStatusCodePostOrderMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Review>> mReviewListMutableLiveData = new MutableLiveData<>();
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
@@ -57,6 +60,11 @@ public class ProductRepository {
                 new TypeToken<List<Category>>() {
                 }.getType(),
                 new CategoryListDeserializer()).create(ProductService.class);
+
+        mReviewService = RetrofitInstance.getRetrofitInstance(
+                new TypeToken<List<Review>>() {
+                }.getType(),
+                new ReviewListDeserializer()).create(ProductService.class);
 
         mContext = context;
         mDataBase = CustomerDataBase.getInstance(mContext.getApplicationContext());
@@ -107,6 +115,10 @@ public class ProductRepository {
 
     public MutableLiveData<Integer> getStatusCodePostOrderMutableLiveData() {
         return mStatusCodePostOrderMutableLiveData;
+    }
+
+    public MutableLiveData<List<Review>> getReviewListMutableLiveData() {
+        return mReviewListMutableLiveData;
     }
 
     public void insert(Customer customer) {
@@ -245,6 +257,20 @@ public class ProductRepository {
 
             @Override
             public void onFailure(Call<Order> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
+    public void getReviews(int id) {
+        mReviewService.getReviews(id).enqueue(new Callback<List<Review>>() {
+            @Override
+            public void onResponse(Call<List<Review>> call, Response<List<Review>> response) {
+                mReviewListMutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Review>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
             }
         });
