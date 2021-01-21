@@ -50,6 +50,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.example.onlineshop.view.fragment.AccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_account" />
+
+    <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.onlineshop.view.fragment.DetailFragment"
         android:label="fragment_detail"

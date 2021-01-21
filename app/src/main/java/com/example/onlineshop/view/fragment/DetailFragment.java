@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -33,6 +32,7 @@ public class DetailFragment extends Fragment {
     private SingleSharedDetailViewModel mViewModel;
     private ReviewAdapter mAdapter;
     private Product mProduct;
+    private Product mMyProduct;
 
     public static DetailFragment newInstance() {
         DetailFragment fragment = new DetailFragment();
@@ -47,6 +47,10 @@ public class DetailFragment extends Fragment {
         setHasOptionsMenu(true);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
+        DetailFragmentArgs args = DetailFragmentArgs.fromBundle(getArguments());
+        int id = args.getId();
+        mViewModel.retrieveProduct(id);
+        mViewModel.getReviews(id);
         setObserver();
     }
 
@@ -64,15 +68,6 @@ public class DetailFragment extends Fragment {
         initRecyclerView();
 
         return mBinding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        DetailFragmentArgs args = DetailFragmentArgs.fromBundle(getArguments());
-        int id = args.getId();
-        mViewModel.retrieveProduct(id);
-        mViewModel.getReviews(id);
     }
 
     @Override
