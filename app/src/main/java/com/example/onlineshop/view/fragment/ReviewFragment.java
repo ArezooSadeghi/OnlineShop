@@ -13,9 +13,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentReviewBinding;
+import com.example.onlineshop.model.Review;
 import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.SharedReviewViewModel;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class ReviewFragment extends Fragment {
     private FragmentReviewBinding mBinding;
@@ -73,6 +76,9 @@ public class ReviewFragment extends Fragment {
         }
         if (statusCode == 201) {
             Toast.makeText(getContext(), R.string.successful_post_review, Toast.LENGTH_LONG).show();
+            List<Review> reviews = mViewModel.getReviews();
+            reviews.add(mViewModel.getReviewLiveData().getValue());
+            mViewModel.getReviewListMutableLiveData().setValue(reviews);
         }
     }
 

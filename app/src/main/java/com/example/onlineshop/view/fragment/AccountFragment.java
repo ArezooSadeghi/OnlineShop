@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentAccountBinding;
@@ -41,6 +42,20 @@ public class AccountFragment extends Fragment {
                 R.layout.fragment_account,
                 container,
                 false);
+
+        setListener();
+
         return mBinding.getRoot();
+    }
+
+    private void setListener() {
+        mBinding.btnReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment
+                        .findNavController(AccountFragment.this)
+                        .navigate(R.id.action_navigation_account_to_userReviewListFragment);
+            }
+        });
     }
 }

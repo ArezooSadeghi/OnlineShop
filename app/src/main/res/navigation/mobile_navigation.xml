@@ -53,7 +53,13 @@
         android:id="@+id/navigation_account"
         android:name="com.example.onlineshop.view.fragment.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account">
+
+        <action
+            android:id="@+id/action_navigation_account_to_userReviewListFragment"
+            app:destination="@id/userReviewListFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
@@ -136,5 +142,11 @@
             app:argType="integer" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/userReviewListFragment"
+        android:name="com.example.onlineshop.view.fragment.UserReviewListFragment"
+        android:label="fragment_user_review_list"
+        tools:layout="@layout/fragment_user_review_list" />
 
 </navigation>
