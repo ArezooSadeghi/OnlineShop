@@ -9,17 +9,20 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.Review;
 import com.example.onlineshop.repository.ProductRepository;
+import com.example.onlineshop.singleliveevent.SingleLiveEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SharedReviewViewModel extends AndroidViewModel {
+public class SingleSharedReviewViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private List<Review> mReviews = new ArrayList<>();
     private MutableLiveData<List<Review>> mReviewListMutableLiveData = new MutableLiveData<>();
     private LiveData<Review> mReviewLiveData;
+    private SingleLiveEvent<Boolean> mDeleteClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private MutableLiveData<Review> mReviewMutableLiveData = new MutableLiveData<>();
 
-    public SharedReviewViewModel(@NonNull Application application) {
+    public SingleSharedReviewViewModel(@NonNull Application application) {
         super(application);
         mRepository = ProductRepository.getInstance(getApplication());
         mReviewLiveData = mRepository.getReviewMutableLiveData();
@@ -43,6 +46,18 @@ public class SharedReviewViewModel extends AndroidViewModel {
 
     public void postReview(int productId, String content, String name, String email, int rating) {
         mRepository.postReview(productId, content, name, email, rating);
+    }
+
+    public SingleLiveEvent<Boolean> getDeleteClickedSingleLiveEvent() {
+        return mDeleteClickedSingleLiveEvent;
+    }
+
+    public MutableLiveData<Review> getReviewMutableLiveData() {
+        return mReviewMutableLiveData;
+    }
+
+    public void deleteReview(int id) {
+        mRepository.deleteReview(id);
     }
 
     public boolean isValidReview(Review myReview, List<Review> reviews) {

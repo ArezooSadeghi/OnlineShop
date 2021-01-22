@@ -2,6 +2,7 @@ package com.example.onlineshop.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,15 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.UserReviewListAdapterItemBinding;
 import com.example.onlineshop.model.Review;
+import com.example.onlineshop.viewmodel.SingleSharedReviewViewModel;
 
 import java.util.List;
 
 public class UserReviewListAdapter extends RecyclerView.Adapter<UserReviewListAdapter.UserReviewListHolder> {
     private Context mContext;
+    private SingleSharedReviewViewModel mViewModel;
     private List<Review> mReviews;
 
-    public UserReviewListAdapter(Context context, List<Review> reviews) {
+    public UserReviewListAdapter(Context context, SingleSharedReviewViewModel viewModel, List<Review> reviews) {
         mContext = context;
+        mViewModel = viewModel;
         mReviews = reviews;
     }
 
@@ -36,6 +40,13 @@ public class UserReviewListAdapter extends RecyclerView.Adapter<UserReviewListAd
     @Override
     public void onBindViewHolder(@NonNull UserReviewListHolder holder, int position) {
         holder.bindReview(mReviews.get(position));
+        holder.mBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.getDeleteClickedSingleLiveEvent().setValue(true);
+                mViewModel.getReviewMutableLiveData().setValue(mReviews.get(position));
+            }
+        });
     }
 
     @Override

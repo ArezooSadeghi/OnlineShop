@@ -300,5 +300,19 @@ public class ProductRepository {
             }
         });
     }
+
+    public void deleteReview(int id) {
+        mReviewService.deleteReview(id).enqueue(new Callback<Review>() {
+            @Override
+            public void onResponse(Call<Review> call, Response<Review> response) {
+                Log.d(TAG, "delete is successful");
+            }
+
+            @Override
+            public void onFailure(Call<Review> call, Throwable t) {
+                Log.d("Arezoo", t.getMessage(), t);
+            }
+        });
+    }
 }
 

@@ -15,14 +15,14 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentReviewBinding;
 import com.example.onlineshop.model.Review;
 import com.example.onlineshop.utilities.Preferences;
-import com.example.onlineshop.viewmodel.SharedReviewViewModel;
+import com.example.onlineshop.viewmodel.SingleSharedReviewViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 public class ReviewFragment extends Fragment {
     private FragmentReviewBinding mBinding;
-    private SharedReviewViewModel mViewModel;
+    private SingleSharedReviewViewModel mViewModel;
     private int mId;
 
 
@@ -37,7 +37,7 @@ public class ReviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(requireActivity()).get(SharedReviewViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedReviewViewModel.class);
         setObserver();
 
         ReviewFragmentArgs args = ReviewFragmentArgs.fromBundle(getArguments());

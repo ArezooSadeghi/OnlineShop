@@ -9,6 +9,7 @@ import com.example.onlineshop.model.Review;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -72,4 +73,8 @@ public interface ProductService {
                             @Field("reviewer") String reviewer,
                             @Field("reviewer_email") String reviewerEmail,
                             @Field("rating") int rating);
+
+    @DELETE("products/reviews/{id}?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
+            "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
+    Call<Review> deleteReview(@Path("id") int id);
 }
