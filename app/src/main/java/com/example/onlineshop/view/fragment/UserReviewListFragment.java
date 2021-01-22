@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.onlineshop.R;
-import com.example.onlineshop.adapter.ReviewAdapter;
+import com.example.onlineshop.adapter.UserReviewListAdapter;
 import com.example.onlineshop.databinding.FragmentUserReviewListBinding;
 import com.example.onlineshop.model.Review;
 import com.example.onlineshop.viewmodel.SharedReviewViewModel;
@@ -23,7 +23,7 @@ import java.util.List;
 public class UserReviewListFragment extends Fragment {
     private FragmentUserReviewListBinding mBinding;
     private SharedReviewViewModel mViewModel;
-    private ReviewAdapter mAdapter;
+    private UserReviewListAdapter mAdapter;
 
     public static UserReviewListFragment newInstance() {
         UserReviewListFragment fragment = new UserReviewListFragment();
@@ -37,12 +37,7 @@ public class UserReviewListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SharedReviewViewModel.class);
-        mViewModel.getReviewListMutableLiveData().observe(this, new Observer<List<Review>>() {
-            @Override
-            public void onChanged(List<Review> reviews) {
-                setupAdapter(reviews);
-            }
-        });
+        setObserver();
     }
 
     @Override
@@ -60,13 +55,22 @@ public class UserReviewListFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    private void setObserver() {
+        mViewModel.getReviewListMutableLiveData().observe(this, new Observer<List<Review>>() {
+            @Override
+            public void onChanged(List<Review> reviews) {
+                setupAdapter(reviews);
+            }
+        });
+    }
+
     private void initRecyclerView() {
         mBinding.recyclerViewUserListReview.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void setupAdapter(List<Review> reviews) {
         if (mAdapter == null) {
-            mAdapter = new ReviewAdapter(getContext(), reviews);
+            mAdapter = new UserReviewListAdapter(getContext(), reviews);
             mBinding.recyclerViewUserListReview.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();

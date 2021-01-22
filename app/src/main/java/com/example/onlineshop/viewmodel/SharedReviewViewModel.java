@@ -15,7 +15,6 @@ import java.util.List;
 
 public class SharedReviewViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
-    private LiveData<Integer> mStatusCodePostReviewLiveData;
     private List<Review> mReviews = new ArrayList<>();
     private MutableLiveData<List<Review>> mReviewListMutableLiveData = new MutableLiveData<>();
     private LiveData<Review> mReviewLiveData;
@@ -23,12 +22,7 @@ public class SharedReviewViewModel extends AndroidViewModel {
     public SharedReviewViewModel(@NonNull Application application) {
         super(application);
         mRepository = ProductRepository.getInstance(getApplication());
-        mStatusCodePostReviewLiveData = mRepository.getStatusCodePostReviewMutableLiveData();
         mReviewLiveData = mRepository.getReviewMutableLiveData();
-    }
-
-    public LiveData<Integer> getStatusCodePostReviewLiveData() {
-        return mStatusCodePostReviewLiveData;
     }
 
     public MutableLiveData<List<Review>> getReviewListMutableLiveData() {
@@ -49,5 +43,14 @@ public class SharedReviewViewModel extends AndroidViewModel {
 
     public void postReview(int productId, String content, String name, String email, int rating) {
         mRepository.postReview(productId, content, name, email, rating);
+    }
+
+    public boolean isValidReview(Review myReview, List<Review> reviews) {
+        for (Review review : reviews) {
+            if (review.getId() == myReview.getId()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

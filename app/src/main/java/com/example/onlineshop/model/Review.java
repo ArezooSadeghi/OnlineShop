@@ -17,6 +17,14 @@ public class Review {
         mRating = rating;
     }
 
+    public Review(int productId, String reviewContent, String reviewerName, String reviewerEmail, int rating) {
+        mProductId = productId;
+        mReviewContent = reviewContent;
+        mReviewerName = reviewerName;
+        mReviewerEmail = reviewerEmail;
+        mRating = rating;
+    }
+
     public int getId() {
         return mId;
     }

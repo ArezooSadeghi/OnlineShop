@@ -62,23 +62,24 @@ public class ReviewFragment extends Fragment {
 
 
     private void setObserver() {
-        mViewModel.getStatusCodePostReviewLiveData().observe(this, new Observer<Integer>() {
+        mViewModel.getReviewLiveData().observe(this, new Observer<Review>() {
             @Override
-            public void onChanged(Integer statusCode) {
-                showPostReviewResult(statusCode);
+            public void onChanged(Review review) {
+                showPostReviewResult(review);
             }
         });
     }
 
-    private void showPostReviewResult(Integer statusCode) {
-        if (statusCode == 400) {
+    private void showPostReviewResult(Review review) {
+        if (review == null) {
             Toast.makeText(getContext(), R.string.failed_post_review, Toast.LENGTH_LONG).show();
-        }
-        if (statusCode == 201) {
+        } else {
+            if (mViewModel.isValidReview(review, mViewModel.getReviews())) {
+                List<Review> reviews = mViewModel.getReviews();
+                reviews.add(review);
+                mViewModel.getReviewListMutableLiveData().setValue(reviews);
+            }
             Toast.makeText(getContext(), R.string.successful_post_review, Toast.LENGTH_LONG).show();
-            List<Review> reviews = mViewModel.getReviews();
-            reviews.add(mViewModel.getReviewLiveData().getValue());
-            mViewModel.getReviewListMutableLiveData().setValue(reviews);
         }
     }
 
