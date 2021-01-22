@@ -17,10 +17,6 @@
             name="mostVisitedProductTitle"
             type="String" />
 
-        <variable
-            name="specialProductTitle"
-            type="String" />
-
     </data>
 
     <ScrollView
@@ -100,49 +96,6 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_most_visited_product_title" />
-
-            <TextView
-                android:id="@+id/txt_special_product_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:text="@{specialProductTitle}"
-                android:textColor="@color/on_surface"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_view_most_visited_product" />
-
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/slider_view_special_product"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_special_product_title"
-                app:sliderAnimationDuration="1000"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderIndicatorAnimationDuration="1000"
-                app:sliderIndicatorGravity="bottom|left"
-                app:sliderIndicatorMargin="8dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="@color/white"
-                app:sliderIndicatorUnselectedColor="@color/light_gray"
-                app:sliderScrollTimeInSec="2"
-                app:sliderStartAutoCycle="true">
-
-                <ImageView
-                    android:id="@+id/img_special_product"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="16dp" />
-
-            </com.smarteist.autoimageslider.SliderView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

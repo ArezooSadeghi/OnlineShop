@@ -160,9 +160,9 @@ public class ProductRepository {
         });
     }
 
-    public void getBestProduct(String orderby, String order, int per_page) {
+    public void getBestProduct(String orderby, String order) {
         mProductListService
-                .getBestProduct(orderby, order, per_page).enqueue(new Callback<List<Product>>() {
+                .getBestProduct(orderby, order).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mBestProductMutableLiveData.setValue(response.body());
@@ -175,9 +175,9 @@ public class ProductRepository {
         });
     }
 
-    public void getLatestProduct(String orderby, String order, int per_page) {
+    public void getLatestProduct(String orderby, String order) {
         mProductListService
-                .getLatestProduct(orderby, order, per_page).enqueue(new Callback<List<Product>>() {
+                .getLatestProduct(orderby, order).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mLatestProductMutableLiveData.setValue(response.body());
@@ -190,9 +190,9 @@ public class ProductRepository {
         });
     }
 
-    public void getMostVisitedProduct(String orderby, String order, int per_page) {
+    public void getMostVisitedProduct(String orderby, String order) {
         mProductListService
-                .getMostVisitedProduct(orderby, order, per_page)
+                .getMostVisitedProduct(orderby, order)
                 .enqueue(new Callback<List<Product>>() {
                     @Override
                     public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -206,9 +206,9 @@ public class ProductRepository {
                 });
     }
 
-    public void getSpecialProduct(boolean featured, int per_page) {
+    public void getSpecialProduct(boolean featured) {
         mProductListService
-                .getSpecialProduct(featured, per_page).enqueue(new Callback<List<Product>>() {
+                .getSpecialProduct(featured).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mSpecialProductMutableLiveData.setValue(response.body());

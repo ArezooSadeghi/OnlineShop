@@ -66,20 +66,20 @@ public class SingleHomeViewModel extends AndroidViewModel {
         mRepository.getTotalProduct();
     }
 
-    public void getBestProduct(String orderby, String order, int per_page) {
-        mRepository.getBestProduct(orderby, order, per_page);
+    public void getBestProduct(String orderby, String order) {
+        mRepository.getBestProduct(orderby, order);
     }
 
-    public void getLatestProduct(String orderby, String order, int per_page) {
-        mRepository.getLatestProduct(orderby, order, per_page);
+    public void getLatestProduct(String orderby, String order) {
+        mRepository.getLatestProduct(orderby, order);
     }
 
-    public void getMostVisitedProduct(String orderby, String order, int per_page) {
-        mRepository.getMostVisitedProduct(orderby, order, per_page);
+    public void getMostVisitedProduct(String orderby, String order) {
+        mRepository.getMostVisitedProduct(orderby, order);
     }
 
-    public void getSpecialProduct(boolean featured, int per_page) {
-        mRepository.getSpecialProduct(featured, per_page);
+    public void getSpecialProduct(boolean featured) {
+        mRepository.getSpecialProduct(featured);
     }
 
     public List<String> getUrl(List<Product> products) {

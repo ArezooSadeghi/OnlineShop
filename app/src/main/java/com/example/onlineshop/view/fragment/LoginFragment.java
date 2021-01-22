@@ -79,6 +79,7 @@ public class LoginFragment extends Fragment {
                                 LoginFragmentDirections.actionLoginFragmentToAddressFragment();
                         action.setEmail(mBinding.txtEmail.getText().toString());
                         NavHostFragment.findNavController(LoginFragment.this).navigate(action);
+
                     } else {
                         Snackbar.make(view, R.string.no_exist_account, Snackbar.LENGTH_LONG).show();
                     }

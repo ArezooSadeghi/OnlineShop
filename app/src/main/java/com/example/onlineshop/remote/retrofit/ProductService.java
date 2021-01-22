@@ -26,19 +26,19 @@ public interface ProductService {
 
     @GET("products?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
-    Call<List<Product>> getBestProduct(@Query("orderby") String orderby, @Query("order") String order, @Query("per_page") int per_page);
+    Call<List<Product>> getBestProduct(@Query("orderby") String orderby, @Query("order") String order);
 
     @GET("products?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
-    Call<List<Product>> getLatestProduct(@Query("orderby") String orderby, @Query("order") String order, @Query("per_page") int per_page);
+    Call<List<Product>> getLatestProduct(@Query("orderby") String orderby, @Query("order") String order);
 
     @GET("products?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
-    Call<List<Product>> getMostVisitedProduct(@Query("orderby") String orderby, @Query("order") String order, @Query("per_page") int per_page);
+    Call<List<Product>> getMostVisitedProduct(@Query("orderby") String orderby, @Query("order") String order);
 
     @GET("products?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
-    Call<List<Product>> getSpecialProduct(@Query("featured") boolean featured, @Query("per_page") int per_page);
+    Call<List<Product>> getSpecialProduct(@Query("featured") boolean featured);
 
     @GET("products/categories?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
