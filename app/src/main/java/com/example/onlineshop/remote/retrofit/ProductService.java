@@ -14,6 +14,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -77,4 +78,11 @@ public interface ProductService {
     @DELETE("products/reviews/{id}?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
             "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
     Call<Review> deleteReview(@Path("id") int id);
+
+    @PUT("products/reviews/{id}?consumer key=ck_3bc440296ce055c52b5b7e421a0d48654ce215dd & " +
+            "consumer secret=cs_a1062b3fc4224055d557cbc90a4323ca633f35aa")
+    Call<Review> updateReview(@Path("id") int id,
+                              @Query("review") String review,
+                              @Query("reviewer") String reviewer,
+                              @Query("rating") int rating);
 }

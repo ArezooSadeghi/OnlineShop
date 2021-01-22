@@ -1,6 +1,8 @@
 package com.example.onlineshop.model;
 
-public class Review {
+import java.io.Serializable;
+
+public class Review implements Serializable {
     private int mId;
     private int mProductId;
     private String mReviewContent;

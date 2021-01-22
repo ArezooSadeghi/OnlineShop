@@ -21,11 +21,16 @@ public class SingleSharedReviewViewModel extends AndroidViewModel {
     private LiveData<Review> mReviewLiveData;
     private SingleLiveEvent<Boolean> mDeleteClickedSingleLiveEvent = new SingleLiveEvent<>();
     private MutableLiveData<Review> mReviewMutableLiveData = new MutableLiveData<>();
+    private SingleLiveEvent<Boolean> mEditClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private MutableLiveData<Review> mEditReviewMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Review> mDialogReviewMutableLiveData = new MutableLiveData<>();
+    private LiveData<Review> mUpdateReviewLiveData;
 
     public SingleSharedReviewViewModel(@NonNull Application application) {
         super(application);
         mRepository = ProductRepository.getInstance(getApplication());
         mReviewLiveData = mRepository.getReviewMutableLiveData();
+        mUpdateReviewLiveData = mRepository.getUpdateReviewMutableLiveData();
     }
 
     public MutableLiveData<List<Review>> getReviewListMutableLiveData() {
@@ -52,8 +57,28 @@ public class SingleSharedReviewViewModel extends AndroidViewModel {
         return mDeleteClickedSingleLiveEvent;
     }
 
+    public SingleLiveEvent<Boolean> getEditClickedSingleLiveEvent() {
+        return mEditClickedSingleLiveEvent;
+    }
+
     public MutableLiveData<Review> getReviewMutableLiveData() {
         return mReviewMutableLiveData;
+    }
+
+    public MutableLiveData<Review> getEditReviewMutableLiveData() {
+        return mEditReviewMutableLiveData;
+    }
+
+    public MutableLiveData<Review> getDialogReviewMutableLiveData() {
+        return mDialogReviewMutableLiveData;
+    }
+
+    public LiveData<Review> getUpdateReviewLiveData() {
+        return mUpdateReviewLiveData;
+    }
+
+    public void updateReview(int id, String content, String name, int rating) {
+        mRepository.updateReview(id, content, name, rating);
     }
 
     public void deleteReview(int id) {

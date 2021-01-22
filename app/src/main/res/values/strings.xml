@@ -21,6 +21,7 @@
     <string name="failed_post_review">متاسفانه ثبت نظر شما موفقیت آمیز نبود</string>
     <string name="account_information">اطلاعات حساب کاربری</string>
     <string name="title_search">جستجو</string>
+    <string name="edit">ویرایش</string>
     <string name="title_add_to_cart">افزودن به سبد خرید</string>
     <string name="final_registration_order">ثبت نهایی سفارش</string>
     <string name="successful_final_registration_order">سفارش شما با موفقیت ثبت شد</string>

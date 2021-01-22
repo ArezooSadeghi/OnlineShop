@@ -24,6 +24,8 @@ public class UserReviewListFragment extends Fragment {
     private FragmentUserReviewListBinding mBinding;
     private SingleSharedReviewViewModel mViewModel;
     private UserReviewListAdapter mAdapter;
+    private Review mReview;
+    private static final String TAG = EditReviewDialogFragment.class.getSimpleName();
 
     public static UserReviewListFragment newInstance() {
         UserReviewListFragment fragment = new UserReviewListFragment();
@@ -75,6 +77,38 @@ public class UserReviewListFragment extends Fragment {
             public void onChanged(Review review) {
                 mViewModel.deleteReview(review.getId());
                 mViewModel.getReviews().remove(review);
+                mViewModel.getReviewListMutableLiveData().setValue(mViewModel.getReviews());
+            }
+        });
+
+        mViewModel.getEditClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isEditClicked) {
+
+            }
+        });
+
+        mViewModel.getEditReviewMutableLiveData().observe(this, new Observer<Review>() {
+            @Override
+            public void onChanged(Review review) {
+                mReview = review;
+                EditReviewDialogFragment fragment = EditReviewDialogFragment.newInstance(review);
+                fragment.show(getParentFragmentManager(), TAG);
+            }
+        });
+
+        mViewModel.getDialogReviewMutableLiveData().observe(this, new Observer<Review>() {
+            @Override
+            public void onChanged(Review review) {
+                mViewModel.updateReview(review.getId(), review.getReviewContent(), review.getReviewerName(), review.getRating());
+            }
+        });
+
+        mViewModel.getUpdateReviewLiveData().observe(this, new Observer<Review>() {
+            @Override
+            public void onChanged(Review review) {
+                mViewModel.getReviews().remove(mReview);
+                mViewModel.getReviews().add(review);
                 mViewModel.getReviewListMutableLiveData().setValue(mViewModel.getReviews());
             }
         });
