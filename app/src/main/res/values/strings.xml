@@ -21,6 +21,16 @@
     <string name="failed_post_review">متاسفانه ثبت نظر شما موفقیت آمیز نبود</string>
     <string name="account_information">اطلاعات حساب کاربری</string>
     <string name="title_search">جستجو</string>
+    <string name="setting">تنظیمات</string>
+    <string name="setting_notification">تنظیمات اعلان</string>
+    <string name="log_out">خروج از حساب کاربری</string>
+    <string name="cancel">لغو کردن</string>
+    <string name="save_setting">ذخیره تنظیمات</string>
+    <string name="every_3_hours">هر سه ساعت</string>
+    <string name="every_5_hours">هر پنج ساعت</string>
+    <string name="every_8_hours">هر هشت ساعت</string>
+    <string name="every_12_hours">هر دوازده ساعت</string>
+    <string name="deactivate">غیرفعال کردن</string>
     <string name="edit">ویرایش</string>
     <string name="title_add_to_cart">افزودن به سبد خرید</string>
     <string name="final_registration_order">ثبت نهایی سفارش</string>

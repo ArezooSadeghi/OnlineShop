@@ -2,13 +2,18 @@ package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.onlineshop.R;
@@ -43,10 +48,34 @@ public class AccountFragment extends Fragment {
                 container,
                 false);
 
+        initToolbar();
         setListener();
 
         return mBinding.getRoot();
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.account_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_setting:
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.settingFragment);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void initToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.accountToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
+    }
+
 
     private void setListener() {
         mBinding.btnReview.setOnClickListener(new View.OnClickListener() {

@@ -149,4 +149,10 @@
         android:label="fragment_user_review_list"
         tools:layout="@layout/fragment_user_review_list" />
 
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.onlineshop.view.fragment.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+
 </navigation>
