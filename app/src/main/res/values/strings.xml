@@ -13,10 +13,15 @@
     <string name="account_exist">یک حساب با آدرس پست الکترونیک شما قبلا ثبت شده است</string>
     <string name="no_exist_account">حسابی با این پست الکترونیک وجود ندارد</string>
     <string name="latest_product_title">جدیدترین محصولات</string>
+    <string name="new_product_title">محصول جدید</string>
+    <string name="new_product_text">محصول جدید رسید</string>
     <string name="wrong_discount_code">کد تخفیف نادرست می باشد</string>
     <string name="enter_email">لطفا پست الکترونیک خود را وارد کنید</string>
     <string name="review">نقد و نظرات</string>
     <string name="address">آدرس ها</string>
+    <string name="channel_id">maktab_channel_id</string>
+    <string name="channel_name">Maktab_Channel</string>
+    <string name="channel_description">This is notification channel for maktab</string>
     <string name="successful_post_review">نظر شما با موفقیت ثبت شد</string>
     <string name="failed_post_review">متاسفانه ثبت نظر شما موفقیت آمیز نبود</string>
     <string name="account_information">اطلاعات حساب کاربری</string>

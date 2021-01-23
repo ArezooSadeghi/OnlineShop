@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentDetailBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.model.Review;
+import com.example.onlineshop.service.PollService;
 import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
 
 import java.util.List;
@@ -72,6 +74,12 @@ public class DetailFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        int id = getArguments().getInt(PollService.BUNDLE_LAST_ID);
+        mViewModel.retrieveProduct(id);
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -136,9 +144,11 @@ public class DetailFragment extends Fragment {
 
 
     private void initViews(Product product) {
-        mBinding.setProduct(product);
-        SliderAdapter sliderAdapter = new SliderAdapter(getContext(), product.getImageUrl());
-        mBinding.imgProductSlider.setSliderAdapter(sliderAdapter);
+        if (product != null) {
+            mBinding.setProduct(product);
+            SliderAdapter sliderAdapter = new SliderAdapter(getContext(), product.getImageUrl());
+            mBinding.imgProductSlider.setSliderAdapter(sliderAdapter);
+        }
     }
 
     private void updateUI(List<Review> reviews) {

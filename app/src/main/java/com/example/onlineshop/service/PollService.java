@@ -2,13 +2,20 @@ package com.example.onlineshop.service;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.navigation.NavDeepLinkBuilder;
+
+import com.example.onlineshop.R;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.repository.ProductRepository;
 import com.example.onlineshop.utilities.Preferences;
@@ -18,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PollService extends IntentService {
     private static final String TAG = PollService.class.getSimpleName();
+    public static final String BUNDLE_LAST_ID = "lastId";
 
 
     public PollService() {
@@ -45,14 +53,15 @@ public class PollService extends IntentService {
         int lastSavedId = Preferences.getLastId(this);
 
         if (serverId != lastSavedId) {
+            Preferences.setLastId(this, serverId);
             Log.d(TAG, "show notification");
-            //TODO:show notification
+            createAndShowNotification();
         } else {
+            Preferences.setLastId(this, serverId);
             Log.d(TAG, "nothing new");
         }
-
-        Preferences.setLastId(this, serverId);
     }
+
 
     private boolean isNetworkAvailableAndConnected() {
         ConnectivityManager connectivityManager =
@@ -89,6 +98,27 @@ public class PollService extends IntentService {
     private static PendingIntent getAlarmPendingIntent(Context context, int flags) {
         Intent intent = newIntent(context);
         return PendingIntent.getService(context, 0, intent, flags);
+    }
+
+    private void createAndShowNotification() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(BUNDLE_LAST_ID, Preferences.getLastId(this));
+        PendingIntent pendingIntent = new NavDeepLinkBuilder(this)
+                .setGraph(R.navigation.mobile_navigation)
+                .setDestination(R.id.detailFragment)
+                .setArguments(bundle)
+                .createPendingIntent();
+
+        String channelId = getString(R.string.channel_id);
+        Notification notification = new NotificationCompat.Builder(this, channelId)
+                .setContentTitle(getString(R.string.new_product_text))
+                .setContentText(getString(R.string.new_product_text))
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build();
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(1, notification);
     }
 
     public static Intent newIntent(Context context) {
