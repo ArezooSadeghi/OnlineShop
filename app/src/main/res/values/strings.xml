@@ -9,6 +9,7 @@
     <string name="register_review">ثبت دیدگاه</string>
     <string name="title_account">حساب کاربری</string>
     <string name="best_product_title">بهترین محصولات</string>
+    <string name="by_default">پیش فرض</string>
     <string name="successful_register">ثبت نام شما با موفقیت انجام شد</string>
     <string name="account_exist">یک حساب با آدرس پست الکترونیک شما قبلا ثبت شده است</string>
     <string name="no_exist_account">حسابی با این پست الکترونیک وجود ندارد</string>

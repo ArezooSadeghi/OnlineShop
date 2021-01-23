@@ -89,6 +89,22 @@ public class PollService extends IntentService {
         }
     }
 
+    public static void scheduleAlarmBaseUserSelectedTime(Context context, boolean isOn, int hour) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent operation = getAlarmPendingIntent(context, 0);
+
+        if (isOn) {
+            alarmManager.setInexactRepeating(
+                    AlarmManager.ELAPSED_REALTIME,
+                    SystemClock.elapsedRealtime(),
+                    TimeUnit.HOURS.toMillis(hour),
+                    operation);
+        } else {
+            alarmManager.cancel(operation);
+            operation.cancel();
+        }
+    }
+
 
     public static boolean isAlarmSet(Context context) {
         PendingIntent operation = getAlarmPendingIntent(context, PendingIntent.FLAG_NO_CREATE);

@@ -9,129 +9,139 @@
 
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/blanchedalmond"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:padding="32dp"
-            android:src="@drawable/image_bell" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="16dp"
-            android:text="@string/setting_notification"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-
-            <RadioButton
-                android:id="@+id/radio_btn_3_hours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:padding="16dp"
-                android:text="@string/every_3_hours"
-                android:textColor="@color/on_surface" />
-
-            <RadioButton
-                android:id="@+id/radio_btn_5_hours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/every_5_hours"
-                android:textColor="@color/on_surface" />
-
-            <RadioButton
-                android:id="@+id/radio_btn_8_hours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:padding="16dp"
-                android:text="@string/every_8_hours"
-                android:textColor="@color/on_surface" />
-
-            <RadioButton
-                android:id="@+id/radio_btn_12_hours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:padding="16dp"
-                android:text="@string/every_12_hours"
-                android:textColor="@color/on_surface" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
-
-        <NumberPicker
-            android:id="@+id/number_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="16dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
-
-        <Switch
-            android:id="@+id/switch_on_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:checked="@{isOnNotification}"
-            android:padding="16dp"
-            android:text="@string/on_notification"
-            android:textColor="@color/on_surface" />
+        android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_cancel"
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:padding="32dp"
+                android:src="@drawable/image_bell" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:backgroundTint="@color/purple_700"
-                android:text="@string/cancel"
-                android:textColor="@color/on_surface" />
+                android:layout_gravity="center_horizontal"
+                android:padding="16dp"
+                android:text="@string/setting_notification"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/btn_save_setting"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <RadioGroup
+                android:id="@+id/radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:backgroundTint="@color/purple_700"
-                android:text="@string/save_setting"
+                android:layout_gravity="right"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RadioButton
+                    android:id="@+id/radio_btn_3_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/every_3_hours"
+                    android:textColor="@color/on_surface" />
+
+                <RadioButton
+                    android:id="@+id/radio_btn_5_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/every_5_hours"
+                    android:textColor="@color/on_surface" />
+
+                <RadioButton
+                    android:id="@+id/radio_btn_8_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/every_8_hours"
+                    android:textColor="@color/on_surface" />
+
+                <RadioButton
+                    android:id="@+id/radio_btn_12_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/every_12_hours"
+                    android:textColor="@color/on_surface" />
+
+                <RadioButton
+                    android:id="@+id/radio_btn_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="16dp"
+                    android:text="@string/by_default"
+                    android:textColor="@color/on_surface" />
+
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <NumberPicker
+                android:id="@+id/number_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <Switch
+                android:id="@+id/switch_on_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:checked="@{isOnNotification}"
+                android:padding="16dp"
+                android:text="@string/on_notification"
                 android:textColor="@color/on_surface" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:backgroundTint="@color/purple_700"
+                    android:text="@string/cancel"
+                    android:textColor="@color/on_surface" />
+
+                <Button
+                    android:id="@+id/btn_save_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:backgroundTint="@color/purple_700"
+                    android:text="@string/save_setting"
+                    android:textColor="@color/on_surface" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </layout>
