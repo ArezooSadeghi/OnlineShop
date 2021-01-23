@@ -20,6 +20,7 @@ import com.example.onlineshop.remote.retrofit.ReviewDeserializer;
 import com.example.onlineshop.remote.retrofit.ReviewListDeserializer;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,6 +46,7 @@ public class ProductRepository {
     private MutableLiveData<List<Review>> mReviewListMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Review> mReviewMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Review> mUpdateReviewMutableLiveData = new MutableLiveData<>();
+
 
     private static final String TAG = ProductRepository.class.getSimpleName();
 
@@ -332,6 +334,16 @@ public class ProductRepository {
                 Log.e(TAG, t.getMessage(), t);
             }
         });
+    }
+
+    public List<Product> getProducts() {
+        try {
+            Response<List<Product>> response = mProductListService.getProducts().execute();
+            return response.body();
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(), e);
+            return null;
+        }
     }
 }
 

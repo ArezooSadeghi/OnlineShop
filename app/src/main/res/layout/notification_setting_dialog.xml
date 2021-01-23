@@ -3,6 +3,10 @@
 
     <data>
 
+        <variable
+            name="isOnNotification"
+            type="Boolean" />
+
     </data>
 
     <LinearLayout
@@ -92,12 +96,13 @@
             android:background="@android:color/black" />
 
         <Switch
-            android:id="@+id/switch_deactivate"
+            android:id="@+id/switch_on_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:checked="@{isOnNotification}"
             android:padding="16dp"
-            android:text="@string/deactivate"
+            android:text="@string/on_notification"
             android:textColor="@color/on_surface" />
 
         <LinearLayout

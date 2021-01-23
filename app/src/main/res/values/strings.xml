@@ -20,6 +20,7 @@
     <string name="successful_post_review">نظر شما با موفقیت ثبت شد</string>
     <string name="failed_post_review">متاسفانه ثبت نظر شما موفقیت آمیز نبود</string>
     <string name="account_information">اطلاعات حساب کاربری</string>
+    <string name="on_notification">محصولات جدید را به من اطلاع دهید</string>
     <string name="title_search">جستجو</string>
     <string name="setting">تنظیمات</string>
     <string name="setting_notification">تنظیمات اعلان</string>
@@ -32,7 +33,6 @@
     <string name="every_5_hours">هر پنج ساعت</string>
     <string name="every_8_hours">هر هشت ساعت</string>
     <string name="every_12_hours">هر دوازده ساعت</string>
-    <string name="deactivate">غیرفعال کردن</string>
     <string name="edit">ویرایش</string>
     <string name="title_add_to_cart">افزودن به سبد خرید</string>
     <string name="final_registration_order">ثبت نهایی سفارش</string>

@@ -23,6 +23,7 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ProductAdapter;
 import com.example.onlineshop.databinding.FragmentHomeBinding;
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.SingleHomeViewModel;
 
 import java.util.List;
@@ -109,6 +110,7 @@ public class HomeFragment extends Fragment {
         mViewModel.getLatestProductLiveData().observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
+                Preferences.setLastId(getContext(), products.get(0).getId());
                 mBinding.setLatestProductTitle(getString(R.string.latest_product_title));
                 setupLatestProductAdapter(products);
             }

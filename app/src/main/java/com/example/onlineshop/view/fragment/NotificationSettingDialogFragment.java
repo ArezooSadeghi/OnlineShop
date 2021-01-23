@@ -11,9 +11,12 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.NotificationSettingDialogBinding;
+import com.example.onlineshop.service.PollService;
+import com.example.onlineshop.utilities.Preferences;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class NotificationSettingDialogFragment extends BottomSheetDialogFragment {
+    private NotificationSettingDialogBinding mBinding;
 
     public static NotificationSettingDialogFragment newInstance() {
         NotificationSettingDialogFragment fragment = new NotificationSettingDialogFragment();
@@ -29,11 +32,31 @@ public class NotificationSettingDialogFragment extends BottomSheetDialogFragment
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        NotificationSettingDialogBinding binding = DataBindingUtil.inflate(
+        mBinding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.notification_setting_dialog,
                 container,
                 false);
-        return binding.getRoot();
+
+        mBinding.setIsOnNotification(Preferences.getIsOnNotification(getContext()));
+
+        mBinding.btnSaveSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Preferences.setIsOnNotification(getContext(), mBinding.switchOnNotification.isChecked());
+                boolean isOn = PollService.isAlarmSet(getContext());
+                if (mBinding.switchOnNotification.isChecked()) {
+                    if (!isOn) {
+                        PollService.scheduleAlarm(getContext(), !isOn);
+                    }
+                } else {
+                    if (isOn) {
+                        PollService.scheduleAlarm(getContext(), !isOn);
+                    }
+                }
+            }
+        });
+
+        return mBinding.getRoot();
     }
 }
