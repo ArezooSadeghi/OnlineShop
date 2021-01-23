@@ -26,6 +26,8 @@
     <string name="log_out">خروج از حساب کاربری</string>
     <string name="cancel">لغو کردن</string>
     <string name="save_setting">ذخیره تنظیمات</string>
+    <string name="log_out_question">آیا می خواهید از حساب کاربری خود خارج شوید؟</string>
+    <string name="common">بیخیال</string>
     <string name="every_3_hours">هر سه ساعت</string>
     <string name="every_5_hours">هر پنج ساعت</string>
     <string name="every_8_hours">هر هشت ساعت</string>

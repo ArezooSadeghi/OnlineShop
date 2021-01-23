@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentSettingBinding;
 
-public class SettingFragment extends Fragment implements View.OnClickListener {
+public class SettingFragment extends Fragment {
     private FragmentSettingBinding mBinding;
 
     private static final String TAG = SettingFragment.class.getSimpleName();
@@ -24,10 +24,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,14 +35,26 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 container,
                 false);
 
-        mBinding.btnSettingNotification.setOnClickListener(this);
+        setListener();
 
         return mBinding.getRoot();
     }
 
-    @Override
-    public void onClick(View view) {
-        NotificationSettingDialogFragment fragment = NotificationSettingDialogFragment.newInstance();
-        fragment.show(getParentFragmentManager(), TAG);
+    private void setListener() {
+        mBinding.btnSettingNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NotificationSettingDialogFragment fragment = NotificationSettingDialogFragment.newInstance();
+                fragment.show(getParentFragmentManager(), TAG);
+            }
+        });
+
+        mBinding.btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LogOutFragment fragment = LogOutFragment.newInstance();
+                fragment.show(getParentFragmentManager(), TAG);
+            }
+        });
     }
 }
