@@ -155,4 +155,10 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
 
+    <fragment
+        android:id="@+id/locatrFragment"
+        android:name="com.example.onlineshop.view.fragment.LocatrFragment"
+        android:label="fragment_locatr"
+        tools:layout="@layout/fragment_locatr" />
+
 </navigation>

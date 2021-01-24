@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentAddressBinding;
@@ -86,6 +87,13 @@ public class AddressFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mViewModel.postOrder(email);
+            }
+        });
+
+        mBinding.fabAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.locatrFragment);
             }
         });
     }
