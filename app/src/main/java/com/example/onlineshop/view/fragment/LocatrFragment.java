@@ -5,8 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +14,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentLocatrBinding;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
+import com.example.onlineshop.viewmodel.LocatrViewModel;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class LocatrFragment extends Fragment {
 
     private FragmentLocatrBinding mBinding;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private LocatrViewModel mViewModel;
+    private GoogleMap mGoogleMap;
     public static final int REQUEST_CODE_PERMISSION_LOCATION = 0;
 
 
@@ -44,7 +47,8 @@ public class LocatrFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        mViewModel = new ViewModelProvider(this).get(LocatrViewModel.class);
+        setObserver();
     }
 
     @Override
@@ -56,6 +60,16 @@ public class LocatrFragment extends Fragment {
                 R.layout.fragment_locatr,
                 container,
                 false);
+
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map);
+        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                mGoogleMap = googleMap;
+                updateUI();
+            }
+        });
 
         initToolbar();
         mBinding.btnMyLocation.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +101,15 @@ public class LocatrFragment extends Fragment {
         }
     }
 
+    private void setObserver() {
+        mViewModel.getLocationLiveData().observe(this, new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                updateUI();
+            }
+        });
+    }
+
     private void initToolbar() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.locatrToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
@@ -108,22 +131,21 @@ public class LocatrFragment extends Fragment {
         if (!hasLocationAccess()) {
             return;
         }
+        mViewModel.getCurrentLocation();
+    }
 
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(0);
-        locationRequest.setNumUpdates(1);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    private void updateUI() {
+        Location location = mViewModel.getLocationLiveData().getValue();
+        if (location == null || mGoogleMap == null)
+            return;
 
-        LocationCallback locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                Location location = locationResult.getLocations().get(0);
-            }
-        };
+        LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        mFusedLocationProviderClient.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                Looper.getMainLooper());
+        MarkerOptions myMarkerOptions = new MarkerOptions()
+                .position(myLatLng);
+
+        mGoogleMap.addMarker(myMarkerOptions);
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(myLatLng));
+
     }
 }
