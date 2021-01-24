@@ -19,6 +19,7 @@ import com.google.android.gms.location.LocationServices;
 public class LocatrViewModel extends AndroidViewModel {
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private MutableLiveData<Location> mLocationMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> mAddressMutableLiveData = new MutableLiveData<>();
 
     public LocatrViewModel(@NonNull Application application) {
         super(application);
@@ -27,6 +28,10 @@ public class LocatrViewModel extends AndroidViewModel {
 
     public LiveData<Location> getLocationLiveData() {
         return mLocationMutableLiveData;
+    }
+
+    public MutableLiveData<String> getAddressMutableLiveData() {
+        return mAddressMutableLiveData;
     }
 
     @SuppressLint("MissingPermission")
