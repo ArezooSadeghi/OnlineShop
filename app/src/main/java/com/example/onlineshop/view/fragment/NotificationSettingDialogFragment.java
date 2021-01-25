@@ -47,6 +47,7 @@ public class NotificationSettingDialogFragment extends BottomSheetDialogFragment
         mBinding.setIsOnNotification(Preferences.getIsOnNotification(getContext()));
         if (Preferences.getSelectedButtonId(getContext()) == 0) {
             mBinding.radioGroup.check(R.id.radio_btn_default);
+            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_desired);
         } else {
             mBinding.radioGroup.check(Preferences.getSelectedButtonId(getContext()));
         }
@@ -67,18 +68,25 @@ public class NotificationSettingDialogFragment extends BottomSheetDialogFragment
                 if (mBinding.switchOnNotification.isChecked()) {
                     Preferences.setIsOnNotification(getContext(), true);
                     if (!isOn) {
-                        for (int i = 0; i < mButtonIds.length; i++) {
-                            if (mLastCheckedId == mButtonIds[i]) {
-                                setNewAlarm(mButtonIds[i], !isOn, mHours[i]);
-                                Preferences.setSelectedButtonId(getContext(), mButtonIds[i]);
-                                break;
-                            } else {
-                                setNewAlarm(R.id.radio_btn_default, !isOn, 1);
+                        if (mLastCheckedId == -1) {
+                            setNewAlarm(Preferences.getSelectedButtonId(getContext()), !isOn, mHours[0]);
+                        } else if (mLastCheckedId == R.id.radio_btn_desired) {
+                            setNewAlarm(R.id.radio_btn_desired, !isOn, mBinding.numberPicker.getValue());
+                        } else {
+                            for (int i = 0; i < mButtonIds.length; i++) {
+                                if (mLastCheckedId == mButtonIds[i]) {
+                                    setNewAlarm(mButtonIds[i], !isOn, mHours[i]);
+                                    Preferences.setSelectedButtonId(getContext(), mButtonIds[i]);
+                                    break;
+                                }
                             }
                         }
                     } else {
                         if (mLastCheckedId == -1) {
                             return;
+                        } else if (mLastCheckedId == R.id.radio_btn_desired) {
+                            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_desired);
+                            setNewAlarm(R.id.radio_btn_desired, isOn, mBinding.numberPicker.getValue());
                         } else {
                             for (int i = 0; i < mButtonIds.length; i++) {
                                 if (mLastCheckedId == mButtonIds[i]) {
@@ -105,6 +113,9 @@ public class NotificationSettingDialogFragment extends BottomSheetDialogFragment
                                 Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_default);
                                 break;
                             }
+                        }
+                        if (Preferences.getSelectedButtonId(getContext()) == R.id.radio_btn_desired) {
+                            cancelOldAlarm(R.id.radio_btn_desired, !isOn, mBinding.numberPicker.getValue());
                         }
                     }
                 }
