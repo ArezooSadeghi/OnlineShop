@@ -195,8 +195,8 @@ public class LocatrFragment extends Fragment {
         MarkerOptions myMarkerOptions = new MarkerOptions()
                 .position(myLatLng);
 
+        mGoogleMap.clear();
         mGoogleMap.addMarker(myMarkerOptions);
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(myLatLng));
-
     }
 }

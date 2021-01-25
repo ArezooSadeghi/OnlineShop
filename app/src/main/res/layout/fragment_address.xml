@@ -13,23 +13,6 @@
         android:background="@color/surface"
         tools:context=".view.fragment.AddressFragment">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/secondary_shrine_pink">
-
-            <Button
-                android:id="@+id/btn_final_registration_order"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/final_registration_order"
-                android:textColor="@android:color/holo_blue_light"
-                android:textSize="18sp" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_address"
             android:layout_width="match_parent"
@@ -40,7 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:backgroundTint="@color/purple_700" />
+            app:backgroundTint="@color/blanchedalmond">
+
+            <Button
+                android:id="@+id/btn_final_registration_order"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                app:icon="@drawable/ic_register_cart" />
+
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_location"
