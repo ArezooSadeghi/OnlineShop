@@ -107,7 +107,9 @@
 
         <action
             android:id="@+id/action_loginFragment_to_addressFragment"
-            app:destination="@id/addressFragment" />
+            app:destination="@id/addressFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
