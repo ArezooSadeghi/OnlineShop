@@ -6,6 +6,9 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(tableName = "customer_table")
 public class Customer {
 
@@ -17,8 +20,12 @@ public class Customer {
     @ColumnInfo(name = "email")
     private String mEmail;
 
+    @ColumnInfo(name = "address")
+    private List<String> mAddress;
+
     public Customer(String email) {
         mEmail = email;
+        mAddress = new ArrayList<>();
     }
 
     public int getId() {
@@ -35,5 +42,13 @@ public class Customer {
 
     public void setEmail(String email) {
         mEmail = email;
+    }
+
+    public List<String> getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(List<String> address) {
+        mAddress = address;
     }
 }

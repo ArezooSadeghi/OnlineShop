@@ -147,6 +147,14 @@ public class ProductRepository {
         return mDataBase.getCustomerDao().getCustomers();
     }
 
+    public Customer getCustomer(String email) {
+        return mDataBase.getCustomerDao().getCustomer(email);
+    }
+
+    public void updateCustomer(Customer customer) {
+        mDataBase.getCustomerDao().updateCustomer(customer);
+    }
+
     public void getTotalProduct() {
         mProductListService.getTotalProduct().enqueue(new Callback<List<Product>>() {
             @Override

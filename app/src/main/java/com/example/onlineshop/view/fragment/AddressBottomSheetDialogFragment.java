@@ -65,8 +65,7 @@ public class AddressBottomSheetDialogFragment extends BottomSheetDialogFragment 
         mBinding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.getAddresses().add(mBinding.txtAddress.getText().toString());
-                mViewModel.getAddressesMutableLiveData().setValue(mViewModel.getAddresses());
+                mViewModel.getFinalAddressMutableLiveData().setValue(mBinding.txtAddress.getText().toString());
                 dismiss();
             }
         });

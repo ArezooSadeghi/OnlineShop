@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.AddressAdapter;
 import com.example.onlineshop.databinding.FragmentAddressBinding;
+import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.viewmodel.LocatrViewModel;
 
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 public class AddressFragment extends Fragment {
     private FragmentAddressBinding mBinding;
     private LocatrViewModel mViewModel;
-    private AddressAdapter mAdapter;
+    private Customer mCustomer;
 
 
     public static AddressFragment newInstance() {
@@ -67,6 +68,8 @@ public class AddressFragment extends Fragment {
         AddressFragmentArgs args = AddressFragmentArgs.fromBundle(getArguments());
         String email = args.getEmail();
         setListener(email);
+        mCustomer = mViewModel.getCustomer(email);
+        setupAdapter(mCustomer.getAddress());
     }
 
 
@@ -78,10 +81,12 @@ public class AddressFragment extends Fragment {
             }
         });
 
-        mViewModel.getAddressesMutableLiveData().observe(this, new Observer<List<String>>() {
+        mViewModel.getFinalAddressMutableLiveData().observe(this, new Observer<String>() {
             @Override
-            public void onChanged(List<String> addresses) {
-                setupAdapter(addresses);
+            public void onChanged(String address) {
+                mCustomer.getAddress().add(address);
+                mViewModel.updateCustomer(mCustomer);
+                setupAdapter(mCustomer.getAddress());
             }
         });
     }
@@ -97,8 +102,8 @@ public class AddressFragment extends Fragment {
     }
 
     private void setupAdapter(List<String> addresses) {
-        mAdapter = new AddressAdapter(getContext(), addresses);
-        mBinding.recyclerViewAddress.setAdapter(mAdapter);
+        AddressAdapter adapter = new AddressAdapter(getContext(), addresses);
+        mBinding.recyclerViewAddress.setAdapter(adapter);
     }
 
     private void initRecyclerView() {

@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.repository.ProductRepository;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -17,17 +18,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LocatrViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private MutableLiveData<Location> mLocationMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> mAddressMutableLiveData = new MutableLiveData<>();
     private LiveData<Integer> mStatusCodePostOrderLiveData;
-    private MutableLiveData<List<String>> mAddressesMutableLiveData = new MutableLiveData<>();
-    private List<String> mAddresses = new ArrayList<>();
+    private MutableLiveData<String> mFinalAddressMutableLiveData = new MutableLiveData<>();
 
     public LocatrViewModel(@NonNull Application application) {
         super(application);
@@ -48,20 +45,20 @@ public class LocatrViewModel extends AndroidViewModel {
         return mStatusCodePostOrderLiveData;
     }
 
-    public MutableLiveData<List<String>> getAddressesMutableLiveData() {
-        return mAddressesMutableLiveData;
-    }
-
-    public List<String> getAddresses() {
-        return mAddresses;
-    }
-
-    public void setAddresses(List<String> addresses) {
-        mAddresses = addresses;
+    public MutableLiveData<String> getFinalAddressMutableLiveData() {
+        return mFinalAddressMutableLiveData;
     }
 
     public void postOrder(String email) {
         mRepository.postOrder(email);
+    }
+
+    public Customer getCustomer(String email) {
+        return mRepository.getCustomer(email);
+    }
+
+    public void updateCustomer(Customer customer) {
+        mRepository.updateCustomer(customer);
     }
 
     @SuppressLint("MissingPermission")
