@@ -1,4 +1,4 @@
-package com.example.onlineshop.paging;
+package com.example.onlineshop.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,40 +7,24 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.paging.PagedListAdapter;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.CategoryAdapterItemBinding;
 import com.example.onlineshop.model.Category;
+import com.example.onlineshop.viewmodel.SingleCategoryViewModel;
 
-public class CategoryListAdapter extends PagedListAdapter<Category, CategoryListAdapter.CategoryHolder> {
+import java.util.List;
+
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
     private Context mContext;
     private SingleCategoryViewModel mViewModel;
+    private List<Category> mCategories;
 
-    private static DiffUtil.ItemCallback<Category> sCategoryItemCallback =
-            new DiffUtil.ItemCallback<Category>() {
-                @Override
-                public boolean areItemsTheSame(Category oldCategory, Category newCategory) {
-                    return true;
-                }
-
-                @Override
-                public boolean areContentsTheSame(Category oldCategory, Category newCategory) {
-                    int result = oldCategory.compareTo(newCategory);
-                    if (result == 0) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            };
-
-    public CategoryListAdapter(Context context, SingleCategoryViewModel viewModel) {
-        super(sCategoryItemCallback);
+    public CategoryAdapter(Context context, SingleCategoryViewModel viewModel, List<Category> categories) {
         mContext = context;
         mViewModel = viewModel;
+        mCategories = categories;
     }
 
     @NonNull
@@ -55,15 +39,18 @@ public class CategoryListAdapter extends PagedListAdapter<Category, CategoryList
 
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
-        Category category = getItem(position);
-        holder.bindCategory(category);
+        holder.bindCategory(mCategories.get(position));
         holder.mBinding.btnSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.getItemClickedSingleLiveEvent().setValue(true);
-                mViewModel.getCategoryIdLiveData().setValue(category.getId());
+                mViewModel.getCategoryIdSingleLiveEvent().setValue(mCategories.get(position).getId());
             }
         });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mCategories.size();
     }
 
     public class CategoryHolder extends RecyclerView.ViewHolder {

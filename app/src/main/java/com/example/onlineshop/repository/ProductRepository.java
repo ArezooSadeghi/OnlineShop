@@ -46,6 +46,7 @@ public class ProductRepository {
     private MutableLiveData<List<Review>> mReviewListMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Review> mReviewMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Review> mUpdateReviewMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Category>> mCategoryListMutableLiveData = new MutableLiveData<>();
 
 
     private static final String TAG = ProductRepository.class.getSimpleName();
@@ -137,6 +138,10 @@ public class ProductRepository {
 
     public MutableLiveData<Review> getUpdateReviewMutableLiveData() {
         return mUpdateReviewMutableLiveData;
+    }
+
+    public MutableLiveData<List<Category>> getCategoryListMutableLiveData() {
+        return mCategoryListMutableLiveData;
     }
 
     public void insert(Customer customer) {
@@ -352,6 +357,20 @@ public class ProductRepository {
             Log.e(TAG, e.getMessage(), e);
             return null;
         }
+    }
+
+    public void getCategory(int page) {
+        mCategoryService.getCategory(page).enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                mCategoryListMutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
     }
 }
 

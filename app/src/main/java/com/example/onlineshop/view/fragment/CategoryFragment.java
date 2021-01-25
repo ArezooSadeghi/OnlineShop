@@ -12,14 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.onlineshop.R;
+import com.example.onlineshop.adapter.CategoryAdapter;
 import com.example.onlineshop.databinding.FragmentCategoryBinding;
 import com.example.onlineshop.model.Category;
-import com.example.onlineshop.paging.CategoryListAdapter;
-import com.example.onlineshop.paging.SingleCategoryViewModel;
+import com.example.onlineshop.viewmodel.SingleCategoryViewModel;
+
+import java.util.List;
 
 public class CategoryFragment extends Fragment {
     private FragmentCategoryBinding mBinding;
@@ -37,6 +38,7 @@ public class CategoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(SingleCategoryViewModel.class);
+        mViewModel.getCategory(1);
     }
 
     @Nullable
@@ -51,37 +53,36 @@ public class CategoryFragment extends Fragment {
                 false);
 
         initRecyclerView();
-        CategoryListAdapter categoryListAdapter = new CategoryListAdapter(getContext(), mViewModel);
-        mViewModel.getPagedListLiveData().observe(getViewLifecycleOwner(), new Observer<PagedList<Category>>() {
-            @Override
-            public void onChanged(PagedList<Category> categories) {
-                categoryListAdapter.submitList(categories);
-            }
-        });
-
-        mViewModel.getItemClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isClicked) {
-                if (isClicked) {
-                    mViewModel.getCategoryIdLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer id) {
-                            CategoryFragmentDirections.ActionNavigationCategoryToProductOfEachCategoryFragment action =
-                                    CategoryFragmentDirections.actionNavigationCategoryToProductOfEachCategoryFragment();
-                            action.setId(id);
-                            NavHostFragment.findNavController(CategoryFragment.this).navigate(action);
-                        }
-                    });
-                }
-            }
-        });
-
-        mBinding.recyclerViewCategory.setAdapter(categoryListAdapter);
+        setObserver();
 
         return mBinding.getRoot();
     }
 
+    private void setObserver() {
+        mViewModel.getCategoryIdSingleLiveEvent().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer categoryId) {
+                CategoryFragmentDirections.ActionNavigationCategoryToProductOfEachCategoryFragment action =
+                        CategoryFragmentDirections.actionNavigationCategoryToProductOfEachCategoryFragment();
+                action.setId(categoryId);
+                NavHostFragment.findNavController(CategoryFragment.this).navigate(action);
+            }
+        });
+
+        mViewModel.getCategoryListLiveData().observe(this, new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> categories) {
+                setupAdapter(categories);
+            }
+        });
+    }
+
     private void initRecyclerView() {
         mBinding.recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void setupAdapter(List<Category> categories) {
+        CategoryAdapter adapter = new CategoryAdapter(getContext(), mViewModel, categories);
+        mBinding.recyclerViewCategory.setAdapter(adapter);
     }
 }
