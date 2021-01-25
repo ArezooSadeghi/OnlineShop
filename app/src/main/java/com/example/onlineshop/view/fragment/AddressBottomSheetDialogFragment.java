@@ -45,10 +45,30 @@ public class AddressBottomSheetDialogFragment extends BottomSheetDialogFragment 
         mViewModel.getAddressMutableLiveData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String approximateAddress) {
-                mBinding.txtAddress.setText(approximateAddress);
+                mBinding.setApproximateAddress(approximateAddress);
             }
         });
 
+        setListener();
+
         return mBinding.getRoot();
+    }
+
+    private void setListener() {
+        mBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
+        mBinding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.getAddresses().add(mBinding.txtAddress.getText().toString());
+                mViewModel.getAddressesMutableLiveData().setValue(mViewModel.getAddresses());
+                dismiss();
+            }
+        });
     }
 }

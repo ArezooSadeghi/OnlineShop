@@ -13,14 +13,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.onlineshop.R;
+import com.example.onlineshop.adapter.AddressAdapter;
 import com.example.onlineshop.databinding.FragmentAddressBinding;
-import com.example.onlineshop.viewmodel.AddressViewModel;
+import com.example.onlineshop.viewmodel.LocatrViewModel;
+
+import java.util.List;
 
 public class AddressFragment extends Fragment {
     private FragmentAddressBinding mBinding;
-    private AddressViewModel mViewModel;
+    private LocatrViewModel mViewModel;
+    private AddressAdapter mAdapter;
 
 
     public static AddressFragment newInstance() {
@@ -35,7 +40,7 @@ public class AddressFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(LocatrViewModel.class);
         setObserver();
     }
 
@@ -49,6 +54,9 @@ public class AddressFragment extends Fragment {
                 R.layout.fragment_address,
                 container,
                 false);
+
+        initRecyclerView();
+
         return mBinding.getRoot();
     }
 
@@ -69,6 +77,13 @@ public class AddressFragment extends Fragment {
                 showReult(statusCode);
             }
         });
+
+        mViewModel.getAddressesMutableLiveData().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> addresses) {
+                setupAdapter(addresses);
+            }
+        });
     }
 
 
@@ -79,6 +94,15 @@ public class AddressFragment extends Fragment {
         if (statusCode == 201) {
             Toast.makeText(getContext(), R.string.successful_final_registration_order, Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void setupAdapter(List<String> addresses) {
+        mAdapter = new AddressAdapter(getContext(), addresses);
+        mBinding.recyclerViewAddress.setAdapter(mAdapter);
+    }
+
+    private void initRecyclerView() {
+        mBinding.recyclerViewAddress.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 

@@ -108,7 +108,7 @@ public class LocatrFragment extends Fragment {
                                 String city = addresses.get(0).getLocality();
                                 String state = addresses.get(0).getAdminArea();
                                 String country = addresses.get(0).getCountryName();
-                                String approximateAddress = address + city + state + country;
+                                String approximateAddress = address + city + state + country + " Lat: " + mLatLng.latitude + " Lng: " + mLatLng.longitude;
                                 mViewModel.getAddressMutableLiveData().postValue(approximateAddress);
                             } catch (IOException e) {
                                 Log.e(TAG, e.getMessage(), e);

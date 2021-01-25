@@ -10,19 +10,29 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.onlineshop.repository.ProductRepository;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LocatrViewModel extends AndroidViewModel {
+    private ProductRepository mRepository;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private MutableLiveData<Location> mLocationMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> mAddressMutableLiveData = new MutableLiveData<>();
+    private LiveData<Integer> mStatusCodePostOrderLiveData;
+    private MutableLiveData<List<String>> mAddressesMutableLiveData = new MutableLiveData<>();
+    private List<String> mAddresses = new ArrayList<>();
 
     public LocatrViewModel(@NonNull Application application) {
         super(application);
+        mRepository = ProductRepository.getInstance(getApplication());
+        mStatusCodePostOrderLiveData = mRepository.getStatusCodePostOrderMutableLiveData();
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplication());
     }
 
@@ -32,6 +42,26 @@ public class LocatrViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> getAddressMutableLiveData() {
         return mAddressMutableLiveData;
+    }
+
+    public LiveData<Integer> getStatusCodePostOrderLiveData() {
+        return mStatusCodePostOrderLiveData;
+    }
+
+    public MutableLiveData<List<String>> getAddressesMutableLiveData() {
+        return mAddressesMutableLiveData;
+    }
+
+    public List<String> getAddresses() {
+        return mAddresses;
+    }
+
+    public void setAddresses(List<String> addresses) {
+        mAddresses = addresses;
+    }
+
+    public void postOrder(String email) {
+        mRepository.postOrder(email);
     }
 
     @SuppressLint("MissingPermission")
