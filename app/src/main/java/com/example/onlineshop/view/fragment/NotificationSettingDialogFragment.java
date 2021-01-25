@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class NotificationSettingDialogFragment extends BottomSheetDialogFragment {
     private NotificationSettingDialogBinding mBinding;
+    private int mLastCheckedId = -1;
+    private int[] mButtonIds = new int[]{R.id.radio_btn_default, R.id.radio_btn_3_hours, R.id.radio_btn_5_hours, R.id.radio_btn_8_hours, R.id.radio_btn_12_hours};
+    private int[] mHours = new int[]{1, 3, 5, 8, 12};
 
     public static NotificationSettingDialogFragment newInstance() {
         NotificationSettingDialogFragment fragment = new NotificationSettingDialogFragment();
@@ -41,9 +45,19 @@ public class NotificationSettingDialogFragment extends BottomSheetDialogFragment
         mBinding.numberPicker.setMaxValue(24);
 
         mBinding.setIsOnNotification(Preferences.getIsOnNotification(getContext()));
-        if (Preferences.getSelectedButtonId(getContext()) != 0) {
+        if (Preferences.getSelectedButtonId(getContext()) == 0) {
+            mBinding.radioGroup.check(R.id.radio_btn_default);
+        } else {
             mBinding.radioGroup.check(Preferences.getSelectedButtonId(getContext()));
         }
+
+
+        mBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                mLastCheckedId = checkedId;
+            }
+        });
 
         mBinding.btnSaveSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,53 +65,47 @@ public class NotificationSettingDialogFragment extends BottomSheetDialogFragment
                 Preferences.setIsOnNotification(getContext(), mBinding.switchOnNotification.isChecked());
                 boolean isOn = PollService.isAlarmSet(getContext());
                 if (mBinding.switchOnNotification.isChecked()) {
+                    Preferences.setIsOnNotification(getContext(), true);
                     if (!isOn) {
-                        checkTimeSelected(isOn);
+                        for (int i = 0; i < mButtonIds.length; i++) {
+                            if (mLastCheckedId == mButtonIds[i]) {
+                                setNewAlarm(mButtonIds[i], !isOn, mHours[i]);
+                                Preferences.setSelectedButtonId(getContext(), mButtonIds[i]);
+                                break;
+                            } else {
+                                setNewAlarm(R.id.radio_btn_default, !isOn, 1);
+                            }
+                        }
                     } else {
-                        if (mBinding.radioGroup.getCheckedRadioButtonId() == R.id.radio_btn_3_hours) {
-                            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_3_hours);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), isOn, 3);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 5);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 8);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 12);
-                            PollService.scheduleAlarm(getContext(), !isOn);
-
-                        } else if (mBinding.radioGroup.getCheckedRadioButtonId() == R.id.radio_btn_5_hours) {
-                            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_5_hours);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), isOn, 5);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 3);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 8);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 12);
-                            PollService.scheduleAlarm(getContext(), !isOn);
-
-                        } else if (mBinding.radioGroup.getCheckedRadioButtonId() == R.id.radio_btn_8_hours) {
-                            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_8_hours);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), isOn, 8);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 3);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 5);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 12);
-                            PollService.scheduleAlarm(getContext(), !isOn);
-
-                        } else if (mBinding.radioGroup.getCheckedRadioButtonId() == R.id.radio_btn_12_hours) {
-                            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_12_hours);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), isOn, 12);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 3);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 5);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 8);
-                            PollService.scheduleAlarm(getContext(), !isOn);
-
+                        if (mLastCheckedId == -1) {
+                            return;
                         } else {
-                            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_default);
-                            PollService.scheduleAlarm(getContext(), isOn);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 12);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 3);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 5);
-                            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 8);
+                            for (int i = 0; i < mButtonIds.length; i++) {
+                                if (mLastCheckedId == mButtonIds[i]) {
+                                    setNewAlarm(mButtonIds[i], isOn, mHours[i]);
+                                    break;
+                                }
+                            }
+
+                            for (int i = 0; i < mButtonIds.length; i++) {
+                                if (Preferences.getSelectedButtonId(getContext()) == mButtonIds[i]) {
+                                    cancelOldAlarm(mButtonIds[i], !isOn, mHours[i]);
+                                    break;
+                                }
+                            }
+                            Preferences.setSelectedButtonId(getContext(), mLastCheckedId);
                         }
                     }
                 } else {
+                    Preferences.setIsOnNotification(getContext(), false);
                     if (isOn) {
-                        checkTimeSelected(isOn);
+                        for (int i = 0; i < mButtonIds.length; i++) {
+                            if (Preferences.getSelectedButtonId(getContext()) == mButtonIds[i]) {
+                                cancelOldAlarm(mButtonIds[i], !isOn, mHours[i]);
+                                Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_default);
+                                break;
+                            }
+                        }
                     }
                 }
                 dismiss();
@@ -114,22 +122,11 @@ public class NotificationSettingDialogFragment extends BottomSheetDialogFragment
         return mBinding.getRoot();
     }
 
-    private void checkTimeSelected(boolean isOn) {
-        if (mBinding.radioGroup.getCheckedRadioButtonId() == R.id.radio_btn_3_hours) {
-            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_3_hours);
-            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 3);
-        } else if (mBinding.radioGroup.getCheckedRadioButtonId() == R.id.radio_btn_5_hours) {
-            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_5_hours);
-            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 5);
-        } else if (mBinding.radioGroup.getCheckedRadioButtonId() == R.id.radio_btn_8_hours) {
-            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_8_hours);
-            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 8);
-        } else if (mBinding.radioGroup.getCheckedRadioButtonId() == R.id.radio_btn_12_hours) {
-            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_12_hours);
-            PollService.scheduleAlarmBaseUserSelectedTime(getContext(), !isOn, 12);
-        } else {
-            Preferences.setSelectedButtonId(getContext(), R.id.radio_btn_default);
-            PollService.scheduleAlarm(getContext(), !isOn);
-        }
+    private void setNewAlarm(int buttonId, boolean isOn, int hour) {
+        PollService.scheduleAlarmBaseUserSelectedTime(getContext(), isOn, hour);
+    }
+
+    private void cancelOldAlarm(int buttonId, boolean isOn, int hour) {
+        PollService.scheduleAlarmBaseUserSelectedTime(getContext(), isOn, hour);
     }
 }
