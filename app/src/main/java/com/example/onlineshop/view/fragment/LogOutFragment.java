@@ -11,9 +11,11 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentLogOutBinding;
+import com.example.onlineshop.utilities.Preferences;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class LogOutFragment extends BottomSheetDialogFragment {
+    private FragmentLogOutBinding mBinding;
 
 
     public static LogOutFragment newInstance() {
@@ -29,11 +31,28 @@ public class LogOutFragment extends BottomSheetDialogFragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        FragmentLogOutBinding binding = DataBindingUtil.inflate(
+        mBinding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_log_out,
                 container,
                 false);
-        return binding.getRoot();
+
+        mBinding.btnCommon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
+        mBinding.btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Preferences.setIsLogin(getContext(), false);
+                Preferences.setEmail(getContext(), null);
+                dismiss();
+            }
+        });
+
+        return mBinding.getRoot();
     }
 }
