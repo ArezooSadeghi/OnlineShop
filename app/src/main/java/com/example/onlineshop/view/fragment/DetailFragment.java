@@ -1,6 +1,7 @@
 package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +45,7 @@ public class DetailFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +56,8 @@ public class DetailFragment extends Fragment {
         mId = args.getId();
         mViewModel.retrieveProduct(mId);
         mViewModel.getReviews(mId);
-        setObserver();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,12 +76,15 @@ public class DetailFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         int id = getArguments().getInt(PollService.BUNDLE_LAST_ID);
         mViewModel.retrieveProduct(id);
+        setObserver();
     }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -87,41 +92,30 @@ public class DetailFragment extends Fragment {
         inflater.inflate(R.menu.detail_menu, menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_add_to_cart:
                 mViewModel.getProducts().add(mProduct);
                 mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
-                mViewModel.getPrices().add(mProduct.getPrice());
-                mViewModel.getPriceMutableLiveData().setValue(mViewModel.getPrices());
+                if (mProduct.getPrice() != null) {
+                    Log.d("Arezoo", mProduct.getPrice());
+                    mViewModel.getPrices().add(mProduct.getPrice());
+                    mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void setObserver() {
-        mViewModel.getRetrieveProductLiveData().observe(this, new Observer<Product>() {
-            @Override
-            public void onChanged(Product product) {
-                mProduct = product;
-                initViews(product);
-            }
-        });
-
-        mViewModel.getReviewListLiveData().observe(this, new Observer<List<Review>>() {
-            @Override
-            public void onChanged(List<Review> reviews) {
-                updateUI(reviews);
-            }
-        });
-    }
 
     private void initToolbar() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.detailToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
     }
+
 
     private void initRecyclerView() {
         mBinding.recyclerViewReview.setLayoutManager(new LinearLayoutManager(
@@ -129,6 +123,7 @@ public class DetailFragment extends Fragment {
                 RecyclerView.HORIZONTAL,
                 true));
     }
+
 
     private void setListener() {
         mBinding.btnAddReview.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +138,25 @@ public class DetailFragment extends Fragment {
     }
 
 
+    private void setObserver() {
+        mViewModel.getRetrieveProductLiveData().observe(getViewLifecycleOwner(), new Observer<Product>() {
+            @Override
+            public void onChanged(Product product) {
+                mProduct = product;
+                initViews(product);
+            }
+        });
+
+
+        mViewModel.getReviewListLiveData().observe(getViewLifecycleOwner(), new Observer<List<Review>>() {
+            @Override
+            public void onChanged(List<Review> reviews) {
+                setupAdapter(reviews);
+            }
+        });
+    }
+
+
     private void initViews(Product product) {
         if (product != null) {
             mBinding.setProduct(product);
@@ -151,7 +165,8 @@ public class DetailFragment extends Fragment {
         }
     }
 
-    private void updateUI(List<Review> reviews) {
+
+    private void setupAdapter(List<Review> reviews) {
         if (mAdapter == null) {
             mAdapter = new ReviewAdapter(getContext(), reviews);
             mBinding.recyclerViewReview.setAdapter(mAdapter);

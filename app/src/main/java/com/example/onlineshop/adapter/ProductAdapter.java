@@ -101,15 +101,13 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((CartProductHolder) holder).mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mSingleSharedDetailViewModel.getProductMutableLiveData().setValue(product);
-                    mSingleSharedDetailViewModel.getItemClickedMutableLiveData().setValue(true);
+                    mSingleSharedDetailViewModel.getItemClickedMutableLiveData().setValue(product.getId());
                 }
             });
             ((CartProductHolder) holder).mBinding.btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mSingleSharedDetailViewModel.getProductMutableLiveData().setValue(product);
-                    mSingleSharedDetailViewModel.getAddClickedSingleLiveEvent().setValue(true);
+                    mSingleSharedDetailViewModel.getAddClickedSingleLiveEvent().setValue(product);
                     int numberOfProduct = Integer.valueOf(((CartProductHolder) holder).mBinding.btnNumberOfProduct.getText().toString());
                     if (numberOfProduct == 1) {
                         ((CartProductHolder) holder).mBinding.btnDelete.setVisibility(View.GONE);
@@ -122,16 +120,14 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((CartProductHolder) holder).mBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mSingleSharedDetailViewModel.getProductMutableLiveData().setValue(product);
-                    mSingleSharedDetailViewModel.getDeleteClickedSingleLiveEvent().setValue(true);
+                    mSingleSharedDetailViewModel.getDeleteClickedSingleLiveEvent().setValue(product);
                 }
             });
 
             ((CartProductHolder) holder).mBinding.btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mSingleSharedDetailViewModel.getProductMutableLiveData().setValue(product);
-                    mSingleSharedDetailViewModel.getRemoveClickedSingleLiveEvent().setValue(true);
+                    mSingleSharedDetailViewModel.getRemoveClickedSingleLiveEvent().setValue(product);
                     int numberOfProduct = Integer.valueOf(((CartProductHolder) holder).mBinding.btnNumberOfProduct.getText().toString());
                     if (numberOfProduct == 2) {
                         ((CartProductHolder) holder).mBinding.btnRemove.setVisibility(View.GONE);

@@ -32,6 +32,7 @@ public class AlertDialogFragment extends DialogFragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ public class AlertDialogFragment extends DialogFragment {
         mTotalPrice = getArguments().getString(ARGS_TOTAL_PRICE);
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
     }
+
 
     @NonNull
     @Override
@@ -57,6 +59,7 @@ public class AlertDialogFragment extends DialogFragment {
                 .setView(mBinding.getRoot())
                 .create();
     }
+
 
     private void setListener() {
         mBinding.fabOk.setOnClickListener(new View.OnClickListener() {

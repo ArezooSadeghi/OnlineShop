@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ProductAdapter;
+import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentHomeBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.SingleHomeViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -50,6 +52,7 @@ public class HomeFragment extends Fragment {
         mViewModel.getBestProduct("rating", "desc");
         mViewModel.getLatestProduct("date", "desc");
         mViewModel.getMostVisitedProduct("popularity", "desc");
+        mViewModel.getSpecialProduct(false);
         setObserver();
     }
 
@@ -124,6 +127,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        mViewModel.getSpecialProductLiveData().observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                setupSpecialProductAdapter(products);
+            }
+        });
+
+
         mViewModel.getItemClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isItemClicked) {
@@ -156,5 +167,16 @@ public class HomeFragment extends Fragment {
     private void setupMostVisitedProductAdapter(List<Product> products) {
         ProductAdapter adapter = new ProductAdapter(getContext(), mViewModel, 1, products);
         mBinding.recyclerViewMostVisitedProduct.setAdapter(adapter);
+    }
+
+    private void setupSpecialProductAdapter(List<Product> products) {
+        List<String> urls = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getImageUrl() != null) {
+                urls.addAll(product.getImageUrl());
+            }
+        }
+        SliderAdapter sliderAdapter = new SliderAdapter(getContext(), urls);
+        mBinding.imgProductSlider.setSliderAdapter(sliderAdapter);
     }
 }

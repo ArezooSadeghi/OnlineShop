@@ -20,13 +20,12 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
     private LiveData<Product> mRetrieveProductLiveData;
     private List<Product> mProducts = new ArrayList<>();
     private List<String> mPrices = new ArrayList<>();
-    private MutableLiveData<List<String>> mPriceMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<String>> mPriceListMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Product>> mProductListMutableLiveData = new MutableLiveData<>();
-    private SingleLiveEvent<Boolean> mAddClickedSingleLiveEvent = new SingleLiveEvent<>();
-    private SingleLiveEvent<Boolean> mDeleteClickedSingleLiveEvent = new SingleLiveEvent<>();
-    private SingleLiveEvent<Boolean> mRemoveClickedSingleLiveEvent = new SingleLiveEvent<>();
-    private MutableLiveData<Boolean> mItemClickedMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
+    private SingleLiveEvent<Product> mAddClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Product> mDeleteClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Product> mRemoveClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private MutableLiveData<Integer> mItemClickedMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> mTotalAmountPaidMutableLiveData = new MutableLiveData<>();
     private SingleLiveEvent<Boolean> mOkClickedSingleLiveEvent = new SingleLiveEvent<>();
     private LiveData<List<Review>> mReviewListLiveData;
@@ -59,27 +58,23 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
         return mProductListMutableLiveData;
     }
 
-    public MutableLiveData<List<String>> getPriceMutableLiveData() {
-        return mPriceMutableLiveData;
+    public MutableLiveData<List<String>> getPriceListMutableLiveData() {
+        return mPriceListMutableLiveData;
     }
 
-    public MutableLiveData<Product> getProductMutableLiveData() {
-        return mProductMutableLiveData;
-    }
-
-    public SingleLiveEvent<Boolean> getAddClickedSingleLiveEvent() {
+    public SingleLiveEvent<Product> getAddClickedSingleLiveEvent() {
         return mAddClickedSingleLiveEvent;
     }
 
-    public SingleLiveEvent<Boolean> getDeleteClickedSingleLiveEvent() {
+    public SingleLiveEvent<Product> getDeleteClickedSingleLiveEvent() {
         return mDeleteClickedSingleLiveEvent;
     }
 
-    public SingleLiveEvent<Boolean> getRemoveClickedSingleLiveEvent() {
+    public SingleLiveEvent<Product> getRemoveClickedSingleLiveEvent() {
         return mRemoveClickedSingleLiveEvent;
     }
 
-    public MutableLiveData<Boolean> getItemClickedMutableLiveData() {
+    public MutableLiveData<Integer> getItemClickedMutableLiveData() {
         return mItemClickedMutableLiveData;
     }
 
