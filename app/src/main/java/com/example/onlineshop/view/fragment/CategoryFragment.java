@@ -26,6 +26,7 @@ public class CategoryFragment extends Fragment {
     private FragmentCategoryBinding mBinding;
     private SingleCategoryViewModel mViewModel;
 
+
     public static CategoryFragment newInstance() {
         Bundle args = new Bundle();
         CategoryFragment fragment = new CategoryFragment();
@@ -33,13 +34,23 @@ public class CategoryFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(SingleCategoryViewModel.class);
         mViewModel.getCategory(1);
+        setObserver();
     }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setObserver();
+    }
+
 
     @Nullable
     @Override
@@ -53,13 +64,20 @@ public class CategoryFragment extends Fragment {
                 false);
 
         initRecyclerView();
-        setObserver();
 
         return mBinding.getRoot();
     }
 
+
     private void setObserver() {
-        mViewModel.getCategoryIdSingleLiveEvent().observe(this, new Observer<Integer>() {
+        mViewModel.getCategoryListLiveData().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> categories) {
+                setupAdapter(categories);
+            }
+        });
+
+        mViewModel.getCategoryIdSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer categoryId) {
                 CategoryFragmentDirections.ActionNavigationCategoryToProductOfEachCategoryFragment action =
@@ -68,18 +86,13 @@ public class CategoryFragment extends Fragment {
                 NavHostFragment.findNavController(CategoryFragment.this).navigate(action);
             }
         });
-
-        mViewModel.getCategoryListLiveData().observe(this, new Observer<List<Category>>() {
-            @Override
-            public void onChanged(List<Category> categories) {
-                setupAdapter(categories);
-            }
-        });
     }
+
 
     private void initRecyclerView() {
         mBinding.recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
 
     private void setupAdapter(List<Category> categories) {
         CategoryAdapter adapter = new CategoryAdapter(getContext(), mViewModel, categories);

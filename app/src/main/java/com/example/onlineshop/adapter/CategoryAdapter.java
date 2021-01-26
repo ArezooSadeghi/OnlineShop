@@ -27,6 +27,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         mCategories = categories;
     }
 
+
     @NonNull
     @Override
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,21 +38,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 false));
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
-        holder.bindCategory(mCategories.get(position));
+        Category category = mCategories.get(position);
+        holder.bindCategory(category);
         holder.mBinding.btnSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.getCategoryIdSingleLiveEvent().setValue(mCategories.get(position).getId());
+                mViewModel.getCategoryIdSingleLiveEvent().setValue(category.getId());
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
         return mCategories.size();
     }
+
 
     public class CategoryHolder extends RecyclerView.ViewHolder {
         private CategoryAdapterItemBinding mBinding;
