@@ -18,9 +18,12 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentAccountBinding;
+import com.example.onlineshop.databinding.NoAccountBinding;
+import com.example.onlineshop.utilities.Preferences;
 
 public class AccountFragment extends Fragment {
     private FragmentAccountBinding mBinding;
+    private NoAccountBinding mNoAccountBinding;
 
 
     public static AccountFragment newInstance() {
@@ -42,16 +45,25 @@ public class AccountFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        mBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_account,
-                container,
-                false);
+        if (!Preferences.getIsLogin(getContext())) {
+            mNoAccountBinding = DataBindingUtil.inflate(
+                    inflater,
+                    R.layout.no_account,
+                    container,
+                    false);
+            return mNoAccountBinding.getRoot();
+        } else {
+            mBinding = DataBindingUtil.inflate(
+                    inflater,
+                    R.layout.fragment_account,
+                    container,
+                    false);
 
-        initToolbar();
-        setListener();
+            initToolbar();
+            setListener();
 
-        return mBinding.getRoot();
+            return mBinding.getRoot();
+        }
     }
 
     @Override
