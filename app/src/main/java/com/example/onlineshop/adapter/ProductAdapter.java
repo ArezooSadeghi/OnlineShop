@@ -147,8 +147,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((ProductOfEachCategoryHolder) holder).mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mProductOfEachCategoryViewModel.getItemClickedSingleLiveEvent().setValue(true);
-                    mProductOfEachCategoryViewModel.getProductIdMutableLiveData().setValue(product.getId());
+                    mProductOfEachCategoryViewModel.getProductIdSingleLiveEvent().setValue(product.getId());
                 }
             });
         }

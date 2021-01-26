@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -32,6 +34,7 @@ public class ProductOfEachCategoryFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +56,28 @@ public class ProductOfEachCategoryFragment extends Fragment {
                 false);
 
         initRecyclerView();
-        setObserver();
 
         return mBinding.getRoot();
     }
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setObserver();
+    }
+
+
     private void setObserver() {
+        mViewModel.getProductIdSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer productId) {
+                ProductOfEachCategoryFragmentDirections.ActionProductOfEachCategoryFragmentToDetailFragment action =
+                        ProductOfEachCategoryFragmentDirections.actionProductOfEachCategoryFragmentToDetailFragment();
+                action.setId(productId);
+                NavHostFragment.findNavController(ProductOfEachCategoryFragment.this).navigate(action);
+            }
+        });
 
         mViewModel.getProductByCategoryLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
@@ -66,28 +85,13 @@ public class ProductOfEachCategoryFragment extends Fragment {
                 setupAdapter(products);
             }
         });
-
-        mViewModel.getItemClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isItemClicked) {
-                if (isItemClicked) {
-                    mViewModel.getProductIdMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer id) {
-                            ProductOfEachCategoryFragmentDirections.ActionProductOfEachCategoryFragmentToDetailFragment action =
-                                    ProductOfEachCategoryFragmentDirections.actionProductOfEachCategoryFragmentToDetailFragment();
-                            action.setId(id);
-                            NavHostFragment.findNavController(ProductOfEachCategoryFragment.this).navigate(action);
-                        }
-                    });
-                }
-            }
-        });
     }
+
 
     private void initRecyclerView() {
         mBinding.recyclerViewProductOfEachCategory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
 
     private void setupAdapter(List<Product> products) {
         ProductAdapter adapter = new ProductAdapter(getContext(), mViewModel, 3, products);

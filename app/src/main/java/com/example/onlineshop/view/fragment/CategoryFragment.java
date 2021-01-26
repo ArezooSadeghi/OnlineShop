@@ -41,14 +41,6 @@ public class CategoryFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(SingleCategoryViewModel.class);
         mViewModel.getCategory(1);
-        setObserver();
-    }
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setObserver();
     }
 
 
@@ -66,6 +58,13 @@ public class CategoryFragment extends Fragment {
         initRecyclerView();
 
         return mBinding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setObserver();
     }
 
 

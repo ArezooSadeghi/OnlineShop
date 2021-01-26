@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.repository.ProductRepository;
@@ -16,8 +15,7 @@ import java.util.List;
 public class SingleProductOfEachCategoryViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<List<Product>> mProductByCategoryLiveData;
-    private SingleLiveEvent<Boolean> mItemClickedSingleLiveEvent = new SingleLiveEvent<>();
-    private MutableLiveData<Integer> mProductIdMutableLiveData = new MutableLiveData<>();
+    private SingleLiveEvent<Integer> mProductIdSingleLiveEvent = new SingleLiveEvent<>();
     private LiveData<Integer> mTotalPageLiveData;
 
     public SingleProductOfEachCategoryViewModel(@NonNull Application application) {
@@ -32,12 +30,8 @@ public class SingleProductOfEachCategoryViewModel extends AndroidViewModel {
         return mProductByCategoryLiveData;
     }
 
-    public SingleLiveEvent<Boolean> getItemClickedSingleLiveEvent() {
-        return mItemClickedSingleLiveEvent;
-    }
-
-    public MutableLiveData<Integer> getProductIdMutableLiveData() {
-        return mProductIdMutableLiveData;
+    public SingleLiveEvent<Integer> getProductIdSingleLiveEvent() {
+        return mProductIdSingleLiveEvent;
     }
 
     public LiveData<Integer> getTotalPageLiveData() {
