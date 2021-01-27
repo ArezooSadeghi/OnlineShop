@@ -47,6 +47,7 @@ public class ProductRepository {
     private MutableLiveData<Review> mReviewMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Review> mUpdateReviewMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Category>> mCategoryListMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Product>> mSearchProductMutableLiveData = new MutableLiveData<>();
 
 
     private static final String TAG = ProductRepository.class.getSimpleName();
@@ -142,6 +143,10 @@ public class ProductRepository {
 
     public MutableLiveData<List<Category>> getCategoryListMutableLiveData() {
         return mCategoryListMutableLiveData;
+    }
+
+    public MutableLiveData<List<Product>> getSearchProductMutableLiveData() {
+        return mSearchProductMutableLiveData;
     }
 
     public void insert(Customer customer) {
@@ -368,6 +373,20 @@ public class ProductRepository {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
+    public void searchProducts(String search) {
+        mProductListService.searchProducts(search).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                mSearchProductMutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
             }
         });

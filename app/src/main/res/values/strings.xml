@@ -9,9 +9,11 @@
     <string name="register_review">ثبت دیدگاه</string>
     <string name="title_account">حساب کاربری</string>
     <string name="confirmation">تایید</string>
+    <string name="sort">مرتب سازی</string>
     <string name="no_account">حساب کاربری برای شما ثبت نشده است</string>
     <string name="your_address">آدرس شما</string>
     <string name="address_hint">آدرس شما</string>
+    <string name="search_hint">جستجو</string>
     <string name="save">ذخیره</string>
     <string name="best_product_title">بهترین محصولات</string>
     <string name="by_default">پیش فرض</string>
