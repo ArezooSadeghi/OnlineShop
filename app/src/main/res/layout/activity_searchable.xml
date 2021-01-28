@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="searchableViewModel"
+            type="com.example.onlineshop.viewmodel.SearchableViewModel" />
+
     </data>
 
     <LinearLayout
@@ -24,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:onClick="@{()->searchableViewModel.setSortClickedSingleLiveEvent()}"
                 android:text="@string/sort"
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="18sp" />

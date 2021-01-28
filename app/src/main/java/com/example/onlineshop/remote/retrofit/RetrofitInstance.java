@@ -14,7 +14,6 @@ public class RetrofitInstance {
     public static Retrofit getRetrofitInstance(Type type, Object typeAdapter) {
         return new Retrofit.Builder()
                 .baseUrl("https://woocommerce.maktabsharif.ir/wp-json/wc/v3/")
-                /*.addCallAdapterFactory(RxJava2CallAdapterFactory.create())*/
                 .addConverterFactory(createGsonConverter(type, typeAdapter))
                 .build();
     }
