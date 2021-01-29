@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -17,23 +18,12 @@
         android:orientation="vertical"
         tools:context=".view.activity.SearchableActivity">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/searchable_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/secondary_shrine_pink">
-
-            <Button
-                android:id="@+id/btn_sort"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="@{()->searchableViewModel.setSortClickedSingleLiveEvent()}"
-                android:text="@string/sort"
-                android:textColor="@android:color/holo_blue_light"
-                android:textSize="18sp" />
-
-        </com.google.android.material.appbar.AppBarLayout>
+            android:background="@color/secondary_shrine_pink"
+            app:menu="@menu/searchable_menu" />
 
         <ListView
             android:id="@+id/list_view_search_result"

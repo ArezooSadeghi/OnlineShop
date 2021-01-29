@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OnlineShop</string>
+    <string name="app_name">فروشگاه آنلاین</string>
     <string name="title_home">خانه</string>
     <string name="title_category">دسته بندی ها</string>
     <string name="first_and_last_name_hint">نام و نام خانوادگی</string>
