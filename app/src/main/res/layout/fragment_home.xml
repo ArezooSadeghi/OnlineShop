@@ -70,7 +70,6 @@
 
             </com.smarteist.autoimageslider.SliderView>
 
-
             <TextView
                 android:id="@+id/txt_best_product_title"
                 android:layout_width="wrap_content"

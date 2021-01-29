@@ -21,6 +21,7 @@ public class EditReviewDialogFragment extends DialogFragment {
     private FragmentEditReviewDialogBinding mBinding;
     private Review mReview;
     private SingleSharedReviewViewModel mViewModel;
+
     private static final String ARGS_REVIEW = "review";
 
     public static EditReviewDialogFragment newInstance(Review review) {

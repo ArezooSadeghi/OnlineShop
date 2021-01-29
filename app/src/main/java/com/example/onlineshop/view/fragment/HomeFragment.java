@@ -27,7 +27,6 @@ import com.example.onlineshop.model.Product;
 import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.SingleHomeViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -42,20 +41,18 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
         mViewModel = new ViewModelProvider(this).get(SingleHomeViewModel.class);
+
         mViewModel.getBestProduct("rating", "desc");
         mViewModel.getLatestProduct("date", "desc");
         mViewModel.getMostVisitedProduct("popularity", "desc");
         mViewModel.getSpecialProduct(false);
-        setObserver();
     }
-
 
     @Nullable
     @Override
@@ -74,13 +71,17 @@ public class HomeFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setObserver();
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.home_menu, menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -108,7 +109,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setObserver() {
-        mViewModel.getBestProductLiveData().observe(this, new Observer<List<Product>>() {
+        mViewModel.getBestProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
                 mBinding.setBestProductTitle(getString(R.string.best_product_title));
@@ -116,7 +117,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        mViewModel.getLatestProductLiveData().observe(this, new Observer<List<Product>>() {
+        mViewModel.getLatestProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
                 Preferences.setLastId(getContext(), products.get(0).getId());
@@ -125,7 +126,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        mViewModel.getMostVisitedProductLiveData().observe(this, new Observer<List<Product>>() {
+        mViewModel.getMostVisitedProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
                 mBinding.setMostVisitedProductTitle(getString(R.string.most_visited_product_title));
@@ -133,32 +134,23 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        mViewModel.getSpecialProductLiveData().observe(this, new Observer<List<Product>>() {
+        mViewModel.getSpecialProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
                 setupSpecialProductAdapter(products);
             }
         });
 
-
-        mViewModel.getItemClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
+        mViewModel.getProductIdSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
-            public void onChanged(Boolean isItemClicked) {
-                if (isItemClicked) {
-                    mViewModel.getProductIdLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer id) {
-                            HomeFragmentDirections.ActionNavigationHomeToDetailFragment action =
-                                    HomeFragmentDirections.actionNavigationHomeToDetailFragment();
-                            action.setId(id);
-                            NavHostFragment.findNavController(HomeFragment.this).navigate(action);
-                        }
-                    });
-                }
+            public void onChanged(Integer productId) {
+                HomeFragmentDirections.ActionNavigationHomeToDetailFragment action =
+                        HomeFragmentDirections.actionNavigationHomeToDetailFragment();
+                action.setId(productId);
+                NavHostFragment.findNavController(HomeFragment.this).navigate(action);
             }
         });
     }
-
 
     private void setupBestProductAdapter(List<Product> products) {
         ProductAdapter adapter = new ProductAdapter(getContext(), mViewModel, 1, products);
@@ -176,13 +168,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupSpecialProductAdapter(List<Product> products) {
-        List<String> urls = new ArrayList<>();
-        for (Product product : products) {
-            if (product.getImageUrl() != null) {
-                urls.addAll(product.getImageUrl());
-            }
-        }
-        SliderAdapter sliderAdapter = new SliderAdapter(getContext(), urls);
+        SliderAdapter sliderAdapter = new SliderAdapter(getContext(), mViewModel.getUrls(products));
         mBinding.imgProductSlider.setSliderAdapter(sliderAdapter);
     }
 }

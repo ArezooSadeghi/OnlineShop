@@ -27,6 +27,7 @@ public class CartFragment extends Fragment {
 
     private FragmentCartBinding mBinding;
     private SingleSharedDetailViewModel mViewModel;
+
     private static final String TAG = "AlertDialogFragment";
 
     public static CartFragment newInstance() {
@@ -141,32 +142,27 @@ public class CartFragment extends Fragment {
         mViewModel.getOkClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isOkClicked) {
-                if (isOkClicked) {
-                    if (Preferences.getIsLogin(getContext())) {
-                        CartFragmentDirections.ActionNavigationCartToAddressFragment action =
-                                CartFragmentDirections.actionNavigationCartToAddressFragment();
-                        action.setEmail(Preferences.getEmail(getContext()));
-                        NavHostFragment.findNavController(CartFragment.this).navigate(action);
-                    } else {
-                        NavHostFragment.findNavController(CartFragment.this)
-                                .navigate(R.id.action_navigation_cart_to_loginFragment);
-                    }
+                if (Preferences.getIsLogin(getContext())) {
+                    CartFragmentDirections.ActionNavigationCartToAddressFragment action =
+                            CartFragmentDirections.actionNavigationCartToAddressFragment();
+                    action.setEmail(Preferences.getEmail(getContext()));
+                    NavHostFragment.findNavController(CartFragment.this).navigate(action);
+                } else {
+                    NavHostFragment.findNavController(CartFragment.this)
+                            .navigate(R.id.action_navigation_cart_to_loginFragment);
                 }
             }
         });
     }
 
-
     private void initRecyclerView() {
         mBinding.recyclerViewCart.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-
 
     private void setupAdapter(List<Product> products) {
         ProductAdapter productAdapter = new ProductAdapter(getContext(), mViewModel, 2, products);
         mBinding.recyclerViewCart.setAdapter(productAdapter);
     }
-
 
     private void calculateTotalPrice(List<String> prices) {
         Double totalPrice = 0.0;

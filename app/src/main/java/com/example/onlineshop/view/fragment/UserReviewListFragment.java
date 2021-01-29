@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -25,6 +27,7 @@ public class UserReviewListFragment extends Fragment {
     private SingleSharedReviewViewModel mViewModel;
     private UserReviewListAdapter mAdapter;
     private Review mReview;
+
     private static final String TAG = EditReviewDialogFragment.class.getSimpleName();
 
     public static UserReviewListFragment newInstance() {
@@ -39,7 +42,6 @@ public class UserReviewListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedReviewViewModel.class);
-        setObserver();
     }
 
     @Override
@@ -57,22 +59,21 @@ public class UserReviewListFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setObserver();
+    }
+
     private void setObserver() {
-        mViewModel.getReviewListMutableLiveData().observe(this, new Observer<List<Review>>() {
+        mViewModel.getReviewListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Review>>() {
             @Override
             public void onChanged(List<Review> reviews) {
                 setupAdapter(reviews);
             }
         });
 
-        mViewModel.getDeleteClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isDeleteClicked) {
-
-            }
-        });
-
-        mViewModel.getReviewMutableLiveData().observe(this, new Observer<Review>() {
+        mViewModel.getDeleteReviewClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
                 mViewModel.deleteReview(review.getId());
@@ -81,14 +82,7 @@ public class UserReviewListFragment extends Fragment {
             }
         });
 
-        mViewModel.getEditClickedSingleLiveEvent().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isEditClicked) {
-
-            }
-        });
-
-        mViewModel.getEditReviewMutableLiveData().observe(this, new Observer<Review>() {
+        mViewModel.getEditReviewClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
                 mReview = review;
@@ -97,14 +91,15 @@ public class UserReviewListFragment extends Fragment {
             }
         });
 
-        mViewModel.getDialogReviewMutableLiveData().observe(this, new Observer<Review>() {
+
+        mViewModel.getDialogReviewMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
                 mViewModel.updateReview(review.getId(), review.getReviewContent(), review.getReviewerName(), review.getRating());
             }
         });
 
-        mViewModel.getUpdateReviewLiveData().observe(this, new Observer<Review>() {
+        mViewModel.getUpdateReviewLiveData().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
                 mViewModel.getReviews().remove(mReview);

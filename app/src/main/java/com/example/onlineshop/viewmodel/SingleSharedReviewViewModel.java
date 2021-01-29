@@ -19,10 +19,8 @@ public class SingleSharedReviewViewModel extends AndroidViewModel {
     private List<Review> mReviews = new ArrayList<>();
     private MutableLiveData<List<Review>> mReviewListMutableLiveData = new MutableLiveData<>();
     private LiveData<Review> mReviewLiveData;
-    private SingleLiveEvent<Boolean> mDeleteClickedSingleLiveEvent = new SingleLiveEvent<>();
-    private MutableLiveData<Review> mReviewMutableLiveData = new MutableLiveData<>();
-    private SingleLiveEvent<Boolean> mEditClickedSingleLiveEvent = new SingleLiveEvent<>();
-    private MutableLiveData<Review> mEditReviewMutableLiveData = new MutableLiveData<>();
+    private SingleLiveEvent<Review> mDeleteReviewClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Review> mEditReviewClickedSingleLiveEvent = new SingleLiveEvent<>();
     private MutableLiveData<Review> mDialogReviewMutableLiveData = new MutableLiveData<>();
     private LiveData<Review> mUpdateReviewLiveData;
 
@@ -53,20 +51,12 @@ public class SingleSharedReviewViewModel extends AndroidViewModel {
         mRepository.postReview(productId, content, name, email, rating);
     }
 
-    public SingleLiveEvent<Boolean> getDeleteClickedSingleLiveEvent() {
-        return mDeleteClickedSingleLiveEvent;
+    public SingleLiveEvent<Review> getDeleteReviewClickedSingleLiveEvent() {
+        return mDeleteReviewClickedSingleLiveEvent;
     }
 
-    public SingleLiveEvent<Boolean> getEditClickedSingleLiveEvent() {
-        return mEditClickedSingleLiveEvent;
-    }
-
-    public MutableLiveData<Review> getReviewMutableLiveData() {
-        return mReviewMutableLiveData;
-    }
-
-    public MutableLiveData<Review> getEditReviewMutableLiveData() {
-        return mEditReviewMutableLiveData;
+    public SingleLiveEvent<Review> getEditReviewClickedSingleLiveEvent() {
+        return mEditReviewClickedSingleLiveEvent;
     }
 
     public MutableLiveData<Review> getDialogReviewMutableLiveData() {

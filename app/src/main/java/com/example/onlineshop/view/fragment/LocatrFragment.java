@@ -40,6 +40,7 @@ public class LocatrFragment extends Fragment {
     private LocatrViewModel mViewModel;
     private GoogleMap mGoogleMap;
     private LatLng mLatLng;
+
     private static final int REQUEST_CODE_PERMISSION_LOCATION = 0;
     private static final String TAG = AddressBottomSheetDialogFragment.class.getSimpleName();
 

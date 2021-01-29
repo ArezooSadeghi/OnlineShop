@@ -90,8 +90,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((HomeProductHolder) holder).mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mSingleHomeViewModel.getItemClickedSingleLiveEvent().setValue(true);
-                    mSingleHomeViewModel.getProductIdLiveData().setValue(product.getId());
+                    mSingleHomeViewModel.getProductIdSingleLiveEvent().setValue(product.getId());
                 }
             });
         }

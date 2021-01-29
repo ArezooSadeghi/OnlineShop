@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -23,7 +25,7 @@ import java.util.List;
 public class ReviewFragment extends Fragment {
     private FragmentReviewBinding mBinding;
     private SingleSharedReviewViewModel mViewModel;
-    private int mId;
+    private int mProductId;
 
 
     public static ReviewFragment newInstance() {
@@ -38,10 +40,8 @@ public class ReviewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedReviewViewModel.class);
-        setObserver();
-
         ReviewFragmentArgs args = ReviewFragmentArgs.fromBundle(getArguments());
-        mId = args.getId();
+        mProductId = args.getId();
     }
 
 
@@ -60,9 +60,14 @@ public class ReviewFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setObserver();
+    }
 
     private void setObserver() {
-        mViewModel.getReviewLiveData().observe(this, new Observer<Review>() {
+        mViewModel.getReviewLiveData().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
                 showPostReviewResult(review);
@@ -96,7 +101,7 @@ public class ReviewFragment extends Fragment {
                     String name = mBinding.txtFirstAndLastName.getText().toString();
                     String email = Preferences.getEmail(getContext());
                     int rating = Integer.valueOf(mBinding.txtScore.getText().toString());
-                    mViewModel.postReview(mId, content, name, email, rating);
+                    mViewModel.postReview(mProductId, content, name, email, rating);
                 }
             }
         });

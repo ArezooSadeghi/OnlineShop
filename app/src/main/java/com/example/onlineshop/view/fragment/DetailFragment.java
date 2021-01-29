@@ -36,7 +36,7 @@ public class DetailFragment extends Fragment {
     private SingleSharedDetailViewModel mViewModel;
     private ReviewAdapter mAdapter;
     private Product mProduct;
-    private int mId;
+    private int mProductId;
 
     public static DetailFragment newInstance() {
         DetailFragment fragment = new DetailFragment();
@@ -52,12 +52,7 @@ public class DetailFragment extends Fragment {
         setHasOptionsMenu(true);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
-        DetailFragmentArgs args = DetailFragmentArgs.fromBundle(getArguments());
-        mId = args.getId();
-        mViewModel.retrieveProduct(mId);
-        mViewModel.getReviews(mId);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,7 +64,7 @@ public class DetailFragment extends Fragment {
                 container,
                 false);
 
-        initToolbar();
+        setToolbar();
         initRecyclerView();
         setListener();
 
@@ -82,6 +77,10 @@ public class DetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         int id = getArguments().getInt(PollService.BUNDLE_LAST_ID);
         mViewModel.retrieveProduct(id);
+        DetailFragmentArgs args = DetailFragmentArgs.fromBundle(getArguments());
+        mProductId = args.getId();
+        mViewModel.retrieveProduct(mProductId);
+        mViewModel.getReviews(mProductId);
         setObserver();
     }
 
@@ -97,13 +96,12 @@ public class DetailFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_add_to_cart:
+                Log.d("Arezoo", mProduct + "");
                 mViewModel.getProducts().add(mProduct);
                 mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
-                if (mProduct.getPrice() != null) {
-                    Log.d("Arezoo", mProduct.getPrice());
-                    mViewModel.getPrices().add(mProduct.getPrice());
-                    mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
-                }
+                String price = new String(mProduct.getPrice());
+                mViewModel.getPrices().add(price);
+                mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -111,7 +109,7 @@ public class DetailFragment extends Fragment {
     }
 
 
-    private void initToolbar() {
+    private void setToolbar() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.detailToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
     }
@@ -131,7 +129,7 @@ public class DetailFragment extends Fragment {
             public void onClick(View view) {
                 DetailFragmentDirections.ActionDetailFragmentToReviewFragment action =
                         DetailFragmentDirections.actionDetailFragmentToReviewFragment();
-                action.setId(mId);
+                action.setId(mProductId);
                 NavHostFragment.findNavController(DetailFragment.this).navigate(action);
             }
         });

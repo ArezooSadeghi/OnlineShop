@@ -43,16 +43,14 @@ public class UserReviewListAdapter extends RecyclerView.Adapter<UserReviewListAd
         holder.mBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.getDeleteClickedSingleLiveEvent().setValue(true);
-                mViewModel.getReviewMutableLiveData().setValue(mReviews.get(position));
+                mViewModel.getDeleteReviewClickedSingleLiveEvent().setValue(mReviews.get(position));
             }
         });
 
         holder.mBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.getEditClickedSingleLiveEvent().setValue(true);
-                mViewModel.getEditReviewMutableLiveData().setValue(mReviews.get(position));
+                mViewModel.getEditReviewClickedSingleLiveEvent().setValue(mReviews.get(position));
             }
         });
     }

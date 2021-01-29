@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.repository.ProductRepository;
@@ -18,10 +17,7 @@ public class SingleHomeViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<List<Product>> mBestProductLiveData,
             mLatestProductLiveData, mMostVisitedProductLiveData, mSpecialProductLiveData;
-    private LiveData<Integer> mTotalProductLiveData;
-    private MutableLiveData<Integer> mProductIdLiveData = new MutableLiveData<>();
-
-    private SingleLiveEvent<Boolean> mItemClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Integer> mProductIdSingleLiveEvent = new SingleLiveEvent<>();
 
     public SingleHomeViewModel(@NonNull Application application) {
         super(application);
@@ -30,12 +26,7 @@ public class SingleHomeViewModel extends AndroidViewModel {
         mBestProductLiveData = mRepository.getBestProductMutableLiveData();
         mLatestProductLiveData = mRepository.getLatestProductMutableLiveData();
         mMostVisitedProductLiveData = mRepository.getMostVisitedProductMutableLiveData();
-        mTotalProductLiveData = mRepository.getTotalProductMutableLiveData();
         mSpecialProductLiveData = mRepository.getSpecialProductMutableLiveData();
-    }
-
-    public LiveData<Integer> getTotalProductLiveData() {
-        return mTotalProductLiveData;
     }
 
     public LiveData<List<Product>> getBestProductLiveData() {
@@ -54,12 +45,8 @@ public class SingleHomeViewModel extends AndroidViewModel {
         return mSpecialProductLiveData;
     }
 
-    public SingleLiveEvent<Boolean> getItemClickedSingleLiveEvent() {
-        return mItemClickedSingleLiveEvent;
-    }
-
-    public MutableLiveData<Integer> getProductIdLiveData() {
-        return mProductIdLiveData;
+    public SingleLiveEvent<Integer> getProductIdSingleLiveEvent() {
+        return mProductIdSingleLiveEvent;
     }
 
     public void getTotalProduct() {
@@ -82,11 +69,11 @@ public class SingleHomeViewModel extends AndroidViewModel {
         mRepository.getSpecialProduct(featured);
     }
 
-    public List<String> getUrl(List<Product> products) {
+    public List<String> getUrls(List<Product> products) {
         List<String> urls = new ArrayList<>();
         for (Product product : products) {
-            if (product.getImageUrl().size() != 0) {
-                urls.add(product.getImageUrl().get(0));
+            if (product.getImageUrl() != null) {
+                urls.addAll(product.getImageUrl());
             }
         }
         return urls;
