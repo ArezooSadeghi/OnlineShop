@@ -15,4 +15,7 @@
     <color name="neon_fuchsia">#fc6c85</color>
     <color name="melon">#fdbcb4</color>
     <color name="blanchedalmond">#ffebcd</color>
+    <color name="red">#ED1C24</color>
+    <color name="baby_powder">#FEFEFA</color>
+    <color name="dark_charcoal">#333333</color>
 </resources>

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -29,12 +30,14 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
     }
+
 
     @Nullable
     @Override
@@ -48,21 +51,28 @@ public class LoginFragment extends Fragment {
                 container,
                 false);
 
+        mBinding.setLoginViewModel(mViewModel);
+
         setListener();
 
         return mBinding.getRoot();
     }
 
-    private void setListener() {
-        mBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mViewModel.getSignUpClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onClick(View view) {
+            public void onChanged(Boolean isSignUpClicked) {
                 NavHostFragment
                         .findNavController(LoginFragment.this)
                         .navigate(R.id.action_loginFragment_to_signupFragment);
             }
         });
+    }
 
+    private void setListener() {
         mBinding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

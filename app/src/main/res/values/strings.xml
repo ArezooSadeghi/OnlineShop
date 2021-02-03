@@ -10,6 +10,7 @@
     <string name="empty_cart">سبد خرید شما خالی می باشد</string>
     <string name="title_account">حساب کاربری</string>
     <string name="confirmation">تایید</string>
+    <string name="create_account">Create Account</string>
     <string name="sort_new">جدیدترین ها</string>
     <string name="sort_best_sellers">پرفروش ترین ها</string>
     <string name="sort_price_high_low">قیمت از زیاد به کم</string>
@@ -61,10 +62,12 @@
     <string name="most_visited_product_title">پربازدیدترین محصولات</string>
     <string name="special_product_title">محصولات ویژه</string>
     <string name="see_all">مشاهده همه</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="sign_in">Sign In</string>
     <string name="login">ورود</string>
     <string name="enter_request_information">لطفا اطلاعات خواسته شده را وارد کنید</string>
-    <string name="register">ثبت نام</string>
-    <string name="email_hint">پست الکترونیک</string>
+    <string name="register">Sign Up</string>
+    <string name="email_hint">Email</string>
     <string name="amount_paid_with_discount">جمع مبلغ پرداختی با احتساب 10 درصد تخفیف:</string>
     <string name="in_stock">instock</string>
     <string name="available_in_stock">موجود در انبار</string>
