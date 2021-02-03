@@ -7,6 +7,8 @@
             name="totalPrice"
             type="String" />
 
+        <import type="android.view.View" />
+
     </data>
 
     <LinearLayout
@@ -15,10 +17,19 @@
         android:background="@color/surface"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/empty_cart"
+            android:textSize="18sp"
+            android:visibility="@{totalPrice.equals(`0.0`) || totalPrice == null ? View.VISIBLE : View.GONE, default=visible}" />
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_shrine_pink">
+            android:background="@color/primary_shrine_pink"
+            android:visibility="@{totalPrice.equals(`0.0`) || totalPrice == null ? View.GONE : View.VISIBLE, default=gone}">
 
             <Button
                 android:id="@+id/btn_continue_buying"
@@ -38,7 +49,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="@{totalPrice != null ? @string/total + `: ` + totalPrice + ` ` + @string/currency : @string/total + `: ` + @string/ziro + ' ' + @string/currency}"
+                android:text="@{@string/total + `: ` + totalPrice + ` ` + @string/currency}"
                 android:textColor="@color/on_surface"
                 android:textSize="18sp" />
 

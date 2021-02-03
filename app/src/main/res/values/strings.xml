@@ -7,6 +7,7 @@
     <string name="score_hint">از یک تا پنج امتیاز دهید</string>
     <string name="title_cart">سبد خرید</string>
     <string name="register_review">ثبت دیدگاه</string>
+    <string name="empty_cart">سبد خرید شما خالی می باشد</string>
     <string name="title_account">حساب کاربری</string>
     <string name="confirmation">تایید</string>
     <string name="sort_new">جدیدترین ها</string>

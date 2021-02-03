@@ -1,6 +1,7 @@
 package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ProductAdapter;
 import com.example.onlineshop.databinding.FragmentCartBinding;
+import com.example.onlineshop.eventbus.event.PostOrder;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -67,6 +72,29 @@ public class CartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setObserver();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(sticky = true)
+    public void postOrderEvent(PostOrder postOrder) {
+        mViewModel.getProducts().clear();
+        mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
+        mViewModel.getPrices().clear();
+        mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
     }
 
 

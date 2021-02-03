@@ -18,8 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.AddressAdapter;
 import com.example.onlineshop.databinding.FragmentAddressBinding;
+import com.example.onlineshop.eventbus.event.PostOrder;
 import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.viewmodel.LocatrViewModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -116,6 +119,7 @@ public class AddressFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mViewModel.postOrder(email);
+                EventBus.getDefault().postSticky(new PostOrder());
             }
         });
 
