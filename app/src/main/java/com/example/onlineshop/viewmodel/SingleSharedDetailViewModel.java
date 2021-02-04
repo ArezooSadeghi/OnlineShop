@@ -31,6 +31,7 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
     private LiveData<List<Review>> mReviewListLiveData;
     private SingleLiveEvent<Boolean> mAddReviewClickedSingleLiveEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<Boolean> mAddToCartClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mContinueClickedSingleLiveEvent = new SingleLiveEvent<>();
 
     public SingleSharedDetailViewModel(@NonNull Application application) {
         super(application);
@@ -104,11 +105,27 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
         mAddToCartClickedSingleLiveEvent.setValue(true);
     }
 
+    public SingleLiveEvent<Boolean> getContinueClickedSingleLiveEvent() {
+        return mContinueClickedSingleLiveEvent;
+    }
+
+    public void setContinueClickedSingleLiveEvent() {
+        mContinueClickedSingleLiveEvent.setValue(true);
+    }
+
     public LiveData<List<Review>> getReviewListLiveData() {
         return mReviewListLiveData;
     }
 
     public void getReviews(int id) {
         mRepository.getReviews(id);
+    }
+
+    public Double calculateTotalPrice(List<String> prices) {
+        Double totalPrice = 0.0;
+        for (String price : prices) {
+            totalPrice += Double.parseDouble(price);
+        }
+        return totalPrice;
     }
 }

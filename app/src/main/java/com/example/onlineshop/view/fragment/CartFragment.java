@@ -1,7 +1,6 @@
 package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,7 @@ public class CartFragment extends Fragment {
     private FragmentCartBinding mBinding;
     private SingleSharedDetailViewModel mViewModel;
 
-    private static final String TAG = "AlertDialogFragment";
+    private static final String TAG = CartFragment.class.getSimpleName();
 
     public static CartFragment newInstance() {
         Bundle args = new Bundle();
@@ -50,6 +49,7 @@ public class CartFragment extends Fragment {
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,8 +61,8 @@ public class CartFragment extends Fragment {
                 container,
                 false);
 
+        mBinding.setSingleSharedDetailViewModel(mViewModel);
         initRecyclerView();
-        setListener();
 
         return mBinding.getRoot();
     }
@@ -98,18 +98,6 @@ public class CartFragment extends Fragment {
     }
 
 
-    private void setListener() {
-        mBinding.btnContinueBuying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialogFragment fragment = AlertDialogFragment.newInstance(
-                        mViewModel.getTotalAmountPaidMutableLiveData().getValue());
-                fragment.show(getParentFragmentManager(), TAG);
-            }
-        });
-    }
-
-
     private void setObserver() {
         mViewModel.getItemClickedMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -133,7 +121,9 @@ public class CartFragment extends Fragment {
         mViewModel.getPriceListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> prices) {
-                calculateTotalPrice(prices);
+                Double totalPrice = mViewModel.calculateTotalPrice(prices);
+                mViewModel.getTotalAmountPaidMutableLiveData().setValue(String.valueOf(totalPrice));
+                mBinding.setTotalPrice(String.valueOf(totalPrice));
             }
         });
 
@@ -181,23 +171,26 @@ public class CartFragment extends Fragment {
                 }
             }
         });
+
+
+        mViewModel.getContinueClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isContinueClicked) {
+                AlertDialogFragment fragment = AlertDialogFragment.newInstance(
+                        mViewModel.getTotalAmountPaidMutableLiveData().getValue());
+                fragment.show(getParentFragmentManager(), TAG);
+            }
+        });
     }
+
 
     private void initRecyclerView() {
         mBinding.recyclerViewCart.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
+
     private void setupAdapter(List<Product> products) {
         ProductAdapter productAdapter = new ProductAdapter(getContext(), mViewModel, 2, products);
         mBinding.recyclerViewCart.setAdapter(productAdapter);
-    }
-
-    private void calculateTotalPrice(List<String> prices) {
-        Double totalPrice = 0.0;
-        for (String price : prices) {
-            totalPrice += Double.parseDouble(price);
-        }
-        mViewModel.getTotalAmountPaidMutableLiveData().setValue(String.valueOf(totalPrice));
-        mBinding.setTotalPrice(String.valueOf(totalPrice));
     }
 }
