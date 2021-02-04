@@ -62,15 +62,9 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel.getSignUpClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isSignUpClicked) {
-                NavHostFragment
-                        .findNavController(LoginFragment.this)
-                        .navigate(R.id.action_loginFragment_to_signupFragment);
-            }
-        });
+        setObserver();
     }
+
 
     private void setListener() {
         mBinding.btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +88,18 @@ public class LoginFragment extends Fragment {
                         Snackbar.make(view, R.string.no_exist_account, Snackbar.LENGTH_LONG).show();
                     }
                 }
+            }
+        });
+    }
+
+
+    private void setObserver() {
+        mViewModel.getSignUpClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSignUpClicked) {
+                NavHostFragment
+                        .findNavController(LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_signupFragment);
             }
         });
     }

@@ -10,31 +10,32 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/red"
+        android:background="@color/rose_madder"
         tools:context=".view.fragment.SignupFragment">
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        <ImageView
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            app:icon="@drawable/ic_arrow_back"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/txt_create_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="64dp"
             android:text="@string/create_account"
             android:textColor="@color/baby_powder"
             android:textSize="35sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/btn_back" />
 
         <EditText
             android:id="@+id/txt_email"
@@ -57,7 +58,6 @@
             android:text="@string/register"
             android:textColor="@color/baby_powder"
             android:textSize="25sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -68,7 +68,7 @@
             android:layout_marginRight="32dp"
             android:layout_marginBottom="100dp"
             android:src="@drawable/ic_arrow_forward"
-            app:backgroundTint="@color/dark_charcoal"
+            app:backgroundTint="@color/charcoal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

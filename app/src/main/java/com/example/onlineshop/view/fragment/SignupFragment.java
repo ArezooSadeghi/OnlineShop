@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -35,7 +37,6 @@ public class SignupFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(SignupViewModel.class);
-        setObserver();
     }
 
 
@@ -55,8 +56,29 @@ public class SignupFragment extends Fragment {
     }
 
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setObserver();
+    }
+
+
+    private void setListener() {
+        mBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mBinding.txtEmail.getText().toString().isEmpty()) {
+                    Snackbar.make(view, R.string.enter_email, Snackbar.LENGTH_LONG).show();
+                } else {
+                    mViewModel.postCustomer(mBinding.txtEmail.getText().toString());
+                }
+            }
+        });
+    }
+
+
     private void setObserver() {
-        mViewModel.getStatusCodePostCustomerLiveData().observe(this, new Observer<Integer>() {
+        mViewModel.getStatusCodePostCustomerLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer statusCode) {
                 showSignupStatus(statusCode);
@@ -73,19 +95,5 @@ public class SignupFragment extends Fragment {
             mViewModel.insert(new Customer(mBinding.txtEmail.getText().toString()));
             Toast.makeText(getContext(), R.string.successful_register, Toast.LENGTH_LONG).show();
         }
-    }
-
-
-    private void setListener() {
-        mBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mBinding.txtEmail.getText().toString().isEmpty()) {
-                    Snackbar.make(view, R.string.enter_email, Snackbar.LENGTH_LONG).show();
-                } else {
-                    mViewModel.postCustomer(mBinding.txtEmail.getText().toString());
-                }
-            }
-        });
     }
 }
