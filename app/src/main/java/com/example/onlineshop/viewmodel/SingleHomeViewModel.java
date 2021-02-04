@@ -18,6 +18,7 @@ public class SingleHomeViewModel extends AndroidViewModel {
     private LiveData<List<Product>> mBestProductLiveData,
             mLatestProductLiveData, mMostVisitedProductLiveData, mSpecialProductLiveData;
     private SingleLiveEvent<Integer> mProductIdSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mSearchClickedSingleLiveEvent = new SingleLiveEvent<>();
 
     public SingleHomeViewModel(@NonNull Application application) {
         super(application);
@@ -47,6 +48,14 @@ public class SingleHomeViewModel extends AndroidViewModel {
 
     public SingleLiveEvent<Integer> getProductIdSingleLiveEvent() {
         return mProductIdSingleLiveEvent;
+    }
+
+    public SingleLiveEvent<Boolean> getSearchClickedSingleLiveEvent() {
+        return mSearchClickedSingleLiveEvent;
+    }
+
+    public void setSearchClickedSingleLiveEvent() {
+        mSearchClickedSingleLiveEvent.setValue(true);
     }
 
     public void getTotalProduct() {

@@ -76,6 +76,7 @@ public class CategoryFragment extends Fragment {
             }
         });
 
+
         mViewModel.getCategoryIdSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer categoryId) {

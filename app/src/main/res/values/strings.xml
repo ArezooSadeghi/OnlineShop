@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">فروشگاه آنلاین</string>
-    <string name="title_home">خانه</string>
-    <string name="title_category">دسته بندی ها</string>
+    <string name="title_home">Home</string>
+    <string name="title_category">Category</string>
     <string name="first_and_last_name_hint">نام و نام خانوادگی</string>
     <string name="your_review_hint">دیدگاه</string>
     <string name="score_hint">از یک تا پنج امتیاز دهید</string>
-    <string name="title_cart">سبد خرید</string>
+    <string name="title_cart">Cart</string>
     <string name="register_review">ثبت دیدگاه</string>
     <string name="empty_cart">سبد خرید شما خالی می باشد</string>
-    <string name="title_account">حساب کاربری</string>
+    <string name="title_account">Account</string>
     <string name="confirmation">تایید</string>
     <string name="create_account">Create Account</string>
     <string name="sort_new">جدیدترین ها</string>
@@ -19,15 +19,15 @@
     <string name="no_account">حساب کاربری برای شما ثبت نشده است</string>
     <string name="your_address">آدرس شما</string>
     <string name="address_hint">آدرس شما</string>
-    <string name="search_hint">جستجو</string>
+    <string name="search_hint">Search</string>
     <string name="save">ذخیره</string>
-    <string name="best_product_title">بهترین محصولات</string>
+    <string name="best_product_title">Best</string>
     <string name="by_default">پیش فرض</string>
     <string name="successful_register">ثبت نام شما با موفقیت انجام شد</string>
     <string name="account_exist">یک حساب با آدرس پست الکترونیک شما قبلا ثبت شده است</string>
     <string name="no_exist_account">حسابی با این پست الکترونیک وجود ندارد</string>
-    <string name="latest_product_title">جدیدترین محصولات</string>
-    <string name="new_product_title">محصول جدید</string>
+    <string name="latest_product_title">New arrivals</string>
+    <string name="new_product_title">New arrivals</string>
     <string name="new_product_text">محصول جدید رسید</string>
     <string name="wrong_discount_code">کد تخفیف نادرست می باشد</string>
     <string name="enter_email">لطفا پست الکترونیک خود را وارد کنید</string>
@@ -59,7 +59,7 @@
     <string name="failed_final_registration_order">متاسفانه ثبت سفارش شما موفقیت آمیز نبود</string>
     <string name="login_description">برای ورود پست الکترونیک خود را وارد نمایید</string>
     <string name="empty_discount_code">لطفا کد تخفیف خود را وارد کنید</string>
-    <string name="most_visited_product_title">پربازدیدترین محصولات</string>
+    <string name="most_visited_product_title">Popular</string>
     <string name="special_product_title">محصولات ویژه</string>
     <string name="see_all">مشاهده همه</string>
     <string name="welcome_back">Welcome Back</string>

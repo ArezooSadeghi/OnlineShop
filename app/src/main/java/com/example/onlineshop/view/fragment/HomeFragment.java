@@ -2,15 +2,11 @@ package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -41,10 +37,10 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
 
         mViewModel = new ViewModelProvider(this).get(SingleHomeViewModel.class);
 
@@ -53,6 +49,7 @@ public class HomeFragment extends Fragment {
         mViewModel.getMostVisitedProduct("popularity", "desc");
         mViewModel.getSpecialProduct(false);
     }
+
 
     @Nullable
     @Override
@@ -65,11 +62,12 @@ public class HomeFragment extends Fragment {
                 container,
                 false);
 
-        initToolbar();
+        mBinding.setSingleHomeViewModel(mViewModel);
         initRecyclerView();
 
         return mBinding.getRoot();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -77,27 +75,6 @@ public class HomeFragment extends Fragment {
         setObserver();
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.home_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_search:
-                getActivity().onSearchRequested();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void initToolbar() {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.homeToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
-    }
 
     private void initRecyclerView() {
         mBinding.recyclerViewBestProduct.setLayoutManager(
@@ -108,6 +85,7 @@ public class HomeFragment extends Fragment {
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true));
     }
 
+
     private void setObserver() {
         mViewModel.getBestProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
@@ -116,6 +94,7 @@ public class HomeFragment extends Fragment {
                 setupBestProductAdapter(products);
             }
         });
+
 
         mViewModel.getLatestProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
@@ -126,6 +105,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         mViewModel.getMostVisitedProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
@@ -134,12 +114,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         mViewModel.getSpecialProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
                 setupSpecialProductAdapter(products);
             }
         });
+
 
         mViewModel.getProductIdSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -150,22 +132,34 @@ public class HomeFragment extends Fragment {
                 NavHostFragment.findNavController(HomeFragment.this).navigate(action);
             }
         });
+
+
+        mViewModel.getSearchClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSearchClicked) {
+                getActivity().onSearchRequested();
+            }
+        });
     }
+
 
     private void setupBestProductAdapter(List<Product> products) {
         ProductAdapter adapter = new ProductAdapter(getContext(), mViewModel, 1, products);
         mBinding.recyclerViewBestProduct.setAdapter(adapter);
     }
 
+
     private void setupLatestProductAdapter(List<Product> products) {
         ProductAdapter adapter = new ProductAdapter(getContext(), mViewModel, 1, products);
         mBinding.recyclerViewLatestProduct.setAdapter(adapter);
     }
 
+
     private void setupMostVisitedProductAdapter(List<Product> products) {
         ProductAdapter adapter = new ProductAdapter(getContext(), mViewModel, 1, products);
         mBinding.recyclerViewMostVisitedProduct.setAdapter(adapter);
     }
+
 
     private void setupSpecialProductAdapter(List<Product> products) {
         SliderAdapter sliderAdapter = new SliderAdapter(getContext(), mViewModel.getUrls(products));
