@@ -19,4 +19,9 @@
         <item name="colorControlNormal">@color/meat_brown</item>
     </style>
 
+    <style name="Theme.NewRatingBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorControlActivated">@color/black</item>
+        <item name="colorControlNormal">@color/black</item>
+    </style>
+
 </resources>

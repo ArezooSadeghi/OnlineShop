@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,8 +80,7 @@ public class HomeFragment extends Fragment {
     private void initRecyclerView() {
         mBinding.recyclerViewBestProduct.setLayoutManager(
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true));
-        mBinding.recyclerViewLatestProduct.setLayoutManager(
-                new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true));
+        mBinding.recyclerViewLatestProduct.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mBinding.recyclerViewMostVisitedProduct.setLayoutManager(
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true));
     }
