@@ -9,42 +9,55 @@
             name="product"
             type="com.example.onlineshop.model.Product" />
 
+        <variable
+            name="singleSharedDetailViewModel"
+            type="com.example.onlineshop.viewmodel.SingleSharedDetailViewModel" />
+
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/surface"
         android:fillViewport="true"
         tools:context=".view.fragment.DetailFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rose_madder"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/detail_toolbar"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/secondary_shrine_pink"
-                app:menu="@menu/detail_menu">
+                android:layout_height="wrap_content">
 
                 <Button
                     android:id="@+id/btn_add_review"
                     style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/add_review"
-                    app:icon="@drawable/ic_add" />
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:onClick="@{() -> singleSharedDetailViewModel.setAddReviewClickedSingleLiveEvent()}"
+                    app:icon="@drawable/ic_add_review" />
 
-            </androidx.appcompat.widget.Toolbar>
+                <Button
+                    android:id="@+id/btn_add_to_cart"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="16dp"
+                    android:onClick="@{() -> singleSharedDetailViewModel.setAddToCartClickedSingleLiveEvent()}"
+                    app:icon="@drawable/ic_add_shopping_cart" />
+
+            </FrameLayout>
 
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/img_product_slider"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="16dp"
                 app:sliderAnimationDuration="1000"
                 app:sliderAutoCycleDirection="back_and_forth"
                 app:sliderAutoCycleEnabled="true"
@@ -55,58 +68,100 @@
                 app:sliderIndicatorOrientation="horizontal"
                 app:sliderIndicatorPadding="3dp"
                 app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="@color/white"
+                app:sliderIndicatorSelectedColor="@color/red"
                 app:sliderIndicatorUnselectedColor="@color/light_gray"
                 app:sliderScrollTimeInSec="2"
-                app:sliderStartAutoCycle="true">
+                app:sliderStartAutoCycle="true" />
 
-                <ImageView
+            <TextView
+                android:id="@+id/txt_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:padding="16dp"
+                android:text="@{product.name}"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:padding="16dp"
+                android:text="@{product.price != null ? product.price + ` ` + @string/currency : ``}" />
+
+            <RatingBar
+                android:id="@+id/rating_bar_product"
+                style="@style/Theme.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:numStars="5"
+                android:rating="@{product.ratingCount}"
+                android:scaleX="0.8"
+                android:scaleY="0.8" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_detail_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_specifications"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="16dp" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/specifications"
+                    android:textColor="@color/on_surface"
+                    android:textSize="20sp" />
 
-            </com.smarteist.autoimageslider.SliderView>
+                <TextView
+                    android:id="@+id/txt_product_description"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:lineSpacingMultiplier="2"
+                    android:text="@{product.description}"
+                    android:textColor="@color/on_surface" />
 
-            <TextView
-                android:id="@+id/txt_specifications"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/specifications"
-                android:textColor="@color/on_surface"
-                android:textSize="20sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txt_product_description"
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:lineSpacingMultiplier="2"
-                android:text="@{product.description}"
-                android:textColor="@color/on_surface" />
+                android:background="@color/white"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/review_title"
-                android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/review_title"
+                    android:textSize="16sp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

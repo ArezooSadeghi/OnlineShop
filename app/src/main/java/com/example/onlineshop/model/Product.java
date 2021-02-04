@@ -18,6 +18,7 @@ public class Product {
     private String mDescription;
     private String mStockStatus;
     private List<String> mImageUrl;
+    private int mRatingCount;
 
     public Product(int id, String name, String price, String averageRating,
                    String description, String stockStatus, List<String> imageUrl) {
@@ -84,6 +85,14 @@ public class Product {
 
     public void setImageUrl(List<String> imageUrl) {
         mImageUrl = imageUrl;
+    }
+
+    public int getRatingCount() {
+        return mRatingCount;
+    }
+
+    public void setRatingCount(int ratingCount) {
+        mRatingCount = ratingCount;
     }
 
     @BindingAdapter({"imageUrl"})

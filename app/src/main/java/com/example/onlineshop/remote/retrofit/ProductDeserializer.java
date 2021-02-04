@@ -27,6 +27,7 @@ public class ProductDeserializer implements JsonDeserializer<Product> {
         String description = Html.fromHtml(
                 productObject.get("description").getAsString()).toString();
         String stockStatus = productObject.get("stock_status").getAsString();
+        int ratingCount = productObject.get("rating_count").getAsInt();
 
         JsonArray images = productObject.get("images").getAsJsonArray();
         List<String> imageUrls = new ArrayList<>();
@@ -35,6 +36,9 @@ public class ProductDeserializer implements JsonDeserializer<Product> {
             imageUrls.add(imageObject.get("src").getAsString());
         }
 
-        return new Product(id, name, price, averageRating, description, stockStatus, imageUrls);
+        Product product = new Product(id, name, price, averageRating, description, stockStatus, imageUrls);
+        product.setRatingCount(ratingCount);
+
+        return product;
     }
 }

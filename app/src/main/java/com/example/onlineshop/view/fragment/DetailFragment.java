@@ -1,17 +1,12 @@
 package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -35,7 +30,6 @@ public class DetailFragment extends Fragment {
     private FragmentDetailBinding mBinding;
     private SingleSharedDetailViewModel mViewModel;
     private ReviewAdapter mAdapter;
-    private Product mProduct;
     private int mProductId;
 
     public static DetailFragment newInstance() {
@@ -49,10 +43,10 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedDetailViewModel.class);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,9 +58,8 @@ public class DetailFragment extends Fragment {
                 container,
                 false);
 
-        setToolbar();
+        mBinding.setSingleSharedDetailViewModel(mViewModel);
         initRecyclerView();
-        setListener();
 
         return mBinding.getRoot();
     }
@@ -85,36 +78,6 @@ public class DetailFragment extends Fragment {
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.detail_menu, menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_add_to_cart:
-                Log.d("Arezoo", mProduct + "");
-                mViewModel.getProducts().add(mProduct);
-                mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
-                String price = new String(mProduct.getPrice());
-                mViewModel.getPrices().add(price);
-                mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    private void setToolbar() {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.detailToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
-    }
-
-
     private void initRecyclerView() {
         mBinding.recyclerViewReview.setLayoutManager(new LinearLayoutManager(
                 getContext(),
@@ -123,25 +86,14 @@ public class DetailFragment extends Fragment {
     }
 
 
-    private void setListener() {
-        mBinding.btnAddReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DetailFragmentDirections.ActionDetailFragmentToReviewFragment action =
-                        DetailFragmentDirections.actionDetailFragmentToReviewFragment();
-                action.setId(mProductId);
-                NavHostFragment.findNavController(DetailFragment.this).navigate(action);
-            }
-        });
-    }
-
-
     private void setObserver() {
         mViewModel.getRetrieveProductLiveData().observe(getViewLifecycleOwner(), new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
-                mProduct = product;
-                initViews(product);
+                if (product != null) {
+                    mBinding.setProduct(product);
+                    initViews(product);
+                }
             }
         });
 
@@ -152,15 +104,34 @@ public class DetailFragment extends Fragment {
                 setupAdapter(reviews);
             }
         });
+
+
+        mViewModel.getAddReviewClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean addReviewClicked) {
+                DetailFragmentDirections.ActionDetailFragmentToReviewFragment action =
+                        DetailFragmentDirections.actionDetailFragmentToReviewFragment();
+                action.setId(mProductId);
+                NavHostFragment.findNavController(DetailFragment.this).navigate(action);
+            }
+        });
+
+
+        mViewModel.getAddToCartClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean addToCartClicked) {
+                mViewModel.getProducts().add(mBinding.getProduct());
+                mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
+                mViewModel.getPrices().add(mBinding.getProduct().getPrice());
+                mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
+            }
+        });
     }
 
 
     private void initViews(Product product) {
-        if (product != null) {
-            mBinding.setProduct(product);
-            SliderAdapter sliderAdapter = new SliderAdapter(getContext(), product.getImageUrl());
-            mBinding.imgProductSlider.setSliderAdapter(sliderAdapter);
-        }
+        SliderAdapter sliderAdapter = new SliderAdapter(getContext(), product.getImageUrl());
+        mBinding.imgProductSlider.setSliderAdapter(sliderAdapter);
     }
 
 

@@ -15,8 +15,8 @@
     </style>
 
     <style name="Theme.RatingBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorControlActivated">@color/teal_200</item>
-        <item name="colorControlNormal">@color/teal_200</item>
+        <item name="colorControlActivated">@color/meat_brown</item>
+        <item name="colorControlNormal">@color/meat_brown</item>
     </style>
 
 </resources>
