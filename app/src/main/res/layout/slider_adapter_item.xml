@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -14,32 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.smarteist.autoimageslider.SliderView
-            android:id="@+id/img_product_slider"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:sliderAnimationDuration="1000"
-            app:sliderAutoCycleDirection="back_and_forth"
-            app:sliderAutoCycleEnabled="true"
-            app:sliderIndicatorAnimationDuration="1000"
-            app:sliderIndicatorGravity="left|bottom"
-            app:sliderIndicatorMargin="8dp"
-            app:sliderIndicatorOrientation="horizontal"
-            app:sliderIndicatorPadding="3dp"
-            app:sliderIndicatorRadius="2dp"
-            app:sliderIndicatorSelectedColor="@color/white"
-            app:sliderIndicatorUnselectedColor="@color/light_gray"
-            app:sliderScrollTimeInSec="2"
-            app:sliderStartAutoCycle="true">
-
-            <ImageView
-                android:id="@+id/img_product"
-                imageUrl="@{url != null ? url : null}"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="25dp" />
-
-        </com.smarteist.autoimageslider.SliderView>
+        <ImageView
+            android:id="@+id/img_product"
+            imageUrl="@{url != null ? url : null}"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp" />
 
     </FrameLayout>
 

@@ -23,4 +23,8 @@
     <color name="smoke">#002147</color>
     <color name="st_patrick_blue">#23297A</color>
     <color name="laurel_green">#A9BA9D</color>
+    <color name="dark_mid_night_blue">#000029</color>
+    <color name="burly_wood">#DEB887</color>
+    <color name="onyx">#6E7F80</color>
+    <color name="charcoal">#36454F</color>
 </resources>
