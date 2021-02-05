@@ -126,6 +126,7 @@ public class SingleSharedDetailViewModel extends AndroidViewModel {
         for (String price : prices) {
             totalPrice += Double.parseDouble(price);
         }
+
         return totalPrice;
     }
 }

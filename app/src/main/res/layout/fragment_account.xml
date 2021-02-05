@@ -4,83 +4,92 @@
 
     <data>
 
+        <variable
+            name="singleAccountViewModel"
+            type="com.example.onlineshop.viewmodel.SingleAccountViewModel" />
+
+        <variable
+            name="email"
+            type="String" />
+
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/surface"
-        android:fillViewport="true">
+        android:background="@color/charcoal">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="80dp"
+            app:cardCornerRadius="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_profile"
+                app:tint="@color/dark_mid_night_blue" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/txt_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@{email}"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/card_view"
+            app:layout_constraintTop_toTopOf="@id/card_view" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="130dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_email" />
+
+        <Button
+            android:id="@+id/btn_review"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="left"
+            android:onClick="@{() -> singleAccountViewModel.setReviewClickedSingleLiveEvent()}"
+            android:text="@string/review"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_comment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/account_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/secondary_shrine_pink"
-                app:menu="@menu/account_menu" />
+        <Button
+            android:id="@+id/btn_setting"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="left"
+            android:onClick="@{() -> singleAccountViewModel.setSettingClickedSingleLiveEvent()}"
+            android:text="@string/setting"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_settings"
+            app:layout_constraintTop_toBottomOf="@id/btn_review" />
 
-            <TextView
-                android:id="@+id/txt_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="32dp"
-                android:textColor="@color/on_surface"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/shopping" />
-
-            <Button
-                android:id="@+id/btn_review"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="right"
-                android:text="@string/review"
-                android:textColor="@color/on_surface"
-                android:textSize="16sp"
-                app:icon="@drawable/ic_comment" />
-
-            <Button
-                android:id="@+id/btn_address"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="right"
-                android:text="@string/address"
-                android:textColor="@color/on_surface"
-                android:textSize="16sp"
-                app:icon="@drawable/ic_location" />
-
-            <Button
-                android:id="@+id/btn_account"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="right"
-                android:text="@string/account_information"
-                android:textColor="@color/on_surface"
-                app:icon="@drawable/ic_account" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/shopping_bag" />
-
-        </LinearLayout>
-
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

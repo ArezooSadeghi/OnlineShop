@@ -16,7 +16,8 @@
     <string name="sort_price_high_low">قیمت از زیاد به کم</string>
     <string name="sort_price_low_high">قیمت از کم به زیاد</string>
     <string name="sort">مرتب سازی</string>
-    <string name="no_account">Do not have any account?</string>
+    <string name="no_account_question">Do not have any account?</string>
+    <string name="no_account">You have not any account</string>
     <string name="your_address">آدرس شما</string>
     <string name="address_hint">آدرس شما</string>
     <string name="search_hint">Search</string>
@@ -31,7 +32,7 @@
     <string name="new_product_text">محصول جدید رسید</string>
     <string name="wrong_discount_code">کد تخفیف نادرست می باشد</string>
     <string name="enter_email">Please enter your email</string>
-    <string name="review">نقد و نظرات</string>
+    <string name="review">Review</string>
     <string name="address">آدرس ها</string>
     <string name="channel_id">maktab_channel_id</string>
     <string name="channel_name">Maktab_Channel</string>
@@ -41,9 +42,9 @@
     <string name="account_information">اطلاعات حساب کاربری</string>
     <string name="on_notification">محصولات جدید را به من اطلاع دهید</string>
     <string name="title_search">جستجو</string>
-    <string name="setting">تنظیمات</string>
+    <string name="setting">Setting</string>
     <string name="setting_notification">تنظیمات اعلان</string>
-    <string name="log_out">خروج از حساب کاربری</string>
+    <string name="log_out">Log out</string>
     <string name="cancel">لغو کردن</string>
     <string name="save_setting">ذخیره تنظیمات</string>
     <string name="log_out_question">آیا می خواهید از حساب کاربری خود خارج شوید؟</string>

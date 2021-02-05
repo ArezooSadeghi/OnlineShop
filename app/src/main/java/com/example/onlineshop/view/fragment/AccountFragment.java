@@ -2,17 +2,15 @@ package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -20,10 +18,12 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentAccountBinding;
 import com.example.onlineshop.databinding.NoAccountBinding;
 import com.example.onlineshop.utilities.Preferences;
+import com.example.onlineshop.viewmodel.SingleAccountViewModel;
 
 public class AccountFragment extends Fragment {
     private FragmentAccountBinding mBinding;
     private NoAccountBinding mNoAccountBinding;
+    private SingleAccountViewModel mViewModel;
 
 
     public static AccountFragment newInstance() {
@@ -33,11 +33,14 @@ public class AccountFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+
+        mViewModel = new ViewModelProvider(this).get(SingleAccountViewModel.class);
     }
+
 
     @Nullable
     @Override
@@ -59,43 +62,36 @@ public class AccountFragment extends Fragment {
                     container,
                     false);
 
-            initToolbar();
-            setListener();
+            mBinding.setSingleAccountViewModel(mViewModel);
+            mBinding.setEmail(Preferences.getEmail(getContext()));
 
             return mBinding.getRoot();
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.account_menu, menu);
-    }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_setting:
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.settingFragment);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void initToolbar() {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.accountToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setObserver();
     }
 
 
-    private void setListener() {
-        mBinding.btnReview.setOnClickListener(new View.OnClickListener() {
+    private void setObserver() {
+        mViewModel.getReviewClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onClick(View view) {
+            public void onChanged(Boolean isReviewClicked) {
                 NavHostFragment
                         .findNavController(AccountFragment.this)
                         .navigate(R.id.action_navigation_account_to_userReviewListFragment);
+            }
+        });
+
+
+        mViewModel.getSettingClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSettingClicked) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.settingFragment);
             }
         });
     }
