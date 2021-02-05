@@ -37,7 +37,7 @@
                 android:layout_marginBottom="32dp"
                 android:onClick="@{() -> singleSharedDetailViewModel.setAddReviewClickedSingleLiveEvent()}"
                 android:src="@drawable/ic_add_review"
-                app:tint="@color/burly_wood" />
+                app:tint="@color/meat_brown" />
 
             <ImageView
                 android:id="@+id/btn_add_to_cart"
@@ -47,7 +47,7 @@
                 android:layout_marginRight="16dp"
                 android:onClick="@{() -> singleSharedDetailViewModel.setAddToCartClickedSingleLiveEvent()}"
                 android:src="@drawable/ic_add_shopping_cart"
-                app:tint="@color/burly_wood" />
+                app:tint="@color/meat_brown" />
 
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/img_product_slider"
@@ -153,6 +153,12 @@
                     android:text="@string/review_title"
                     android:textColor="@color/st_patrick_blue"
                     android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/dark_mid_night_blue" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_review"
