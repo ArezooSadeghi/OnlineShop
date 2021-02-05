@@ -12,11 +12,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.repository.ProductRepository;
+import com.example.onlineshop.singleliveevent.SingleLiveEvent;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocatrViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
@@ -25,6 +29,7 @@ public class LocatrViewModel extends AndroidViewModel {
     private MutableLiveData<String> mAddressMutableLiveData = new MutableLiveData<>();
     private LiveData<Integer> mStatusCodePostOrderLiveData;
     private MutableLiveData<String> mFinalAddressMutableLiveData = new MutableLiveData<>();
+    private SingleLiveEvent<Boolean> mAddLocationClickedSingleLiveEvent = new SingleLiveEvent<>();
 
     public LocatrViewModel(@NonNull Application application) {
         super(application);
@@ -59,6 +64,24 @@ public class LocatrViewModel extends AndroidViewModel {
 
     public void updateCustomer(Customer customer) {
         mRepository.updateCustomer(customer);
+    }
+
+    public SingleLiveEvent<Boolean> getAddLocationClickedSingleLiveEvent() {
+        return mAddLocationClickedSingleLiveEvent;
+    }
+
+    public void setAddLocationClickedSingleLiveEvent() {
+        mAddLocationClickedSingleLiveEvent.setValue(true);
+    }
+
+    public List<String> getAddresses(List<String> addresses) {
+        List<String> addressesOutput = new ArrayList<>();
+        for (String address : addresses) {
+            if (!address.isEmpty()) {
+                addressesOutput.add(address);
+            }
+        }
+        return addressesOutput;
     }
 
     @SuppressLint("MissingPermission")

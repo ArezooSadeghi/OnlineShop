@@ -56,13 +56,14 @@
     <string name="edit">ویرایش</string>
     <string name="title_add_to_cart">افزودن به سبد خرید</string>
     <string name="final_registration_order">ثبت نهایی سفارش</string>
-    <string name="successful_final_registration_order">سفارش شما با موفقیت ثبت شد</string>
-    <string name="failed_final_registration_order">متاسفانه ثبت سفارش شما موفقیت آمیز نبود</string>
+    <string name="successful_final_registration_order">Your order has been successfully registered</string>
+    <string name="failed_final_registration_order">Your order registration was not successful</string>
     <string name="login_description">برای ورود پست الکترونیک خود را وارد نمایید</string>
     <string name="empty_discount_code">لطفا کد تخفیف خود را وارد کنید</string>
     <string name="most_visited_product_title">Popular</string>
     <string name="special_product_title">محصولات ویژه</string>
     <string name="see_all">مشاهده همه</string>
+    <string name="post_order_item_title">Post order</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="sign_in">Sign In</string>
     <string name="login">ورود</string>

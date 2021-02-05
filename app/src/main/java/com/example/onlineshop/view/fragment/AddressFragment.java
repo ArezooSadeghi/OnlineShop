@@ -2,12 +2,16 @@ package com.example.onlineshop.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -44,8 +48,9 @@ public class AddressFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         mViewModel = new ViewModelProvider(requireActivity()).get(LocatrViewModel.class);
-        setObserver();
     }
 
 
@@ -59,6 +64,8 @@ public class AddressFragment extends Fragment {
                 container,
                 false);
 
+        mBinding.setLocatrViewModel(mViewModel);
+        initToolbar();
         initRecyclerView();
 
         return mBinding.getRoot();
@@ -70,26 +77,70 @@ public class AddressFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         AddressFragmentArgs args = AddressFragmentArgs.fromBundle(getArguments());
         String email = args.getEmail();
-        setListener(email);
         mCustomer = mViewModel.getCustomer(email);
-        setupAdapter(mCustomer.getAddress());
+        setupAdapter(mViewModel.getAddresses(mCustomer.getAddress()));
+        setObserver();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.address_menu, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_post_order:
+                mViewModel.postOrder(mCustomer.getEmail());
+                EventBus.getDefault().postSticky(new PostOrder());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private void initToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.bottomAppBar);
+    }
+
+
+    private void initRecyclerView() {
+        mBinding.recyclerViewAddress.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+
+    private void setupAdapter(List<String> addresses) {
+        AddressAdapter adapter = new AddressAdapter(getContext(), addresses);
+        mBinding.recyclerViewAddress.setAdapter(adapter);
     }
 
 
     private void setObserver() {
-        mViewModel.getStatusCodePostOrderLiveData().observe(this, new Observer<Integer>() {
+        mViewModel.getStatusCodePostOrderLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer statusCode) {
                 showReult(statusCode);
             }
         });
 
-        mViewModel.getFinalAddressMutableLiveData().observe(this, new Observer<String>() {
+
+        mViewModel.getFinalAddressMutableLiveData().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String address) {
                 mCustomer.getAddress().add(address);
                 mViewModel.updateCustomer(mCustomer);
-                setupAdapter(mCustomer.getAddress());
+                setupAdapter(mViewModel.getAddresses(mCustomer.getAddress()));
+            }
+        });
+
+
+        mViewModel.getAddLocationClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isAddLocationClicked) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.locatrFragment);
             }
         });
     }
@@ -102,32 +153,5 @@ public class AddressFragment extends Fragment {
         if (statusCode == 201) {
             Toast.makeText(getContext(), R.string.successful_final_registration_order, Toast.LENGTH_LONG).show();
         }
-    }
-
-    private void setupAdapter(List<String> addresses) {
-        AddressAdapter adapter = new AddressAdapter(getContext(), addresses);
-        mBinding.recyclerViewAddress.setAdapter(adapter);
-    }
-
-    private void initRecyclerView() {
-        mBinding.recyclerViewAddress.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-
-    private void setListener(String email) {
-        mBinding.btnFinalRegistrationOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewModel.postOrder(email);
-                EventBus.getDefault().postSticky(new PostOrder());
-            }
-        });
-
-        mBinding.fabAddLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.locatrFragment);
-            }
-        });
     }
 }

@@ -5,12 +5,15 @@
 
     <data>
 
+        <variable
+            name="locatrViewModel"
+            type="com.example.onlineshop.viewmodel.LocatrViewModel" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/surface"
         tools:context=".view.fragment.AddressFragment">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -23,25 +26,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:backgroundTint="@color/blanchedalmond">
-
-            <Button
-                android:id="@+id/btn_final_registration_order"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                app:icon="@drawable/ic_register_cart" />
-
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
+            app:backgroundTint="@color/charcoal"
+            app:menu="@menu/address_menu" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> locatrViewModel.setAddLocationClickedSingleLiveEvent()}"
             android:src="@drawable/ic_add_location"
-            app:backgroundTint="@color/melon"
+            app:backgroundTint="@color/meat_brown"
             app:layout_anchor="@id/bottomAppBar" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
