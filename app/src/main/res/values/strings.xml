@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">فروشگاه آنلاین</string>
+    <string name="app_name">OnlineShop</string>
     <string name="title_home">Home</string>
     <string name="title_category">Category</string>
-    <string name="first_and_last_name_hint">نام و نام خانوادگی</string>
-    <string name="your_review_hint">دیدگاه</string>
-    <string name="score_hint">از یک تا پنج امتیاز دهید</string>
+    <string name="first_and_last_name_hint">Name</string>
+    <string name="your_review_hint">Review</string>
+    <string name="score_hint">Rate</string>
     <string name="title_cart">Cart</string>
-    <string name="register_review">ثبت دیدگاه</string>
+    <string name="register_review">Submit</string>
     <string name="empty_cart">Your cart is empty</string>
     <string name="title_account">Account</string>
     <string name="confirmation">تایید</string>
@@ -37,8 +37,8 @@
     <string name="channel_id">maktab_channel_id</string>
     <string name="channel_name">Maktab_Channel</string>
     <string name="channel_description">This is notification channel for maktab</string>
-    <string name="successful_post_review">نظر شما با موفقیت ثبت شد</string>
-    <string name="failed_post_review">متاسفانه ثبت نظر شما موفقیت آمیز نبود</string>
+    <string name="successful_post_review">Your comment was successfully submitted</string>
+    <string name="failed_post_review">Sorry, your comment was not successful</string>
     <string name="account_information">اطلاعات حساب کاربری</string>
     <string name="on_notification">محصولات جدید را به من اطلاع دهید</string>
     <string name="title_search">جستجو</string>
@@ -66,7 +66,7 @@
     <string name="welcome_back">Welcome Back</string>
     <string name="sign_in">Sign In</string>
     <string name="login">ورود</string>
-    <string name="enter_request_information">لطفا اطلاعات خواسته شده را وارد کنید</string>
+    <string name="enter_request_information">Please enter the requested information</string>
     <string name="register">Sign Up</string>
     <string name="email_hint">Email</string>
     <string name="amount_paid_with_discount">جمع مبلغ پرداختی با احتساب 10 درصد تخفیف:</string>

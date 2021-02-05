@@ -28,5 +28,6 @@
     <color name="onyx">#6E7F80</color>
     <color name="charcoal">#36454F</color>
     <color name="green">#738276</color>
+    <color name="grey">#DCDCDC</color>
     <color name="peach_orange">#FFCC99</color>
 </resources>

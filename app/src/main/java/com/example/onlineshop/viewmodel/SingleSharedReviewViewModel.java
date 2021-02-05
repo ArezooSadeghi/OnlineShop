@@ -23,6 +23,7 @@ public class SingleSharedReviewViewModel extends AndroidViewModel {
     private SingleLiveEvent<Review> mEditReviewClickedSingleLiveEvent = new SingleLiveEvent<>();
     private MutableLiveData<Review> mDialogReviewMutableLiveData = new MutableLiveData<>();
     private LiveData<Review> mUpdateReviewLiveData;
+    private SingleLiveEvent<Boolean> mSubmitClickedSingleLiveEvent = new SingleLiveEvent<>();
 
     public SingleSharedReviewViewModel(@NonNull Application application) {
         super(application);
@@ -61,6 +62,14 @@ public class SingleSharedReviewViewModel extends AndroidViewModel {
 
     public MutableLiveData<Review> getDialogReviewMutableLiveData() {
         return mDialogReviewMutableLiveData;
+    }
+
+    public SingleLiveEvent<Boolean> getSubmitClickedSingleLiveEvent() {
+        return mSubmitClickedSingleLiveEvent;
+    }
+
+    public void setSubmitClickedSingleLiveEvent() {
+        mSubmitClickedSingleLiveEvent.setValue(true);
     }
 
     public LiveData<Review> getUpdateReviewLiveData() {

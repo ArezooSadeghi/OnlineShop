@@ -35,13 +35,12 @@ public class ReviewFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedReviewViewModel.class);
-        ReviewFragmentArgs args = ReviewFragmentArgs.fromBundle(getArguments());
-        mProductId = args.getId();
     }
 
 
@@ -55,16 +54,20 @@ public class ReviewFragment extends Fragment {
                 container,
                 false);
 
-        setListener();
+        mBinding.setSingleSharedReviewViewModel(mViewModel);
 
         return mBinding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ReviewFragmentArgs args = ReviewFragmentArgs.fromBundle(getArguments());
+        mProductId = args.getId();
         setObserver();
     }
+
 
     private void setObserver() {
         mViewModel.getReviewLiveData().observe(getViewLifecycleOwner(), new Observer<Review>() {
@@ -73,7 +76,26 @@ public class ReviewFragment extends Fragment {
                 showPostReviewResult(review);
             }
         });
+
+
+        mViewModel.getSubmitClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSubmitClicked) {
+                if (mBinding.txtFirstAndLastName.getText().toString().isEmpty() ||
+                        mBinding.txtYourReview.getText().toString().isEmpty() ||
+                        mBinding.txtScore.getText().toString().isEmpty()) {
+                    Snackbar.make(getView(), R.string.enter_request_information, Snackbar.LENGTH_LONG).show();
+                } else {
+                    String content = mBinding.txtYourReview.getText().toString();
+                    String name = mBinding.txtFirstAndLastName.getText().toString();
+                    String email = Preferences.getEmail(getContext());
+                    int rating = Integer.valueOf(mBinding.txtScore.getText().toString());
+                    mViewModel.postReview(mProductId, content, name, email, rating);
+                }
+            }
+        });
     }
+
 
     private void showPostReviewResult(Review review) {
         if (review == null) {
@@ -86,24 +108,5 @@ public class ReviewFragment extends Fragment {
             }
             Toast.makeText(getContext(), R.string.successful_post_review, Toast.LENGTH_LONG).show();
         }
-    }
-
-    private void setListener() {
-        mBinding.btnRegisterReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mBinding.txtFirstAndLastName.getText().toString().isEmpty() ||
-                        mBinding.txtYourReview.getText().toString().isEmpty() ||
-                        mBinding.txtScore.getText().toString().isEmpty()) {
-                    Snackbar.make(view, R.string.enter_request_information, Snackbar.LENGTH_LONG).show();
-                } else {
-                    String content = mBinding.txtYourReview.getText().toString();
-                    String name = mBinding.txtFirstAndLastName.getText().toString();
-                    String email = Preferences.getEmail(getContext());
-                    int rating = Integer.valueOf(mBinding.txtScore.getText().toString());
-                    mViewModel.postReview(mProductId, content, name, email, rating);
-                }
-            }
-        });
     }
 }
