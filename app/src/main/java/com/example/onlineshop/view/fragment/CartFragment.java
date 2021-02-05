@@ -95,6 +95,7 @@ public class CartFragment extends Fragment {
         mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
         mViewModel.getPrices().clear();
         mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
+        EventBus.getDefault().removeStickyEvent(postOrder);
     }
 
 
