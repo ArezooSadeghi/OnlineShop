@@ -30,6 +30,8 @@ public class LocatrViewModel extends AndroidViewModel {
     private LiveData<Integer> mStatusCodePostOrderLiveData;
     private MutableLiveData<String> mFinalAddressMutableLiveData = new MutableLiveData<>();
     private SingleLiveEvent<Boolean> mAddLocationClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mMyLocationClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mConfirmationClickedSingleLiveEvent = new SingleLiveEvent<>();
 
     public LocatrViewModel(@NonNull Application application) {
         super(application);
@@ -72,6 +74,22 @@ public class LocatrViewModel extends AndroidViewModel {
 
     public void setAddLocationClickedSingleLiveEvent() {
         mAddLocationClickedSingleLiveEvent.setValue(true);
+    }
+
+    public SingleLiveEvent<Boolean> getMyLocationClickedSingleLiveEvent() {
+        return mMyLocationClickedSingleLiveEvent;
+    }
+
+    public void setMyLocationClickedSingleLiveEvent() {
+        mMyLocationClickedSingleLiveEvent.setValue(true);
+    }
+
+    public SingleLiveEvent<Boolean> getConfirmationClickedSingleLiveEvent() {
+        return mConfirmationClickedSingleLiveEvent;
+    }
+
+    public void setConfirmationClickedSingleLiveEvent() {
+        mConfirmationClickedSingleLiveEvent.setValue(true);
     }
 
     public List<String> getAddresses(List<String> addresses) {

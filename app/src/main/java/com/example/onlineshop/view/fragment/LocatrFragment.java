@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -52,14 +53,16 @@ public class LocatrFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(LocatrViewModel.class);
-        setObserver();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +73,8 @@ public class LocatrFragment extends Fragment {
                 R.layout.fragment_locatr,
                 container,
                 false);
+
+        mBinding.setLocatrViewModel(mViewModel);
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -93,9 +98,65 @@ public class LocatrFragment extends Fragment {
             }
         });
 
-        mBinding.btnConfirmation.setOnClickListener(new View.OnClickListener() {
+        initToolbar();
+
+        return mBinding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setObserver();
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_PERMISSION_LOCATION:
+                if (grantResults == null || grantResults.length == 0) {
+                    return;
+                }
+
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getCurrentLocation();
+                }
+                return;
+        }
+    }
+
+
+    private void initToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.locatrToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
+    }
+
+
+    private void setObserver() {
+        mViewModel.getLocationLiveData().observe(getViewLifecycleOwner(), new Observer<Location>() {
             @Override
-            public void onClick(View view) {
+            public void onChanged(Location location) {
+                updateUI();
+            }
+        });
+
+
+        mViewModel.getMyLocationClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isMyLocationClicked) {
+                if (hasLocationAccess()) {
+                    getCurrentLocation();
+                } else {
+                    requestLocationAccessPermission();
+                }
+            }
+        });
+
+
+        mViewModel.getConfirmationClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isConfirmationClicked) {
                 if (mLatLng != null) {
                     Thread thread = new Thread() {
                         @Override
@@ -122,50 +183,8 @@ public class LocatrFragment extends Fragment {
                 fragment.show(getParentFragmentManager(), TAG);
             }
         });
-
-        initToolbar();
-        mBinding.btnMyLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (hasLocationAccess()) {
-                    getCurrentLocation();
-                } else {
-                    requestLocationAccessPermission();
-                }
-            }
-        });
-
-        return mBinding.getRoot();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_PERMISSION_LOCATION:
-                if (grantResults == null || grantResults.length == 0) {
-                    return;
-                }
-
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getCurrentLocation();
-                }
-                return;
-        }
-    }
-
-    private void setObserver() {
-        mViewModel.getLocationLiveData().observe(this, new Observer<Location>() {
-            @Override
-            public void onChanged(Location location) {
-                updateUI();
-            }
-        });
-    }
-
-    private void initToolbar() {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.locatrToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
-    }
 
     private boolean hasLocationAccess() {
         return ContextCompat.checkSelfPermission(
@@ -173,10 +192,12 @@ public class LocatrFragment extends Fragment {
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+
     private void requestLocationAccessPermission() {
         String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
         requestPermissions(permissions, REQUEST_CODE_PERMISSION_LOCATION);
     }
+
 
     @SuppressLint("MissingPermission")
     private void getCurrentLocation() {

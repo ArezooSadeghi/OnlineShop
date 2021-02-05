@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="locatrViewModel"
+            type="com.example.onlineshop.viewmodel.LocatrViewModel" />
 
     </data>
 
@@ -16,8 +19,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/locatr_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/blanchedalmond">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/charcoal">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -28,7 +31,10 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/confirmation" />
+                    android:onClick="@{() -> locatrViewModel.setConfirmationClickedSingleLiveEvent()}"
+                    android:text="@string/confirmation"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/btn_my_location"
@@ -36,7 +42,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    app:icon="@drawable/ic_my_location" />
+                    android:layout_marginRight="8dp"
+                    android:drawableRight="@drawable/ic_my_location"
+                    android:onClick="@{() -> locatrViewModel.setMyLocationClickedSingleLiveEvent()}" />
 
             </FrameLayout>
 
