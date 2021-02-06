@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
             name="bestProductTitle"
             type="String" />
 
@@ -21,6 +25,8 @@
             name="singleHomeViewModel"
             type="com.example.onlineshop.viewmodel.SingleHomeViewModel" />
 
+        <import type="android.view.View" />
+
     </data>
 
     <ScrollView
@@ -30,98 +36,112 @@
         android:fillViewport="true"
         tools:context=".view.fragment.HomeFragment">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/btn_search"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="wrap_content"
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:drawableRight="@drawable/ic_search"
-                android:onClick="@{() -> singleHomeViewModel.setSearchClickedSingleLiveEvent()}" />
-
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/img_product_slider"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="8dp"
-                app:sliderAnimationDuration="1000"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderIndicatorAnimationDuration="1000"
-                app:sliderIndicatorEnabled="false"
-                app:sliderIndicatorGravity="left|bottom"
-                app:sliderIndicatorMargin="8dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="@color/white"
-                app:sliderIndicatorUnselectedColor="@color/light_gray"
-                app:sliderScrollTimeInSec="2"
-                app:sliderStartAutoCycle="true">
-
-            </com.smarteist.autoimageslider.SliderView>
+                android:layout_gravity="center"
+                android:visibility="@{isLoading ? View.VISIBLE : View.GONE, default = visible}"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading_animation" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/custom_home_layout"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{isLoading ? View.GONE : View.VISIBLE, default = gone}">
 
-                <TextView
-                    android:id="@+id/txt_best_product_title"
+                <Button
+                    android:id="@+id/btn_search"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="right"
                     android:layout_marginTop="16dp"
-                    android:text="@{bestProductTitle}"
-                    android:textColor="@color/st_patrick_blue"
-                    android:textSize="18sp" />
+                    android:layout_marginRight="16dp"
+                    android:drawableRight="@drawable/ic_search"
+                    android:onClick="@{() -> singleHomeViewModel.setSearchClickedSingleLiveEvent()}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_best_product"
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/img_product_slider"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp"
+                    app:sliderAnimationDuration="1000"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="1000"
+                    app:sliderIndicatorEnabled="false"
+                    app:sliderIndicatorGravity="left|bottom"
+                    app:sliderIndicatorMargin="8dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="@color/white"
+                    app:sliderIndicatorUnselectedColor="@color/light_gray"
+                    app:sliderScrollTimeInSec="2"
+                    app:sliderStartAutoCycle="true" />
 
-                <TextView
-                    android:id="@+id/latest_product_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@{latestProductTitle}"
-                    android:textColor="@color/st_patrick_blue"
-                    android:textSize="18sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_latest_product"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/custom_home_layout"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txt_most_visited_product_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@{mostVisitedProductTitle}"
-                    android:textColor="@color/st_patrick_blue"
-                    android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/txt_best_product_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@{bestProductTitle}"
+                        android:textColor="@color/st_patrick_blue"
+                        android:textSize="18sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_most_visited_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_best_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/latest_product_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@{latestProductTitle}"
+                        android:textColor="@color/st_patrick_blue"
+                        android:textSize="18sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_latest_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/txt_most_visited_product_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@{mostVisitedProductTitle}"
+                        android:textColor="@color/st_patrick_blue"
+                        android:textSize="18sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_most_visited_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </FrameLayout>
 
     </ScrollView>
 

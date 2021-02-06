@@ -63,6 +63,7 @@ public class HomeFragment extends Fragment {
                 container,
                 false);
 
+        mBinding.setIsLoading(true);
         mBinding.setSingleHomeViewModel(mViewModel);
         initRecyclerView();
 
@@ -90,6 +91,7 @@ public class HomeFragment extends Fragment {
         mViewModel.getBestProductLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
+                mBinding.setIsLoading(false);
                 mBinding.setBestProductTitle(getString(R.string.best_product_title));
                 setupBestProductAdapter(products);
             }
