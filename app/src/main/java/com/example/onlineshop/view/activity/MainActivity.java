@@ -17,9 +17,18 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.ActivityMainBinding;
+import com.example.onlineshop.eventbus.event.AddEvent;
+import com.example.onlineshop.eventbus.event.AddToCartEvent;
+import com.example.onlineshop.eventbus.event.DeleteEvent;
+import com.example.onlineshop.eventbus.event.RemoveEvent;
+import com.google.android.material.badge.BadgeDrawable;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class MainActivity extends AppCompatActivity implements NavController.OnDestinationChangedListener {
     private ActivityMainBinding mBinding;
+    private int mNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +43,21 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
         navController.addOnDestinationChangedListener(this::onDestinationChanged);
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+
     @Override
     public void onDestinationChanged(@NonNull NavController controller,
                                      @NonNull NavDestination destination,
@@ -46,6 +70,40 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
             mBinding.navView.setVisibility(View.VISIBLE);
         }
     }
+
+
+    @Subscribe
+    public void getNumber(AddToCartEvent addToCartEvent) {
+        setBadge(++mNumber);
+    }
+
+
+    @Subscribe
+    public void getNumberWithAddEvent(AddEvent addEvent) {
+        setBadge(++mNumber);
+    }
+
+
+    @Subscribe
+    public void getNumberWithRemoveEvent(RemoveEvent removeEvent) {
+        setBadge(--mNumber);
+    }
+
+
+    @Subscribe
+    public void getNumberWithDeleteEvent(DeleteEvent deleteEvent) {
+        --mNumber;
+        BadgeDrawable badgeDrawable = mBinding.navView.getOrCreateBadge(R.id.navigation_cart);
+        badgeDrawable.setVisible(false);
+    }
+
+
+    public void setBadge(int number) {
+        BadgeDrawable badgeDrawable = mBinding.navView.getOrCreateBadge(R.id.navigation_cart);
+        badgeDrawable.setNumber(number);
+        badgeDrawable.setVisible(true);
+    }
+
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);

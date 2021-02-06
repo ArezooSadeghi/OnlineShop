@@ -17,7 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ProductAdapter;
 import com.example.onlineshop.databinding.FragmentCartBinding;
+import com.example.onlineshop.eventbus.event.AddEvent;
+import com.example.onlineshop.eventbus.event.DeleteEvent;
 import com.example.onlineshop.eventbus.event.PostOrder;
+import com.example.onlineshop.eventbus.event.RemoveEvent;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
@@ -132,6 +135,7 @@ public class CartFragment extends Fragment {
         mViewModel.getAddClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
+                EventBus.getDefault().post(new AddEvent());
                 mViewModel.getPrices().add(product.getPrice());
                 mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
             }
@@ -141,6 +145,7 @@ public class CartFragment extends Fragment {
         mViewModel.getDeleteClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
+                EventBus.getDefault().post(new DeleteEvent());
                 mViewModel.getPrices().remove(product.getPrice());
                 mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
                 mViewModel.getProducts().remove(product);
@@ -152,6 +157,7 @@ public class CartFragment extends Fragment {
         mViewModel.getRemoveClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
+                EventBus.getDefault().post(new RemoveEvent());
                 mViewModel.getPrices().remove(product.getPrice());
                 mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
             }

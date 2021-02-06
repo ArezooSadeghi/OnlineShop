@@ -19,10 +19,13 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.adapter.ReviewAdapter;
 import com.example.onlineshop.adapter.SliderAdapter;
 import com.example.onlineshop.databinding.FragmentDetailBinding;
+import com.example.onlineshop.eventbus.event.AddToCartEvent;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.model.Review;
 import com.example.onlineshop.service.PollService;
 import com.example.onlineshop.viewmodel.SingleSharedDetailViewModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -120,6 +123,7 @@ public class DetailFragment extends Fragment {
         mViewModel.getAddToCartClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean addToCartClicked) {
+                EventBus.getDefault().post(new AddToCartEvent());
                 mViewModel.getProducts().add(mBinding.getProduct());
                 mViewModel.getProductListMutableLiveData().setValue(mViewModel.getProducts());
                 mViewModel.getPrices().add(mBinding.getProduct().getPrice());
