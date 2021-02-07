@@ -30,7 +30,7 @@
     <string name="latest_product_title">New arrivals</string>
     <string name="new_product_title">New arrivals</string>
     <string name="new_product_text">محصول جدید رسید</string>
-    <string name="wrong_discount_code">کد تخفیف نادرست می باشد</string>
+    <string name="wrong_discount_code">The discount code is incorrect</string>
     <string name="enter_email">Please enter your email</string>
     <string name="review">Review</string>
     <string name="address">آدرس ها</string>
@@ -59,7 +59,7 @@
     <string name="successful_final_registration_order">Your order has been successfully registered</string>
     <string name="failed_final_registration_order">Your order registration was not successful</string>
     <string name="login_description">برای ورود پست الکترونیک خود را وارد نمایید</string>
-    <string name="empty_discount_code">لطفا کد تخفیف خود را وارد کنید</string>
+    <string name="empty_discount_code">Please enter your discount code</string>
     <string name="most_visited_product_title">Popular</string>
     <string name="special_product_title">محصولات ویژه</string>
     <string name="see_all">مشاهده همه</string>
@@ -70,7 +70,7 @@
     <string name="enter_request_information">Please enter the requested information</string>
     <string name="register">Sign Up</string>
     <string name="email_hint">Email</string>
-    <string name="amount_paid_with_discount">جمع مبلغ پرداختی با احتساب 10 درصد تخفیف:</string>
+    <string name="amount_paid_with_discount">Total amount paid with 10% discount: </string>
     <string name="in_stock">instock</string>
     <string name="available_in_stock">موجود در انبار</string>
     <string name="not_available_in_stock">در انبار موجود نیست</string>
@@ -79,8 +79,9 @@
     <string name="number">1</string>
     <string name="total_amount_paid">جمع مبلغ پرداختی:</string>
     <string name="final_confirmation">تایید نهایی سبد خرید</string>
-    <string name="discount_code">کد تخفیف</string>
+    <string name="discount_code">Discount Code</string>
     <string name="review_title">نظرات کاربران</string>
+    <string name="check_discount_code">Check Discount Code</string>
     <string name="currency">تومان</string>
     <string name="total">Total</string>
     <string name="continue_the_buying_process">Continue</string>

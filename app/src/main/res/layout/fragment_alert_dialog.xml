@@ -14,67 +14,84 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/surface"
-        android:orientation="vertical">
+        android:background="@color/green">
 
         <TextView
             android:id="@+id/txt_total_amount_paid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
             android:text="@{totalAmountPaid}"
-            android:textColor="@color/on_surface"
-            android:textSize="16sp" />
+            android:textColor="@color/baby_powder"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_amount_paid_with_discount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="24dp"
             android:text="@{amountPaidWithDiscount}"
-            android:textColor="@color/on_surface"
-            android:textSize="14sp" />
+            android:textColor="@color/baby_powder"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_total_amount_paid" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:boxStrokeColor="@color/primary_shrine_pink">
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
+            app:boxStrokeColor="@color/meat_brown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_amount_paid_with_discount">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_discount_code"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/discount_code" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:hint="@string/discount_code"
+                android:textColorHint="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_ok"
-            app:backgroundTint="@color/teal_200" />
-
         <Button
-            android:id="@+id/btn_final_confirmation"
+            android:id="@+id/fab_ok"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:text="@string/final_confirmation"
-            android:textColor="@android:color/holo_blue_light" />
+            android:layout_marginTop="32dp"
+            android:text="@string/check_discount_code"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/outlinedTextField" />
 
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_final_confirmation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/ic_ok"
+            app:backgroundTint="@color/meat_brown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fab_ok" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
