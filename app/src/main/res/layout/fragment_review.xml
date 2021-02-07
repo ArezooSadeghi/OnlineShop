@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/charcoal"
+        android:background="@color/pastel_orange"
         tools:context=".view.fragment.ReviewFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,8 +25,8 @@
 
             <EditText
                 android:id="@+id/txt_first_and_last_name"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="80dp"
                 android:background="@drawable/rounded_edit_text"
                 android:gravity="center"
@@ -37,8 +37,8 @@
 
             <EditText
                 android:id="@+id/txt_your_review"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_edit_text"
                 android:gravity="center"
@@ -49,8 +49,8 @@
 
             <EditText
                 android:id="@+id/txt_score"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_edit_text"
                 android:gravity="center"
@@ -69,9 +69,9 @@
                 android:onClick="@{() -> singleSharedReviewViewModel.setSubmitClickedSingleLiveEvent()}"
                 android:text="@string/register_review"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
-                app:backgroundTint="@color/charcoal"
+                app:backgroundTint="@color/pastel_orange"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

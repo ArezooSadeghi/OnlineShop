@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,7 +13,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blanchedalmond"
+        android:background="@color/charcoal"
         android:fillViewport="true">
 
         <LinearLayout
@@ -20,21 +21,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
-                android:padding="32dp"
-                android:src="@drawable/image_bell" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:padding="16dp"
-                android:text="@string/setting_notification"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/notification" />
 
             <View
                 android:layout_width="match_parent"
@@ -45,7 +40,7 @@
                 android:id="@+id/radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="left"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -55,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:text="@string/every_3_hours"
-                    android:textColor="@color/on_surface" />
+                    android:textColor="@color/baby_powder" />
 
                 <RadioButton
                     android:id="@+id/radio_btn_5_hours"
@@ -63,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:text="@string/every_5_hours"
-                    android:textColor="@color/on_surface" />
+                    android:textColor="@color/baby_powder" />
 
                 <RadioButton
                     android:id="@+id/radio_btn_8_hours"
@@ -71,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:text="@string/every_8_hours"
-                    android:textColor="@color/on_surface" />
+                    android:textColor="@color/baby_powder" />
 
                 <RadioButton
                     android:id="@+id/radio_btn_12_hours"
@@ -79,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:text="@string/every_12_hours"
-                    android:textColor="@color/on_surface" />
+                    android:textColor="@color/baby_powder" />
 
                 <RadioButton
                     android:id="@+id/radio_btn_default"
@@ -87,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:text="@string/by_default"
-                    android:textColor="@color/on_surface" />
+                    android:textColor="@color/baby_powder" />
 
                 <RadioButton
                     android:id="@+id/radio_btn_desired"
@@ -96,7 +91,7 @@
                     android:checked="true"
                     android:padding="16dp"
                     android:text="@string/by_default"
-                    android:textColor="@color/on_surface" />
+                    android:textColor="@color/baby_powder" />
 
             </RadioGroup>
 
@@ -119,7 +114,7 @@
                 android:checked="@{isOnNotification}"
                 android:padding="16dp"
                 android:text="@string/on_notification"
-                android:textColor="@color/on_surface" />
+                android:textColor="@color/baby_powder" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -130,21 +125,22 @@
 
                 <Button
                     android:id="@+id/btn_cancel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:backgroundTint="@color/purple_700"
+                    android:background="@drawable/custom_right_button"
                     android:text="@string/cancel"
-                    android:textColor="@color/on_surface" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/slate_grey" />
 
                 <Button
                     android:id="@+id/btn_save_setting"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:backgroundTint="@color/purple_700"
+                    android:background="@drawable/custom_left_button"
                     android:text="@string/save_setting"
-                    android:textColor="@color/on_surface" />
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/slate_grey" />
 
             </LinearLayout>
 
