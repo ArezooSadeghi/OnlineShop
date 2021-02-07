@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
                                      @Nullable Bundle arguments) {
         if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.signupFragment
                 || destination.getId() == R.id.addressFragment || destination.getId() == R.id.locatrFragment
-                || destination.getId() == R.id.reviewFragment) {
+                || destination.getId() == R.id.reviewFragment || destination.getId() == R.id.settingFragment
+                || destination.getId() == R.id.userReviewListFragment) {
             mBinding.navView.setVisibility(View.GONE);
         } else {
             mBinding.navView.setVisibility(View.VISIBLE);

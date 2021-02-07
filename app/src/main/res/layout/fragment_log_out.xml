@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/meat_brown"
+        android:background="@color/green"
         android:orientation="vertical"
         tools:context=".view.fragment.LogOutFragment">
 
@@ -39,7 +39,7 @@
                 android:text="@string/log_out"
                 android:textAllCaps="false"
                 android:textColor="@color/baby_powder"
-                app:backgroundTint="@color/onyx" />
+                app:backgroundTint="@color/black" />
 
             <Button
                 android:id="@+id/btn_common"
@@ -50,7 +50,7 @@
                 android:text="@string/common"
                 android:textAllCaps="false"
                 android:textColor="@color/baby_powder"
-                app:backgroundTint="@color/onyx" />
+                app:backgroundTint="@color/black" />
 
         </LinearLayout>
 

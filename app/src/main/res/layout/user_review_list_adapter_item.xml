@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
+        android:background="@color/green"
         android:orientation="vertical">
 
         <TextView
@@ -38,14 +38,14 @@
 
         <RatingBar
             android:id="@+id/rating_bar"
-            style="@style/Theme.RatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:numStars="5"
             android:rating="@{review.rating}"
             android:scaleX="0.5"
-            android:scaleY="0.5" />
+            android:scaleY="0.5"
+            android:theme="@style/Theme.NewRatingBar" />
 
         <LinearLayout
             android:layout_width="wrap_content"
