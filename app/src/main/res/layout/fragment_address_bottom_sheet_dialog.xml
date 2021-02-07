@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blanchedalmond"
+        android:background="@color/rusty"
         android:orientation="vertical"
         tools:context=".view.fragment.AddressBottomSheetDialogFragment">
 
@@ -24,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="16dp"
             android:text="@string/your_address"
-            android:textColor="@color/on_surface"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <View
@@ -39,13 +39,15 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="16dp"
             android:hint="@string/address_hint"
-            app:boxStrokeColor="@color/secondary_shrine_pink">
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_address"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="@{approximateAddress}" />
+                android:text="@{approximateAddress}"
+                android:textColor="@color/baby_powder" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,19 +60,25 @@
 
             <Button
                 android:id="@+id/btn_cancel"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:background="@drawable/rounded_button"
                 android:text="@string/cancel"
-                android:textSize="16sp" />
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                app:backgroundTint="@color/gray_asparagus" />
 
             <Button
                 android:id="@+id/btn_save"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:background="@drawable/rounded_button"
                 android:text="@string/save"
-                android:textSize="16sp" />
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                app:backgroundTint="@color/gray_asparagus" />
 
         </LinearLayout>
 

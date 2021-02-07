@@ -13,16 +13,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/surface"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:background="@color/pastel_orange"
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginRight="16dp"
             android:hint="@string/first_and_last_name_hint"
-            app:boxStrokeColor="@color/secondary_shrine_pink">
+            app:boxStrokeColor="@color/slate_grey">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_first_and_last_name"
@@ -35,9 +37,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
             android:hint="@string/your_review_hint"
-            app:boxStrokeColor="@color/secondary_shrine_pink">
+            app:boxStrokeColor="@color/slate_grey">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_content"
@@ -50,8 +55,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:hint="@string/score_hint">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/score_hint"
+            app:boxStrokeColor="@color/slate_grey">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt.rating"
@@ -63,12 +72,17 @@
 
         <Button
             android:id="@+id/btn_edit"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
-            android:backgroundTint="@color/neon_fuchsia"
-            android:text="@string/edit" />
+            android:layout_marginTop="64dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/edit"
+            android:textAllCaps="false"
+            android:textColor="@color/baby_powder"
+            android:textSize="18sp"
+            app:backgroundTint="@color/onyx" />
 
     </LinearLayout>
 
