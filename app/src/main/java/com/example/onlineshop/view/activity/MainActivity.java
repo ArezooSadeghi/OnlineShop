@@ -20,6 +20,7 @@ import com.example.onlineshop.databinding.ActivityMainBinding;
 import com.example.onlineshop.eventbus.event.AddEvent;
 import com.example.onlineshop.eventbus.event.AddToCartEvent;
 import com.example.onlineshop.eventbus.event.DeleteEvent;
+import com.example.onlineshop.eventbus.event.PostOrder;
 import com.example.onlineshop.eventbus.event.RemoveEvent;
 import com.google.android.material.badge.BadgeDrawable;
 
@@ -28,6 +29,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 public class MainActivity extends AppCompatActivity implements NavController.OnDestinationChangedListener {
     private ActivityMainBinding mBinding;
+    private BadgeDrawable mBadgeDrawable;
     private int mNumber = 0;
 
     @Override
@@ -99,10 +101,17 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
     }
 
 
+    @Subscribe
+    public void getPostOrderEvent(PostOrder postOrder) {
+        mNumber = 0;
+        mBadgeDrawable.setVisible(false);
+    }
+
+
     public void setBadge(int number) {
-        BadgeDrawable badgeDrawable = mBinding.navView.getOrCreateBadge(R.id.navigation_cart);
-        badgeDrawable.setNumber(number);
-        badgeDrawable.setVisible(true);
+        mBadgeDrawable = mBinding.navView.getOrCreateBadge(R.id.navigation_cart);
+        mBadgeDrawable.setNumber(number);
+        mBadgeDrawable.setVisible(true);
     }
 
 

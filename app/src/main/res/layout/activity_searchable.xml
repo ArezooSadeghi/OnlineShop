@@ -14,15 +14,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/surface"
         android:orientation="vertical"
         tools:context=".view.activity.SearchableActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/searchable_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/secondary_shrine_pink"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/green"
             app:menu="@menu/searchable_menu" />
 
         <ListView
