@@ -102,9 +102,13 @@ public class UserReviewListFragment extends Fragment {
         mViewModel.getUpdateReviewLiveData().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
-                mViewModel.getReviews().remove(mReview);
-                mViewModel.getReviews().add(review);
-                mViewModel.getReviewListMutableLiveData().setValue(mViewModel.getReviews());
+                if (mReview != null) {
+                    mViewModel.getReviews().remove(mReview);
+                }
+                if (mViewModel.isValidReview(review, mViewModel.getReviews())) {
+                    mViewModel.getReviews().add(review);
+                    mViewModel.getReviewListMutableLiveData().setValue(mViewModel.getReviews());
+                }
             }
         });
     }

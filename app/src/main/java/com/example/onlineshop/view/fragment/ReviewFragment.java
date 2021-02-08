@@ -105,8 +105,8 @@ public class ReviewFragment extends Fragment {
                 List<Review> reviews = mViewModel.getReviews();
                 reviews.add(review);
                 mViewModel.getReviewListMutableLiveData().setValue(reviews);
+                Toast.makeText(getContext(), R.string.successful_post_review, Toast.LENGTH_LONG).show();
             }
-            Toast.makeText(getContext(), R.string.successful_post_review, Toast.LENGTH_LONG).show();
         }
     }
 }

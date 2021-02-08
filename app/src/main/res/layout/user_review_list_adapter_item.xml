@@ -22,7 +22,7 @@
             android:layout_gravity="right"
             android:padding="16dp"
             android:text="@{review.reviewerName}"
-            android:textColor="@color/on_surface"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:lineSpacingMultiplier="2"
             android:padding="16dp"
             android:text="@{review.reviewContent}"
-            android:textColor="@color/on_surface"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
         <RatingBar
