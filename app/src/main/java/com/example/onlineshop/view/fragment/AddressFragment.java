@@ -66,6 +66,7 @@ public class AddressFragment extends Fragment {
                 false);
 
         mBinding.setLocatrViewModel(mViewModel);
+
         initToolbar();
         initRecyclerView();
 
@@ -129,7 +130,7 @@ public class AddressFragment extends Fragment {
             @Override
             public void onChanged(Integer statusCode) {
                 if (mFlag) {
-                    showReult(statusCode);
+                    showResult(statusCode);
                 }
             }
         });
@@ -154,7 +155,7 @@ public class AddressFragment extends Fragment {
     }
 
 
-    private void showReult(Integer statusCode) {
+    private void showResult(Integer statusCode) {
         if (statusCode == 400) {
             Toast.makeText(getContext(), R.string.failed_final_registration_order, Toast.LENGTH_LONG).show();
         }

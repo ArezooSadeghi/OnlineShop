@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="signupViewModel"
+            type="com.example.onlineshop.viewmodel.SignupViewModel" />
+
     </data>
 
     <LinearLayout
@@ -63,6 +67,7 @@
                 android:layout_marginBottom="96dp"
                 android:background="@drawable/custom_left_button"
                 android:drawableRight="@drawable/ic_arrow_forward"
+                android:onClick="@{() -> signupViewModel.setRegisterClickedSingleLiveEvent()}"
                 android:text="@string/register"
                 android:textAllCaps="false"
                 android:textColor="@color/black"

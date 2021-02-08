@@ -31,11 +31,11 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 public class CartFragment extends Fragment {
-
     private FragmentCartBinding mBinding;
     private SingleSharedDetailViewModel mViewModel;
 
     private static final String TAG = CartFragment.class.getSimpleName();
+
 
     public static CartFragment newInstance() {
         Bundle args = new Bundle();
@@ -65,6 +65,7 @@ public class CartFragment extends Fragment {
                 false);
 
         mBinding.setSingleSharedDetailViewModel(mViewModel);
+
         initRecyclerView();
 
         return mBinding.getRoot();
@@ -99,6 +100,11 @@ public class CartFragment extends Fragment {
         mViewModel.getPrices().clear();
         mViewModel.getPriceListMutableLiveData().setValue(mViewModel.getPrices());
         EventBus.getDefault().removeStickyEvent(postOrder);
+    }
+
+
+    private void initRecyclerView() {
+        mBinding.recyclerViewCart.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 
@@ -188,11 +194,6 @@ public class CartFragment extends Fragment {
                 fragment.show(getParentFragmentManager(), TAG);
             }
         });
-    }
-
-
-    private void initRecyclerView() {
-        mBinding.recyclerViewCart.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 

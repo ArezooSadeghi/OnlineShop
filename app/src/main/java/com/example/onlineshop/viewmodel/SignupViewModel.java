@@ -8,10 +8,12 @@ import androidx.lifecycle.LiveData;
 
 import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.repository.ProductRepository;
+import com.example.onlineshop.singleliveevent.SingleLiveEvent;
 
 public class SignupViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private LiveData<Integer> mStatusCodePostCustomerLiveData;
+    private SingleLiveEvent<Boolean> mRegisterClickedSingleLiveEvent = new SingleLiveEvent<>();
 
 
     public SignupViewModel(@NonNull Application application) {
@@ -23,6 +25,14 @@ public class SignupViewModel extends AndroidViewModel {
 
     public LiveData<Integer> getStatusCodePostCustomerLiveData() {
         return mStatusCodePostCustomerLiveData;
+    }
+
+    public SingleLiveEvent<Boolean> getRegisterClickedSingleLiveEvent() {
+        return mRegisterClickedSingleLiveEvent;
+    }
+
+    public void setRegisterClickedSingleLiveEvent() {
+        mRegisterClickedSingleLiveEvent.setValue(true);
     }
 
     public void postCustomer(String email) {

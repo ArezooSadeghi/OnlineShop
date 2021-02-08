@@ -13,7 +13,6 @@ import com.example.onlineshop.singleliveevent.SingleLiveEvent;
 import java.util.List;
 
 public class SingleCategoryViewModel extends AndroidViewModel {
-
     private ProductRepository mRepository;
     private SingleLiveEvent<Integer> mCategoryIdSingleLiveEvent = new SingleLiveEvent<>();
     private LiveData<List<Category>> mCategoryListLiveData;
@@ -23,7 +22,6 @@ public class SingleCategoryViewModel extends AndroidViewModel {
         mRepository = ProductRepository.getInstance(getApplication());
         mCategoryListLiveData = mRepository.getCategoryListMutableLiveData();
     }
-
 
     public SingleLiveEvent<Integer> getCategoryIdSingleLiveEvent() {
         return mCategoryIdSingleLiveEvent;

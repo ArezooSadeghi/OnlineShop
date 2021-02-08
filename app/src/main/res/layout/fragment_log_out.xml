@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="logOutViewModel"
+            type="com.example.onlineshop.viewmodel.LogOutViewModel" />
+
     </data>
 
     <LinearLayout
@@ -36,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_right_button"
                 android:drawableLeft="@drawable/ic_arrow_back"
+                android:onClick="@{() -> logOutViewModel.setLogOutClickedSingleLiveEvent()}"
                 android:text="@string/log_out"
                 android:textAllCaps="false"
                 android:textColor="@color/baby_powder"
@@ -47,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_left_button"
                 android:drawableRight="@drawable/ic_arrow_forward"
+                android:onClick="@{() -> logOutViewModel.setCommonClickedSingleLiveEvent()}"
                 android:text="@string/common"
                 android:textAllCaps="false"
                 android:textColor="@color/baby_powder"

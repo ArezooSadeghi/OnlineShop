@@ -9,6 +9,10 @@
             name="approximateAddress"
             type="String" />
 
+        <variable
+            name="locatrViewModel"
+            type="com.example.onlineshop.viewmodel.LocatrViewModel" />
+
     </data>
 
     <LinearLayout
@@ -64,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="32dp"
                 android:background="@drawable/rounded_button"
+                android:onClick="@{() -> locatrViewModel.setCancelClickedSingleLiveEvent()}"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textSize="16sp"
@@ -75,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
                 android:background="@drawable/rounded_button"
+                android:onClick="@{() -> locatrViewModel.setSaveClickedSingleLiveEvent()}"
                 android:text="@string/save"
                 android:textAllCaps="false"
                 android:textSize="16sp"

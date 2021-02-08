@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,11 +18,11 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentLoginBinding;
 import com.example.onlineshop.utilities.Preferences;
 import com.example.onlineshop.viewmodel.LoginViewModel;
-import com.google.android.material.snackbar.Snackbar;
 
 public class LoginFragment extends Fragment {
     private FragmentLoginBinding mBinding;
     private LoginViewModel mViewModel;
+
 
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,8 +54,6 @@ public class LoginFragment extends Fragment {
 
         mBinding.setLoginViewModel(mViewModel);
 
-        setListener();
-
         return mBinding.getRoot();
     }
 
@@ -66,12 +65,22 @@ public class LoginFragment extends Fragment {
     }
 
 
-    private void setListener() {
-        mBinding.btnLogin.setOnClickListener(new View.OnClickListener() {
+    private void setObserver() {
+        mViewModel.getSignUpClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onClick(View view) {
+            public void onChanged(Boolean isSignUpClicked) {
+                NavHostFragment
+                        .findNavController(LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_signupFragment);
+            }
+        });
+
+
+        mViewModel.getLoginClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoginClicked) {
                 if (mBinding.txtEmail.getText().toString().isEmpty()) {
-                    Snackbar.make(view, R.string.enter_email, Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.enter_email, Toast.LENGTH_LONG).show();
                 } else {
                     boolean isValidCustomer = mViewModel.isValidCustomer(
                             mBinding.txtEmail.getText().toString(),
@@ -85,21 +94,9 @@ public class LoginFragment extends Fragment {
                         NavHostFragment.findNavController(LoginFragment.this).navigate(action);
 
                     } else {
-                        Snackbar.make(view, R.string.no_exist_account, Snackbar.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.no_exist_account, Toast.LENGTH_LONG).show();
                     }
                 }
-            }
-        });
-    }
-
-
-    private void setObserver() {
-        mViewModel.getSignUpClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isSignUpClicked) {
-                NavHostFragment
-                        .findNavController(LoginFragment.this)
-                        .navigate(R.id.action_loginFragment_to_signupFragment);
             }
         });
     }

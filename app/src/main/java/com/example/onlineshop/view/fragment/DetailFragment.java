@@ -35,6 +35,7 @@ public class DetailFragment extends Fragment {
     private ReviewAdapter mAdapter;
     private int mProductId;
 
+
     public static DetailFragment newInstance() {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
@@ -62,6 +63,7 @@ public class DetailFragment extends Fragment {
                 false);
 
         mBinding.setSingleSharedDetailViewModel(mViewModel);
+
         initRecyclerView();
 
         return mBinding.getRoot();

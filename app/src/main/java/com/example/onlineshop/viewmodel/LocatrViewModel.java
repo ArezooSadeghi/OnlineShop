@@ -32,6 +32,8 @@ public class LocatrViewModel extends AndroidViewModel {
     private SingleLiveEvent<Boolean> mAddLocationClickedSingleLiveEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<Boolean> mMyLocationClickedSingleLiveEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<Boolean> mConfirmationClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mCancelClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mSaveClickedSingleLiveEvent = new SingleLiveEvent<>();
 
     public LocatrViewModel(@NonNull Application application) {
         super(application);
@@ -90,6 +92,22 @@ public class LocatrViewModel extends AndroidViewModel {
 
     public void setConfirmationClickedSingleLiveEvent() {
         mConfirmationClickedSingleLiveEvent.setValue(true);
+    }
+
+    public SingleLiveEvent<Boolean> getCancelClickedSingleLiveEvent() {
+        return mCancelClickedSingleLiveEvent;
+    }
+
+    public void setCancelClickedSingleLiveEvent() {
+        mCancelClickedSingleLiveEvent.setValue(true);
+    }
+
+    public SingleLiveEvent<Boolean> getSaveClickedSingleLiveEvent() {
+        return mSaveClickedSingleLiveEvent;
+    }
+
+    public void setSaveClickedSingleLiveEvent() {
+        mSaveClickedSingleLiveEvent.setValue(true);
     }
 
     public List<String> getAddresses(List<String> addresses) {

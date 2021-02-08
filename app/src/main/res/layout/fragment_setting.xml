@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="settingViewModel"
+            type="com.example.onlineshop.viewmodel.SettingViewModel" />
+
     </data>
 
     <LinearLayout
@@ -31,6 +35,7 @@
             android:layout_margin="16dp"
             android:drawableLeft="@drawable/ic_notifications"
             android:gravity="right"
+            android:onClick="@{() -> settingViewModel.setSettingNotificationClickedSingleLiveEvent()}"
             android:text="@string/setting_notification"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -44,6 +49,7 @@
             android:layout_margin="16dp"
             android:drawableLeft="@drawable/ic_baseline_arrow_back_"
             android:gravity="right"
+            android:onClick="@{() -> settingViewModel.setLogOutClickedSingleLiveEvent()}"
             android:text="@string/log_out"
             android:textAllCaps="false"
             android:textColor="@color/black"

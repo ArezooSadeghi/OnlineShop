@@ -14,6 +14,7 @@ import java.util.List;
 public class LoginViewModel extends AndroidViewModel {
     private ProductRepository mRepository;
     private SingleLiveEvent<Boolean> mSignUpClickedSingleLiveEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> mLoginClickedSingleLiveEvent = new SingleLiveEvent<>();
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -27,6 +28,14 @@ public class LoginViewModel extends AndroidViewModel {
 
     public void setSignUpClickedSingleLiveEvent() {
         mSignUpClickedSingleLiveEvent.setValue(true);
+    }
+
+    public SingleLiveEvent<Boolean> getLoginClickedSingleLiveEvent() {
+        return mLoginClickedSingleLiveEvent;
+    }
+
+    public void setLoginClickedSingleLiveEvent() {
+        mLoginClickedSingleLiveEvent.setValue(true);
     }
 
     public List<Customer> getCustomers() {

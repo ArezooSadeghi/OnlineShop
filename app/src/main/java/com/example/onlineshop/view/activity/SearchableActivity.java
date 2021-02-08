@@ -27,24 +27,28 @@ public class SearchableActivity extends AppCompatActivity {
 
     private static final String TAG = SearchableActivity.class.getSimpleName();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_searchable);
 
-        setToolbar();
+        initToolbar();
 
         mViewModel = new ViewModelProvider(this).get(SearchableViewModel.class);
         setObserver();
+
         handleIntent();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.searchable_menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -66,9 +70,11 @@ public class SearchableActivity extends AppCompatActivity {
         }
     }
 
-    private void setToolbar() {
+
+    private void initToolbar() {
         setSupportActionBar(mBinding.searchableToolbar);
     }
+
 
     private void setObserver() {
         mViewModel.getSearchProductLiveData().observe(this, new Observer<List<Product>>() {
@@ -86,6 +92,7 @@ public class SearchableActivity extends AppCompatActivity {
         });
     }
 
+
     private void handleIntent() {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -94,9 +101,11 @@ public class SearchableActivity extends AppCompatActivity {
         }
     }
 
+
     private void doMySearch(String query) {
         mViewModel.searchProducts(query);
     }
+
 
     private void setupAdapter(List<Product> products) {
         SearchAdapter adapter = new SearchAdapter(this, products);

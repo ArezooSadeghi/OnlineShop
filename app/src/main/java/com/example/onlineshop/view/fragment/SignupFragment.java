@@ -17,7 +17,6 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentSignupBinding;
 import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.viewmodel.SignupViewModel;
-import com.google.android.material.snackbar.Snackbar;
 
 public class SignupFragment extends Fragment {
     private FragmentSignupBinding mBinding;
@@ -50,7 +49,7 @@ public class SignupFragment extends Fragment {
                 container,
                 false);
 
-        setListener();
+        mBinding.setSignupViewModel(mViewModel);
 
         return mBinding.getRoot();
     }
@@ -63,12 +62,20 @@ public class SignupFragment extends Fragment {
     }
 
 
-    private void setListener() {
-        mBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
+    private void setObserver() {
+        mViewModel.getStatusCodePostCustomerLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
-            public void onClick(View view) {
+            public void onChanged(Integer statusCode) {
+                showSignUpStatus(statusCode);
+            }
+        });
+
+
+        mViewModel.getRegisterClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isRegisterClicked) {
+                Toast.makeText(getContext(), R.string.enter_email, Toast.LENGTH_LONG).show();
                 if (mBinding.txtEmail.getText().toString().isEmpty()) {
-                    Snackbar.make(view, R.string.enter_email, Snackbar.LENGTH_LONG).show();
                 } else {
                     mViewModel.postCustomer(mBinding.txtEmail.getText().toString());
                 }
@@ -77,17 +84,7 @@ public class SignupFragment extends Fragment {
     }
 
 
-    private void setObserver() {
-        mViewModel.getStatusCodePostCustomerLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer statusCode) {
-                showSignupStatus(statusCode);
-            }
-        });
-    }
-
-
-    private void showSignupStatus(Integer statusCode) {
+    private void showSignUpStatus(Integer statusCode) {
         if (statusCode == 400) {
             Toast.makeText(getContext(), R.string.account_exist, Toast.LENGTH_LONG).show();
         }

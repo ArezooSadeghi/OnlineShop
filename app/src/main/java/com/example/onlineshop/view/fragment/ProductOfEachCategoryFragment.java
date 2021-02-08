@@ -38,6 +38,7 @@ public class ProductOfEachCategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mViewModel = new ViewModelProvider(this).get(SingleProductOfEachCategoryViewModel.class);
         ProductOfEachCategoryFragmentArgs args = ProductOfEachCategoryFragmentArgs.fromBundle(getArguments());
         int categoryId = args.getId();
@@ -68,6 +69,11 @@ public class ProductOfEachCategoryFragment extends Fragment {
     }
 
 
+    private void initRecyclerView() {
+        mBinding.recyclerViewProductOfEachCategory.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+
     private void setObserver() {
         mViewModel.getProductIdSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -79,17 +85,13 @@ public class ProductOfEachCategoryFragment extends Fragment {
             }
         });
 
+
         mViewModel.getProductByCategoryLiveData().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
                 setupAdapter(products);
             }
         });
-    }
-
-
-    private void initRecyclerView() {
-        mBinding.recyclerViewProductOfEachCategory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 

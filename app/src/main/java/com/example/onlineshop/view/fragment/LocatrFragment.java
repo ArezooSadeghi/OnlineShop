@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class LocatrFragment extends Fragment {
-
     private FragmentLocatrBinding mBinding;
     private LocatrViewModel mViewModel;
     private GoogleMap mGoogleMap;

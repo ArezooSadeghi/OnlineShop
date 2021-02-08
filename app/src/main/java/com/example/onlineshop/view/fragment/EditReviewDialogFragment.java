@@ -24,6 +24,7 @@ public class EditReviewDialogFragment extends DialogFragment {
 
     private static final String ARGS_REVIEW = "review";
 
+
     public static EditReviewDialogFragment newInstance(Review review) {
         Bundle args = new Bundle();
         args.putSerializable(ARGS_REVIEW, review);
@@ -32,12 +33,15 @@ public class EditReviewDialogFragment extends DialogFragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedReviewViewModel.class);
+
         mReview = (Review) getArguments().getSerializable(ARGS_REVIEW);
+        mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedReviewViewModel.class);
     }
+
 
     @NonNull
     @Override
@@ -50,6 +54,13 @@ public class EditReviewDialogFragment extends DialogFragment {
 
         mBinding.setReview(mReview);
 
+        setListener();
+
+        return new AlertDialog.Builder(getContext()).setView(mBinding.getRoot()).create();
+    }
+
+
+    private void setListener() {
         mBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +71,5 @@ public class EditReviewDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
-
-        return new AlertDialog.Builder(getContext()).setView(mBinding.getRoot()).create();
     }
 }

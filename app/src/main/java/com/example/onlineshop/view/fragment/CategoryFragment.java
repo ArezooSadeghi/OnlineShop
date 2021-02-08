@@ -68,6 +68,11 @@ public class CategoryFragment extends Fragment {
     }
 
 
+    private void initRecyclerView() {
+        mBinding.recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+
     private void setObserver() {
         mViewModel.getCategoryListLiveData().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
             @Override
@@ -86,11 +91,6 @@ public class CategoryFragment extends Fragment {
                 NavHostFragment.findNavController(CategoryFragment.this).navigate(action);
             }
         });
-    }
-
-
-    private void initRecyclerView() {
-        mBinding.recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 

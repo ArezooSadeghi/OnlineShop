@@ -30,6 +30,7 @@ public class UserReviewListFragment extends Fragment {
 
     private static final String TAG = EditReviewDialogFragment.class.getSimpleName();
 
+
     public static UserReviewListFragment newInstance() {
         UserReviewListFragment fragment = new UserReviewListFragment();
         Bundle args = new Bundle();
@@ -37,12 +38,14 @@ public class UserReviewListFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(SingleSharedReviewViewModel.class);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,11 +62,18 @@ public class UserReviewListFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setObserver();
     }
+
+
+    private void initRecyclerView() {
+        mBinding.recyclerViewUserListReview.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
 
     private void setObserver() {
         mViewModel.getReviewListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Review>>() {
@@ -73,6 +83,7 @@ public class UserReviewListFragment extends Fragment {
             }
         });
 
+
         mViewModel.getDeleteReviewClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
@@ -81,6 +92,7 @@ public class UserReviewListFragment extends Fragment {
                 mViewModel.getReviewListMutableLiveData().setValue(mViewModel.getReviews());
             }
         });
+
 
         mViewModel.getEditReviewClickedSingleLiveEvent().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
@@ -99,6 +111,7 @@ public class UserReviewListFragment extends Fragment {
             }
         });
 
+
         mViewModel.getUpdateReviewLiveData().observe(getViewLifecycleOwner(), new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
@@ -113,9 +126,6 @@ public class UserReviewListFragment extends Fragment {
         });
     }
 
-    private void initRecyclerView() {
-        mBinding.recyclerViewUserListReview.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
 
     private void setupAdapter(List<Review> reviews) {
         if (mAdapter == null) {

@@ -65,6 +65,7 @@ public class HomeFragment extends Fragment {
 
         mBinding.setIsLoading(true);
         mBinding.setSingleHomeViewModel(mViewModel);
+
         initRecyclerView();
 
         return mBinding.getRoot();

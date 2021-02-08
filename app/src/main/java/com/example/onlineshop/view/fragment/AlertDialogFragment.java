@@ -65,18 +65,19 @@ public class AlertDialogFragment extends DialogFragment {
         mBinding.fabOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mBinding.txtDiscountCode.getText().toString().equals("")) {
+                if (mBinding.txtDiscountCode.getText().toString().isEmpty()) {
                     Snackbar.make(view, R.string.empty_discount_code, Snackbar.LENGTH_LONG).show();
                 } else {
                     if (mBinding.txtDiscountCode.getText().toString().equals("code10")) {
                         Double finalPrice = Double.valueOf(mTotalPrice) - (Double.valueOf(mTotalPrice) * 0.1);
-                        mBinding.setAmountPaidWithDiscount(getString(R.string.amount_paid_with_discount) + " " + String.valueOf(finalPrice));
+                        mBinding.setAmountPaidWithDiscount(getString(R.string.amount_paid_with_discount) + " " + finalPrice);
                     } else {
                         Snackbar.make(view, R.string.wrong_discount_code, Snackbar.LENGTH_LONG).show();
                     }
                 }
             }
         });
+
 
         mBinding.btnFinalConfirmation.setOnClickListener(new View.OnClickListener() {
             @Override
