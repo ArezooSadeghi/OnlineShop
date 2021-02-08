@@ -34,6 +34,7 @@ public class AddressFragment extends Fragment {
     private FragmentAddressBinding mBinding;
     private LocatrViewModel mViewModel;
     private Customer mCustomer;
+    private boolean mFlag;
 
 
     public static AddressFragment newInstance() {
@@ -93,8 +94,13 @@ public class AddressFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_post_order:
-                mViewModel.postOrder(mCustomer.getEmail());
-                EventBus.getDefault().postSticky(new PostOrder());
+                if (!mFlag) {
+                    mFlag = true;
+                    mViewModel.postOrder(mCustomer.getEmail());
+                    EventBus.getDefault().postSticky(new PostOrder());
+                } else {
+                    Toast.makeText(getContext(), R.string.empty_cart, Toast.LENGTH_LONG).show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -122,7 +128,9 @@ public class AddressFragment extends Fragment {
         mViewModel.getStatusCodePostOrderLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer statusCode) {
-                showReult(statusCode);
+                if (mFlag) {
+                    showReult(statusCode);
+                }
             }
         });
 

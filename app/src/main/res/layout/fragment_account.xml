@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/charcoal">
+        android:background="@color/onyx">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
@@ -59,35 +59,35 @@
 
         <Button
             android:id="@+id/btn_review"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
+            android:drawableRight="@drawable/ic_comment"
             android:gravity="left"
             android:onClick="@{() -> singleAccountViewModel.setReviewClickedSingleLiveEvent()}"
             android:text="@string/review"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:icon="@drawable/ic_comment"
+            app:backgroundTint="@color/gray_asparagus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view" />
 
         <Button
             android:id="@+id/btn_setting"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:drawableRight="@drawable/ic_settings"
             android:gravity="left"
             android:onClick="@{() -> singleAccountViewModel.setSettingClickedSingleLiveEvent()}"
             android:text="@string/setting"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            app:icon="@drawable/ic_settings"
+            app:backgroundTint="@color/gray_asparagus"
             app:layout_constraintTop_toBottomOf="@id/btn_review" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
